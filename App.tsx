@@ -93,6 +93,7 @@ const FeatureVisual: React.FC<{ type: string }> = ({ type }) => {
 const App: React.FC = () => {
   const containerRef = useRef(null);
   const [activeFeature, setActiveFeature] = useState(0);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -111,6 +112,26 @@ const App: React.FC = () => {
     { id: 'domains', icon: <Icons.Domains />, title: "Brand Experience", desc: "Whitelabel total para você usar seu domínio e fortalecer sua autoridade.", highlights: ["SSL Ilimitado", "Setup Instantâneo", "Marca Própria"] },
     { id: 'products', icon: <Icons.Products />, title: "Escala Infinita", desc: "Infraestrutura resiliente pronta para suportar milhares de vendas simultâneas.", highlights: ["Sem Taxas Ocultas", "Dashboard Realtime", "Suporte 24h"] }
   ];
+
+  // Auto-scroll feature activation
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-index') || '0');
+            setActiveFeature(index);
+          }
+        });
+      },
+      { threshold: 0.6, rootMargin: '-20% 0px -20% 0px' }
+    );
+
+    const cards = featuresRef.current?.querySelectorAll('[data-index]');
+    cards?.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div ref={containerRef} className="relative w-full bg-[#030303] text-white selection:bg-purple-600/30 overflow-x-hidden font-['Plus_Jakarta_Sans']">
@@ -195,10 +216,10 @@ const App: React.FC = () => {
               </div>
 
               {/* Efeito de Vidro (Reflexos) */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.12] via-transparent to-black/40 z-20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
 
               {/* Overlay de Gradiente Suave para Profundidade */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-15 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
 
               {/* A IMAGEM ATUALIZADA */}
               <div className="w-full h-full p-3 md:p-6 flex items-center justify-center relative z-10">
@@ -266,10 +287,11 @@ const App: React.FC = () => {
 
           <div className="flex flex-col lg:flex-row gap-10 items-stretch h-[700px]">
             {/* Navegação Vertical */}
-            <div className="lg:w-[400px] flex flex-col gap-4">
+            <div ref={featuresRef} className="lg:w-[400px] flex flex-col gap-4">
               {showcaseFeatures.map((f, i) => (
                 <div
                   key={f.id}
+                  data-index={i}
                   onMouseEnter={() => setActiveFeature(i)}
                   className={`p-10 rounded-[48px] cursor-pointer transition-all duration-700 relative flex items-center gap-8 ${activeFeature === i ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-2xl scale-[1.03]' : 'bg-transparent border border-white/5 opacity-40 grayscale hover:opacity-60'
                     }`}

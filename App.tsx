@@ -136,6 +136,16 @@ const App: React.FC = () => {
   return (
     <div ref={containerRef} className="relative w-full bg-[#030303] text-white selection:bg-purple-600/30 overflow-x-hidden font-['Plus_Jakarta_Sans']">
 
+      {/* Full Page Aurora Background - Fixed */}
+      <div className="fixed inset-0 z-0 opacity-10 pointer-events-none">
+        <Aurora
+          colorStops={['#9232ea', '#a855f7', '#9232ea']}
+          amplitude={1.5}
+          blend={0.7}
+          speed={0.3}
+        />
+      </div>
+
       {/* Background Orbs */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[10%] left-[-10%] w-[60vw] h-[60vw] bg-purple-900/10 blur-[180px] rounded-full" />
@@ -164,12 +174,14 @@ const App: React.FC = () => {
               SISTEMA DE ALTA PERFORMANCE
             </div>
             <h1 className="text-[11vw] md:text-[9vw] font-black leading-[0.8] tracking-tighter mb-16 uppercase italic">
-              Venda em <br />
-              <span className="text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.25)" }}>Tempo Real.</span>
+              VENDA + <br />
+              <span className="text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.25)" }}>E ESCALE</span> <br />
+              SEM LIMITES!
             </h1>
             <div className="flex flex-col md:flex-row items-center justify-center gap-14 mt-6">
               <p className="text-gray-500 max-w-sm text-[13px] font-bold uppercase tracking-tight leading-loose text-left border-l-4 border-purple-600 pl-10">
-                A única plataforma brasileira desenhada para tráfego pesado e escala agressiva. Zero atrito, 100% conversão.
+                Um sistema que não trava seu crescimento.<br />
+                Seu checkout. Suas regras. Seu dinheiro.
               </p>
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
@@ -199,16 +211,40 @@ const App: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-8 bg-white/[0.02] border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500"
+                className="p-8 bg-white/[0.02] border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
               >
-                <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                  {stat.icon}
-                </div>
-                <div className="text-5xl font-black mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
-                  {stat.value}
-                </div>
-                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
-                  {stat.label}
+                {/* Strong Glow Effect - Bottom Left */}
+                <div
+                  className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                  style={{
+                    background: i === 0
+                      ? 'radial-gradient(circle, rgba(146, 50, 234, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
+                      : i === 1
+                        ? 'radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.4) 40%, transparent 70%)'
+                        : i === 2
+                          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.8) 0%, rgba(146, 50, 234, 0.4) 40%, transparent 70%)'
+                          : 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
+                  }}
+                />
+
+                {/* Subtle top-right accent */}
+                <div
+                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-20"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 60%)'
+                  }}
+                />
+
+                <div className="relative z-10">
+                  <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
+                    {stat.icon}
+                  </div>
+                  <div className="text-5xl font-black mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
+                    {stat.label}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -342,6 +378,120 @@ const App: React.FC = () => {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* INFRASTRUCTURE SECTION - BACKGROUND TEXT EFFECT */}
+      <section className="py-40 px-6 relative z-10 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          {/* Large Background Text */}
+          <div className="relative">
+            <div className="absolute top-0 left-0 text-[15vw] font-black uppercase tracking-tighter opacity-5 pointer-events-none whitespace-nowrap overflow-hidden">
+              INFRAESTRUTURA
+            </div>
+
+            {/* Main Title */}
+            <div className="relative z-10 mb-20">
+              <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                A engenharia por <br />
+                <span className="text-purple-500">trás do sucesso.</span>
+              </h2>
+            </div>
+          </div>
+
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+            {/* Card 1 - Núcleo Reativo (Large) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="md:col-span-2 p-10 bg-gradient-to-br from-purple-950/20 to-transparent border border-purple-500/20 rounded-[32px] relative overflow-hidden group hover:border-purple-500/40 transition-all duration-500"
+            >
+              {/* Icon */}
+              <div className="w-12 h-12 bg-purple-600/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600/30 transition-all">
+                <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+
+              <h3 className="text-2xl font-black mb-4">Núcleo Reativo</h3>
+              <p className="text-gray-400 text-sm mb-8 max-w-2xl">
+                Processamos dados em milissegundos usando arquitetura serverless de última geração. Nada de espera, apenas resultados.
+              </p>
+
+              {/* Progress Bar */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-black uppercase tracking-wider text-purple-400">LOAD SPEED</span>
+                  <span className="text-sm font-black text-white">120ms</span>
+                </div>
+                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "95%" }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3, duration: 1.5, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full relative"
+                  >
+                    <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 2 - Omni-Channel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="p-8 bg-white/[0.02] border border-white/10 rounded-[24px] hover:bg-white/[0.04] hover:border-purple-500/20 transition-all duration-500"
+            >
+              <h4 className="text-sm font-black uppercase mb-3 tracking-wider">OMNI-CHANNEL</h4>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                Integração nativa com 40+ gateways e CRM de alta performance.
+              </p>
+            </motion.div>
+
+            {/* Card 3 - AI Security */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="p-8 bg-white/[0.02] border border-white/10 rounded-[24px] hover:bg-white/[0.04] hover:border-purple-500/20 transition-all duration-500"
+            >
+              <h4 className="text-sm font-black uppercase mb-3 tracking-wider">AI SECURITY</h4>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                Proteção contra fraudes em tempo real usando modelos preditivos.
+              </p>
+            </motion.div>
+
+            {/* Card 4 - One-Click Buy (Large with Icon) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="md:col-span-2 p-10 bg-gradient-to-br from-purple-900/10 to-transparent border border-purple-500/20 rounded-[32px] relative overflow-hidden group hover:border-purple-500/40 transition-all duration-500 flex items-center justify-between"
+            >
+              <div>
+                <h3 className="text-xl font-black mb-3">One-Click Buy</h3>
+                <p className="text-gray-400 text-sm max-w-md">
+                  Armazenamento seguro de tokens para compras instantâneas em toda a rede.
+                </p>
+              </div>
+
+              {/* Icon Circle */}
+              <div className="hidden md:flex w-24 h-24 bg-purple-600/10 rounded-full items-center justify-center group-hover:bg-purple-600/20 transition-all">
+                <svg className="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

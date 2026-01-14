@@ -182,7 +182,7 @@ const App: React.FC = () => {
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32">
         <div className="text-center z-10 max-w-7xl">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-[0.6em] mb-12">
+            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] mb-12 max-w-xs md:max-w-none">
               <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#a855f7]"></span>
               Um sistema que não trava seu crescimento.
             </div>
@@ -193,7 +193,7 @@ const App: React.FC = () => {
                 isBackground
                 colors={["#a855f7", "#ffffff", "#22c55e"]}
                 animationSpeed={0.1}
-                className="inline-block text-white px-2 mb-8"
+                className="inline-block text-white px-2 mb-2 md:mb-8"
               >
                 SEM LIMITES!
               </GradientText>
@@ -201,15 +201,15 @@ const App: React.FC = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-14 mt-6">
               <p className="text-gray-500 text-[13px] font-bold uppercase tracking-tight leading-loose text-left border-l-4 border-purple-600 pl-10 max-w-sm flex flex-col md:flex-row md:flex-wrap gap-1">
                 <span className="flex items-center">
-                  <svg className="inline-block w-3 h-3 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  <svg className="inline-block w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                   Seu checkout.
                 </span>
                 <span className="flex items-center">
-                  <svg className="inline-block w-3 h-3 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                  <svg className="inline-block w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                   Suas regras.
                 </span>
                 <span className="flex items-center">
-                  <svg className="inline-block w-3 h-3 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <svg className="inline-block w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   Seu dinheiro.
                 </span>
               </p>
@@ -222,7 +222,7 @@ const App: React.FC = () => {
                 </motion.button>
 
                 {/* Social Proof */}
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col items-center gap-3">
                   <div className="flex -space-x-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-sm">
                       A
@@ -347,8 +347,8 @@ const App: React.FC = () => {
                   src="/assets/dashboard.png"
                   alt="Super Checkout .app Dashboard"
                   className="w-full h-full object-contain"
-                  initial={{ filter: "grayscale(10%)" }}
-                  whileHover={{ filter: "grayscale(0%)", transition: { duration: 0.6 } }}
+                  initial={{ filter: "grayscale(0%)" }}
+                  whileHover={{ filter: "brightness(1.1)", transition: { duration: 0.6 } }}
                 />
               </div>
 
@@ -368,13 +368,13 @@ const App: React.FC = () => {
           {/* Elementos Flutuantes Interativos (Widgets) */}
           <motion.div
             style={{ y: yParallax }}
-            className="absolute -right-6 top-1/4 p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] hidden lg:block z-40"
+            className="absolute -right-2 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[16px] md:rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] block z-40 scale-75 md:scale-100"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
               <div>
-                <p className="text-[7px] font-black text-gray-500 uppercase tracking-widest">Status da Engine</p>
-                <p className="text-sm font-bold text-white tracking-tight italic uppercase">Alta Performance</p>
+                <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Status da Engine</p>
+                <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Alta Performance</p>
               </div>
             </div>
           </motion.div>
@@ -382,10 +382,10 @@ const App: React.FC = () => {
           <motion.div
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -left-6 bottom-[10%] p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl hidden lg:block z-40"
+            className="absolute -left-2 md:-left-6 bottom-[10%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[16px] md:rounded-[20px] shadow-2xl block z-40 scale-75 md:scale-100"
           >
-            <p className="text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Conversão Ativa</p>
-            <p className="text-lg font-black text-white italic">+94.0%</p>
+            <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Conversão Ativa</p>
+            <p className="text-base md:text-lg font-black text-white italic">+94.0%</p>
           </motion.div>
         </div>
       </section>

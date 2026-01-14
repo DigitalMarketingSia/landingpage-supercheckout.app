@@ -184,31 +184,61 @@ const App: React.FC = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-[0.6em] mb-12">
               <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#a855f7]"></span>
-              SISTEMA DE ALTA PERFORMANCE
+              Um sistema que não trava seu crescimento.
             </div>
             <h1 className="text-[11vw] md:text-[9vw] font-black leading-[0.8] tracking-tighter mb-16 uppercase italic">
-              VENDA + <br />
-              <span className="text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.25)" }}>E ESCALE</span> <br />
+              VENDA MAIS <br />
+              <span className="text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.25)" }}>ESCALE</span> <br />
               <GradientText
                 isBackground
                 colors={["#a855f7", "#ffffff", "#22c55e"]}
                 animationSpeed={0.1}
-                className="inline-block text-white px-2"
+                className="inline-block text-white px-2 mb-8"
               >
                 SEM LIMITES!
               </GradientText>
             </h1>
             <div className="flex flex-col md:flex-row items-center justify-center gap-14 mt-6">
-              <p className="text-gray-500 max-w-sm text-[13px] font-bold uppercase tracking-tight leading-loose text-left border-l-4 border-purple-600 pl-10">
-                Um sistema que não trava seu crescimento.<br />
-                Seu checkout. Suas regras. Seu dinheiro.
+              <p className="text-gray-500 text-[13px] font-bold uppercase tracking-tight leading-loose text-left border-l-4 border-purple-600 pl-10 max-w-sm flex flex-col md:flex-row md:flex-wrap gap-1">
+                <span className="flex items-center">
+                  <svg className="inline-block w-3 h-3 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  Seu checkout.
+                </span>
+                <span className="flex items-center">
+                  <svg className="inline-block w-3 h-3 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                  Suas regras.
+                </span>
+                <span className="flex items-center">
+                  <svg className="inline-block w-3 h-3 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Seu dinheiro.
+                </span>
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
-                className="px-20 py-10 bg-purple-600 text-white rounded-[50px] font-black text-2xl uppercase italic tracking-tighter shadow-2xl transition-all"
-              >
-                Ativar Agora →
-              </motion.button>
+              <div className="flex flex-col items-center gap-6">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
+                  className="px-20 py-10 bg-purple-600 text-white rounded-[50px] font-black text-2xl uppercase italic tracking-tighter shadow-2xl transition-all"
+                >
+                  Ativar Agora →
+                </motion.button>
+
+                {/* Social Proof */}
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-sm">
+                      A
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-sm">
+                      B
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-sm">
+                      C
+                    </div>
+                  </div>
+                  <p className="text-gray-500 text-xs font-bold uppercase tracking-wide mb-8">
+                    Junte-se à seleta comunidade
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -523,7 +553,7 @@ const App: React.FC = () => {
 
       {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
       <section id="features" className="relative z-10">
-        <div className="h-screen sticky top-0 flex items-center justify-center py-20 px-6">
+        <div className="py-32 lg:h-screen lg:sticky lg:top-0 flex items-center justify-center px-6">
           <div className="max-w-7xl mx-auto w-full">
             <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
               <div>
@@ -537,10 +567,61 @@ const App: React.FC = () => {
               </p>
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-10 items-center h-[600px]">
+            <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
 
-              {/* Vertical Card Carousel */}
-              <div className="lg:w-[400px] relative h-full flex flex-col justify-center">
+              {/* MOBILE: Simple Stacked Cards */}
+              <div className="lg:hidden w-full space-y-4">
+                {showcaseFeatures.map((f, i) => (
+                  <motion.div
+                    key={f.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.6 }}
+                    onClick={() => setActiveFeature(i)}
+                    className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
+                      ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
+                      : 'bg-[#0a0a0f]/50 border border-white/10'
+                      }`}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_15px_#a855f7]' : 'bg-white/5 text-gray-500'
+                        }`}>
+                        {f.icon}
+                      </div>
+                      <h3 className="text-base font-black italic uppercase tracking-wide">{f.title}</h3>
+                    </div>
+
+                    {/* Expandable Content */}
+                    <AnimatePresence>
+                      {activeFeature === i && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-4 border-t border-white/10">
+                            <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
+                            <div className="space-y-3">
+                              {f.highlights.map(h => (
+                                <div key={h} className="flex items-center gap-3">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
+                                  <span className="text-xs font-bold uppercase tracking-wider text-white/70">{h}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* DESKTOP: Vertical Card Carousel */}
+              <div className="hidden lg:flex lg:w-[400px] relative h-full flex-col justify-center">
                 <div className="relative h-[500px] flex flex-col items-center justify-center">
                   {showcaseFeatures.map((f, i) => {
                     const offset = i - activeFeature;
@@ -592,8 +673,8 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* Content Display */}
-              <div className="flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex flex-col lg:flex-row shadow-inner h-full">
+              {/* DESKTOP: Content Display */}
+              <div className="hidden lg:flex flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex-col lg:flex-row shadow-inner h-full">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
 
                 <div className="flex-1 relative min-h-[400px]">
@@ -624,8 +705,8 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Spacer for scroll-jacking - creates space for scrolling through all cards */}
-        <div style={{ height: `${showcaseFeatures.length * 100}vh` }} />
+        {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
+        <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 15}vh` }} />
       </section>
 
       {/* SECTION 2: CHECKOUT QUE VENDE */}

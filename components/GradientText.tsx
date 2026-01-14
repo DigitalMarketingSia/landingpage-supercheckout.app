@@ -1,109 +1,68 @@
-
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useMotionValue, useAnimationFrame, useTransform } from 'framer-motion';
 
 interface GradientTextProps {
   children: React.ReactNode;
-  className?: string;
   colors?: string[];
-  animationSpeed?: number;
-  showBorder?: boolean;
-  direction?: 'horizontal' | 'vertical' | 'diagonal';
-  pauseOnHover?: boolean;
-  yoyo?: boolean;
+  animationSpeed?: number; // Quanto MENOR, mais RÁPIDO (é um divisor). Ex: 3 = Rápido, 8 = Lento.
+  className?: string; // Permitir classes extras
+  isBackground?: boolean; // Se true, o gradiente é um background normal, se false (default), é aplicado ao texto
 }
 
-// Fixed: Using React.FC to properly handle children prop typing and resolve JSX compilation issues in App.tsx
 const GradientText: React.FC<GradientTextProps> = ({
   children,
-  className = '',
-  colors = ['#5227FF', '#FF9FFC', '#B19EEF'],
+  colors = ["#a855f7", "#ffffff", "#22c55e"],
   animationSpeed = 8,
-  showBorder = false,
-  direction = 'horizontal',
-  pauseOnHover = false,
-  yoyo = true
+  className = "",
+  isBackground = false
 }) => {
-  const [isPaused, setIsPaused] = useState(false);
   const progress = useMotionValue(0);
-  const elapsedRef = useRef(0);
   const lastTimeRef = useRef<number | null>(null);
 
-  const animationDuration = animationSpeed * 1000;
-
-  useAnimationFrame(time => {
-    if (isPaused) {
-      lastTimeRef.current = null;
-      return;
-    }
-
+  // useAnimationFrame cria um loop de 60fps+ para mover o gradiente
+  useAnimationFrame((time) => {
     if (lastTimeRef.current === null) {
       lastTimeRef.current = time;
       return;
     }
-
     const deltaTime = time - lastTimeRef.current;
     lastTimeRef.current = time;
-    elapsedRef.current += deltaTime;
 
-    if (yoyo) {
-      const fullCycle = animationDuration * 2;
-      const cycleTime = elapsedRef.current % fullCycle;
-
-      if (cycleTime < animationDuration) {
-        progress.set((cycleTime / animationDuration) * 100);
-      } else {
-        progress.set(100 - ((cycleTime - animationDuration) / animationDuration) * 100);
-      }
-    } else {
-      progress.set((elapsedRef.current / animationDuration) * 100);
-    }
+    // Atualiza o valor do progresso baseado no tempo decorrido
+    // Lógica invertida para que "animationSpeed" funcione como velocidade (maior = mais rápido)
+    // Se animationSpeed for divisor, 3 é rápido e 8 é lento.
+    // Vamos manter a lógica original do usuário onde 3 era rápido.
+    // delta / (speed * 100) -> 16ms / 300 = 0.05 step per frame.
+    // delta / (speed * 100) -> 16ms / 800 = 0.02 step per frame.
+    const nextValue = (progress.get() + (deltaTime / (animationSpeed * 100))) % 100;
+    progress.set(nextValue);
   });
 
-  useEffect(() => {
-    elapsedRef.current = 0;
-    progress.set(0);
-  }, [animationSpeed, yoyo, progress]);
+  // Mapeia o progresso (0-100) para a posição do background em CSS
+  const backgroundPosition = useTransform(progress, p => `${p}% 50%`);
 
-  const backgroundPosition = useTransform(progress, p => {
-    if (direction === 'horizontal') {
-      return `${p}% 50%`;
-    } else if (direction === 'vertical') {
-      return `50% ${p}%`;
-    } else {
-      return `${p}% 50%`;
-    }
-  });
-
-  const handleMouseEnter = useCallback(() => {
-    if (pauseOnHover) setIsPaused(true);
-  }, [pauseOnHover]);
-
-  const handleMouseLeave = useCallback(() => {
-    if (pauseOnHover) setIsPaused(false);
-  }, [pauseOnHover]);
-
-  const gradientAngle =
-    direction === 'horizontal' ? 'to right' : direction === 'vertical' ? 'to bottom' : 'to bottom right';
   const gradientColors = [...colors, colors[0]].join(', ');
 
-  const gradientStyle: React.CSSProperties = {
-    backgroundImage: `linear-gradient(${gradientAngle}, ${gradientColors})`,
-    backgroundSize: direction === 'horizontal' ? '300% 100%' : direction === 'vertical' ? '100% 300%' : '300% 300%',
-    backgroundRepeat: 'repeat'
+  const textClipStyles = {
+    WebkitBackgroundClip: 'text', // Faz o fundo aparecer apenas no texto
+    WebkitTextFillColor: 'transparent', // Torna o corpo da letra invisível
+    backgroundClip: 'text',
+    color: 'transparent', // Fallback
   };
 
   return (
-    <motion.div
-      className={`animated-gradient-text ${showBorder ? 'with-border' : ''} ${className}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <motion.span
+      className={className}
+      style={{
+        backgroundImage: `linear-gradient(to right, ${gradientColors})`,
+        backgroundSize: '300% 100%',
+        backgroundPosition, // O Framer Motion aplica isso diretamente
+        display: 'inline-block',
+        ...(isBackground ? {} : textClipStyles),
+      }}
     >
-      {showBorder && <motion.div className="gradient-overlay absolute inset-0 pointer-events-none" style={{ ...gradientStyle, backgroundPosition }} />}
-      <motion.div className="text-content" style={{ ...gradientStyle, backgroundPosition }}>
-        {children}
-      </motion.div>
-    </motion.div>
+      {children}
+    </motion.span>
   );
 };
 

@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import BlurText from './components/BlurText';
 import Aurora from './components/Aurora';
+import GradientText from './components/GradientText';
 
 // Ícones Minimalistas Premium (SVG Single-Tone)
 const Icons = {
@@ -176,7 +177,14 @@ const App: React.FC = () => {
             <h1 className="text-[11vw] md:text-[9vw] font-black leading-[0.8] tracking-tighter mb-16 uppercase italic">
               VENDA + <br />
               <span className="text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.25)" }}>E ESCALE</span> <br />
-              SEM LIMITES!
+              <GradientText
+                isBackground
+                colors={["#a855f7", "#ffffff", "#22c55e"]}
+                animationSpeed={0.1}
+                className="inline-block text-white px-2"
+              >
+                SEM LIMITES!
+              </GradientText>
             </h1>
             <div className="flex flex-col md:flex-row items-center justify-center gap-14 mt-6">
               <p className="text-gray-500 max-w-sm text-[13px] font-bold uppercase tracking-tight leading-loose text-left border-l-4 border-purple-600 pl-10">
@@ -252,88 +260,91 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* FEATURES BENTO GRID */}
-      <section className="py-32 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-              Tudo que você <br /> <span className="text-purple-500">Precisa.</span>
-            </h2>
-            <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto" />
-          </div>
+      {/* DASHBOARD SECTION - SMOOTH & FLUID */}
+      <section className="py-16 px-6 relative z-10 overflow-visible">
+        <div className="max-w-[900px] mx-auto relative group">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px]">
-            {[
-              { title: 'Checkout Otimizado', desc: 'Mobile-first, conversão máxima', span: 'md:col-span-2', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
-              { title: 'Automação Total', desc: 'Webhooks, n8n, APIs', span: '', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg> },
-              { title: 'Pixel Tracking', desc: 'Meta, Google, TikTok', span: '', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> },
-              { title: 'Upsell & Downsell', desc: 'Order bump 1-click', span: 'md:col-span-2', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg> },
-              { title: 'Área de Membros', desc: 'Liberação automática', span: '', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> },
-              { title: 'Segurança LGPD', desc: 'Infraestrutura resiliente', span: 'md:col-span-2 md:row-span-2', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
-              { title: 'Relatórios Real-Time', desc: 'Dashboard completo', span: '', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg> }
-            ].map((feature, i) => (
+          {/* Luz Atmosférica Dinâmica em volta do card */}
+          <motion.div
+            style={{ opacity: glowOpacity }}
+            className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
+          />
+
+          <motion.div
+            style={{
+              scale: dashScale,
+              opacity: dashOpacity,
+              y: dashY
+            }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 100, damping: 30 }}
+            className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
+          >
+            {/* Inner Content */}
+            <div className="w-full h-full relative">
+              {/* Aurora Background Animation */}
+              <div className="absolute inset-0 z-0 opacity-30">
+                <Aurora
+                  color1="#9232ea"
+                  colorStops={['#9232ea', '#a855f7', '#9232ea']}
+                  amplitude={1.2}
+                  blend={0.6}
+                  speed={0.8}
+                />
+              </div>
+
+              {/* Efeito de Vidro (Reflexos) */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
+
+              {/* Overlay de Gradiente Suave para Profundidade */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
+
+              {/* A IMAGEM ATUALIZADA */}
+              <div className="w-full h-full p-3 md:p-6 flex items-center justify-center relative z-10">
+                <motion.img
+                  src="/assets/dashboard.png"
+                  alt="Super Checkout .app Dashboard"
+                  className="w-full h-full object-contain"
+                  initial={{ filter: "grayscale(10%)" }}
+                  whileHover={{ filter: "grayscale(0%)", transition: { duration: 0.6 } }}
+                />
+              </div>
+
+              {/* Linha de Scan Laser Animada */}
               <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.5 }}
-                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className={`${feature.span} p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] flex flex-col justify-between group hover:bg-white/[0.05] transition-all duration-500 cursor-pointer`}
-              >
-                <div className="text-purple-500 mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                  {feature.icon}
-                </div>
-                <div>
-                  <h3 className="text-xl font-black italic uppercase mb-2 tracking-tight">{feature.title}</h3>
-                  <p className="text-sm text-gray-500 font-medium">{feature.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                animate={{ y: ["-100%", "300%"] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
+              />
+            </div>
 
-      {/* INTEGRATION ECOSYSTEM */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-              Ecossistema <br /> <span className="text-purple-500">Completo.</span>
-            </h2>
-            <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto">
-              Integre com as principais ferramentas do mercado sem esforço
-            </p>
-          </div>
+            {/* Borda Neon Refinada */}
+            <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
+            <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { name: 'Stripe', category: 'Pagamento', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg> },
-              { name: 'Meta Pixel', category: 'Marketing', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> },
-              { name: 'Google Ads', category: 'Marketing', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> },
-              { name: 'TikTok', category: 'Marketing', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
-              { name: 'n8n', category: 'Automação', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { name: 'Mailchimp', category: 'E-mail', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> },
-              { name: 'HubSpot', category: 'CRM', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
-              { name: 'Webhooks', category: 'API', icon: <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> }
-            ].map((integration, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.5 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="p-8 bg-white/[0.02] border border-white/10 rounded-[24px] text-center group hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-500 cursor-pointer"
-              >
-                <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                  {integration.icon}
-                </div>
-                <h4 className="text-sm font-black uppercase mb-1">{integration.name}</h4>
-                <p className="text-[10px] text-gray-500 uppercase tracking-widest">{integration.category}</p>
-              </motion.div>
-            ))}
-          </div>
+          {/* Elementos Flutuantes Interativos (Widgets) */}
+          <motion.div
+            style={{ y: yParallax }}
+            className="absolute -right-6 top-1/4 p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] hidden lg:block z-40"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
+              <div>
+                <p className="text-[7px] font-black text-gray-500 uppercase tracking-widest">Status da Engine</p>
+                <p className="text-sm font-bold text-white tracking-tight italic uppercase">Alta Performance</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -left-6 bottom-[10%] p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl hidden lg:block z-40"
+          >
+            <p className="text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Conversão Ativa</p>
+            <p className="text-lg font-black text-white italic">+94.0%</p>
+          </motion.div>
         </div>
       </section>
 
@@ -496,93 +507,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* DASHBOARD SECTION - SMOOTH & FLUID */}
-      <section className="py-16 px-6 relative z-10 overflow-visible">
-        <div className="max-w-[900px] mx-auto relative group">
 
-          {/* Luz Atmosférica Dinâmica em volta do card */}
-          <motion.div
-            style={{ opacity: glowOpacity }}
-            className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
-          />
-
-          <motion.div
-            style={{
-              scale: dashScale,
-              opacity: dashOpacity,
-              y: dashY
-            }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 100, damping: 30 }}
-            className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
-          >
-            {/* Inner Content */}
-            <div className="w-full h-full relative">
-              {/* Aurora Background Animation */}
-              <div className="absolute inset-0 z-0 opacity-30">
-                <Aurora
-                  color1="#9232ea"
-                  colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                  amplitude={1.2}
-                  blend={0.6}
-                  speed={0.8}
-                />
-              </div>
-
-              {/* Efeito de Vidro (Reflexos) */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-              {/* Overlay de Gradiente Suave para Profundidade */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
-
-              {/* A IMAGEM ATUALIZADA */}
-              <div className="w-full h-full p-3 md:p-6 flex items-center justify-center relative z-10">
-                <motion.img
-                  src="/assets/dashboard.png"
-                  alt="Super Checkout .app Dashboard"
-                  className="w-full h-full object-contain"
-                  initial={{ filter: "grayscale(10%)" }}
-                  whileHover={{ filter: "grayscale(0%)", transition: { duration: 0.6 } }}
-                />
-              </div>
-
-              {/* Linha de Scan Laser Animada */}
-              <motion.div
-                animate={{ y: ["-100%", "300%"] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-                className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
-              />
-            </div>
-
-            {/* Borda Neon Refinada */}
-            <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
-            <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-          </motion.div>
-
-          {/* Elementos Flutuantes Interativos (Widgets) */}
-          <motion.div
-            style={{ y: yParallax }}
-            className="absolute -right-6 top-1/4 p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] hidden lg:block z-40"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
-              <div>
-                <p className="text-[7px] font-black text-gray-500 uppercase tracking-widest">Status da Engine</p>
-                <p className="text-sm font-bold text-white tracking-tight italic uppercase">Alta Performance</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -left-6 bottom-[10%] p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl hidden lg:block z-40"
-          >
-            <p className="text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Conversão Ativa</p>
-            <p className="text-lg font-black text-white italic">+94.0%</p>
-          </motion.div>
-        </div>
-      </section>
 
       {/* SECTION: EXPERIENCE SHOWCASE - MODELO NOVO ULTRA MINIMALISTA */}
       <section id="features" className="py-40 px-6 relative z-10">
@@ -650,6 +575,512 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* SECTION 2: CHECKOUT QUE VENDE */}
+      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Checkout que <br /> <span className="text-purple-500">Vende.</span>
+              </h2>
+              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
+                Otimizado para conversão máxima em qualquer dispositivo
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { title: 'Alta Conversão', desc: 'Design otimizado para maximizar vendas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg> },
+              { title: 'Mobile First', desc: 'Experiência perfeita em smartphones', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> },
+              { title: 'Order Bump & Upsell', desc: 'Aumente o ticket médio automaticamente', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+              { title: 'Recuperação de Carrinho', desc: 'Não perca nenhuma venda', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg> }
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
+              >
+                <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
+                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: PAGAMENTOS SEM FRICÇÃO */}
+      <section className="py-32 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Pagamentos sem <br /> <span className="text-purple-500">Fricção.</span>
+              </h2>
+              <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: 'Gateways Integrados', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg> },
+              { title: 'Aprovação Instantânea', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+              { title: 'Pagamento Seguro', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> },
+              { title: 'Pix, Cartão, Boleto', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg> }
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                className="p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-500"
+              >
+                <div className="w-12 h-12 bg-purple-600/20 rounded-2xl flex items-center justify-center mx-auto mb-6 text-purple-500 group-hover:bg-purple-600/30 group-hover:scale-110 transition-all">
+                  {feature.icon}
+                </div>
+                <h3 className="text-sm font-black italic uppercase tracking-wider">{feature.title}</h3>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: PRODUTOS DIGITAIS */}
+      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
+                Venda qualquer <br /> <span className="text-purple-500">Produto Digital.</span>
+              </h2>
+              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
+                Gerencie todos os seus produtos em um único lugar com total flexibilidade
+              </p>
+              <div className="space-y-6">
+                {[
+                  { title: 'Produtos Ilimitados', desc: 'Crie quantos produtos quiser sem restrições' },
+                  { title: 'Multi-Checkouts', desc: 'Checkouts personalizados para cada produto' },
+                  { title: 'Liberação Automática', desc: 'Acesso instantâneo após a compra' },
+                  { title: 'Gestão Centralizada', desc: 'Controle total em um dashboard único' }
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    className="flex items-start gap-4 group"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-purple-600 mt-2 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
+                    <div>
+                      <h4 className="text-lg font-black uppercase tracking-wide mb-1">{item.title}</h4>
+                      <p className="text-sm text-gray-500">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative h-[500px]"
+            >
+              <div className="absolute inset-0 flex items-center justify-center">
+                {[1, 2, 3].map(i => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.2, duration: 0.6 }}
+                    whileHover={{ y: -10, rotate: i % 2 === 0 ? 2 : -2 }}
+                    className="absolute w-64 h-80 bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 rounded-[40px] shadow-2xl backdrop-blur-sm p-8"
+                    style={{
+                      left: `${10 + i * 20}%`,
+                      top: `${10 + i * 10}%`,
+                      zIndex: 10 - i
+                    }}
+                  >
+                    <div className="w-12 h-12 bg-purple-600 rounded-2xl mb-6" />
+                    <div className="space-y-3">
+                      <div className="h-2 w-full bg-white/10 rounded-full" />
+                      <div className="h-2 w-2/3 bg-white/10 rounded-full" />
+                      <div className="h-2 w-1/2 bg-white/10 rounded-full" />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5: ÁREA DE MEMBROS PROFISSIONAL */}
+      <section className="py-32 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
+              </h2>
+              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
+                Uma experiência digna de streaming para seus clientes
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { title: 'Vitrine de Produtos', desc: 'Layout tipo Netflix para seus cursos', span: 'md:col-span-2', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg> },
+              { title: 'Acesso Centralizado', desc: 'Todos os produtos em um só lugar', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> },
+              { title: 'Branding Próprio', desc: 'Sua marca em destaque', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
+              { title: 'Experiência Premium', desc: 'Interface moderna e intuitiva', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> }
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className={`${feature.span || ''} p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500`}
+              >
+                <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
+                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 6: AUTOMAÇÃO - TUDO CONECTADO */}
+      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Tudo <br /> <span className="text-purple-500">Conectado.</span>
+              </h2>
+              <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
+              { title: 'Automações com n8n', desc: 'Workflows poderosos sem código', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+              { title: 'Fluxos Personalizados', desc: 'Crie automações sob medida', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
+              { title: 'Eventos em Tempo Real', desc: 'Notificações instantâneas de vendas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> }
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
+              >
+                <div className="text-purple-500 mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
+                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 7: TRÁFEGO & DADOS */}
+      <section className="py-32 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Dados que <br /> <span className="text-purple-500">Importam.</span>
+              </h2>
+              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
+                Rastreamento completo para otimizar suas campanhas
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: 'Pixel Meta / Google / TikTok', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>, color: '#a855f7', glow: 'from-purple-500/20' },
+              { title: 'Conversão por Checkout', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>, color: '#22c55e', glow: 'from-green-500/20' },
+              { title: 'Rastreamento Completo', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>, color: '#3b82f6', glow: 'from-blue-500/20' },
+              { title: 'Performance Real', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, color: '#f97316', glow: 'from-orange-500/20' }
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-500 overflow-hidden"
+                style={{
+                  borderLeftWidth: '4px',
+                  borderLeftColor: feature.color
+                }}
+              >
+                {/* Glow Effect from Left */}
+                <div className={`absolute inset-y-0 left-0 w-[100px] bg-gradient-to-r ${feature.glow} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+
+                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
+                  <div className="w-12 h-12 bg-purple-600/20 rounded-2xl flex items-center justify-center mb-6 text-purple-500 group-hover:bg-purple-600/30 group-hover:scale-110 transition-all">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xs font-black italic uppercase tracking-wider leading-tight text-white">{feature.title}</h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 8: GESTÃO - CONTROLE TOTAL */}
+      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative h-[400px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.1)_0%,_transparent_70%)]" />
+              <div className="relative z-10 space-y-6">
+                {[1, 2, 3, 4].map(i => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
+                  >
+                    <div className="w-10 h-10 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-500">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    </div>
+                    <div className="flex-1">
+                      <div className="h-2 w-full bg-white/10 rounded-full mb-2" />
+                      <div className="h-2 w-2/3 bg-white/5 rounded-full" />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
+                Controle <br /> <span className="text-purple-500">Total.</span>
+              </h2>
+              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
+                Dashboard completo com todas as métricas que você precisa
+              </p>
+              <div className="space-y-6">
+                {[
+                  'Relatórios em Tempo Real',
+                  'Gestão de Clientes',
+                  'Histórico de Vendas',
+                  'Visão Clara do Negócio'
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    className="flex items-center gap-4 group"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
+                    <span className="text-lg font-black uppercase tracking-wide">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 9: MARCA - SUA MARCA EM PRIMEIRO LUGAR */}
+      <section className="py-32 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Sua Marca em <br /> <span className="text-purple-500">Primeiro Lugar.</span>
+              </h2>
+              <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { title: 'Domínios Personalizados', desc: 'Use seu próprio domínio profissional', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" /></svg> },
+              { title: 'Marca Própria', desc: 'Logo, cores e identidade visual', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
+              { title: 'Experiência White-Label', desc: 'Sem marcas de terceiros', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> },
+              { title: 'Autoridade Visual', desc: 'Fortaleça sua presença no mercado', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> }
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
+              >
+                <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
+                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 10: INFRA & SEGURANÇA - ENHANCED */}
+      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Pronto para <br /> <span className="text-purple-500">Escalar.</span>
+              </h2>
+              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
+                Infraestrutura de nível empresarial para seu negócio
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { title: 'Infraestrutura Cloud', desc: 'Servidores de alta performance globais', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg> },
+              { title: 'Alta Performance', desc: 'Velocidade máxima em qualquer escala', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+              { title: 'Segurança e LGPD', desc: 'Proteção total dos dados dos clientes', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
+              { title: 'Estabilidade Garantida', desc: '99.9% de uptime SLA', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> }
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
+              >
+                <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
+                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 11: CTA INTERMEDIÁRIO - COMECE AGORA */}
+      <section className="py-40 px-6 relative z-10 overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-7xl md:text-[8vw] font-black leading-none tracking-tighter mb-12 uppercase italic">
+              Comece <br /> <span className="text-purple-500">Agora.</span>
+            </h2>
+            <p className="text-gray-400 text-lg font-medium mb-16 max-w-2xl mx-auto">
+              Cadastro gratuito • Sem cartão • Ativação instantânea
+            </p>
+            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
+                className="px-16 py-8 bg-purple-600 text-white rounded-full font-black text-xl uppercase italic tracking-tighter shadow-2xl transition-all"
+              >
+                Criar Conta Grátis →
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="px-16 py-8 bg-transparent border-2 border-white/20 text-white rounded-full font-black text-xl uppercase italic tracking-tighter transition-all hover:border-purple-500/50"
+              >
+                Ver Demo
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />
       </section>
 
       {/* PLANOS - HIGH CONTRAST */}

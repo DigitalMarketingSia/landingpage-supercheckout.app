@@ -114,28 +114,40 @@ const App: React.FC = () => {
     { id: 'products', icon: <Icons.Products />, title: "Escala Infinita", desc: "Infraestrutura resiliente pronta para suportar milhares de vendas simultâneas.", highlights: ["Sem Taxas Ocultas", "Dashboard Realtime", "Suporte 24h"] }
   ];
 
-  // Auto-scroll feature activation
+  // Scroll-based card navigation for vertical carousel
   React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0');
-            setActiveFeature(index);
-          }
-        });
-      },
-      { threshold: 0.6, rootMargin: '-20% 0px -20% 0px' }
-    );
+    const handleScroll = () => {
+      const section = document.getElementById('features');
+      if (!section) return;
 
-    const cards = featuresRef.current?.querySelectorAll('[data-index]');
-    cards?.forEach((card) => observer.observe(card));
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = section.offsetHeight;
+      const viewportHeight = window.innerHeight;
 
-    return () => observer.disconnect();
-  }, []);
+      // Check if section is in view
+      if (rect.top <= 0 && rect.bottom >= viewportHeight) {
+        // Calculate progress through the section (0 to 1)
+        const scrollProgress = Math.abs(rect.top) / (sectionHeight - viewportHeight);
+
+        // Map progress to card index
+        const totalCards = showcaseFeatures.length;
+        const cardIndex = Math.min(
+          Math.floor(scrollProgress * totalCards),
+          totalCards - 1
+        );
+
+        setActiveFeature(Math.max(0, cardIndex));
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [showcaseFeatures.length]);
 
   return (
-    <div ref={containerRef} className="relative w-full bg-[#030303] text-white selection:bg-purple-600/30 overflow-x-hidden font-['Plus_Jakarta_Sans']">
+    <div ref={containerRef} className="relative w-full bg-[#030303] text-white selection:bg-purple-600/30 overflow-x-hidden font-['Plus_Jakarta_Sans'] px-6 md:px-12 lg:px-20">
 
       {/* Full Page Aurora Background - Fixed */}
       <div className="fixed inset-0 z-0 opacity-10 pointer-events-none">
@@ -509,72 +521,111 @@ const App: React.FC = () => {
 
 
 
-      {/* SECTION: EXPERIENCE SHOWCASE - MODELO NOVO ULTRA MINIMALISTA */}
-      <section id="features" className="py-40 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-32 flex flex-col md:flex-row justify-between items-end gap-10">
-            <div>
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
-              </h2>
-              <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
-            </div>
-            <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
-              Design minimalista. <br />Engenharia máxima.
-            </p>
-          </div>
-
-          <div className="flex flex-col lg:flex-row gap-10 items-stretch h-[700px]">
-            {/* Navegação Vertical */}
-            <div ref={featuresRef} className="lg:w-[400px] flex flex-col gap-4">
-              {showcaseFeatures.map((f, i) => (
-                <div
-                  key={f.id}
-                  data-index={i}
-                  onMouseEnter={() => setActiveFeature(i)}
-                  className={`p-10 rounded-[48px] cursor-pointer transition-all duration-700 relative flex items-center gap-8 ${activeFeature === i ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-2xl scale-[1.03]' : 'bg-transparent border border-white/5 opacity-40 grayscale hover:opacity-60'
-                    }`}
-                >
-                  <div className={`w-16 h-16 rounded-3xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_30px_#a855f7]' : 'bg-white/5 text-gray-500'}`}>
-                    {f.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-black italic uppercase tracking-[0.2em]">{f.title}</h3>
-                    {activeFeature === i && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-3" />}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Stage de Visualização */}
-            <div className="flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex flex-col lg:flex-row shadow-inner">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
-
-              <div className="flex-1 relative min-h-[400px]">
-                <AnimatePresence mode="wait">
-                  <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
-                </AnimatePresence>
+      {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
+      <section id="features" className="relative z-10">
+        <div className="h-screen sticky top-0 flex items-center justify-center py-20 px-6">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
+              <div>
+                <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                  Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
+                </h2>
+                <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
               </div>
+              <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
+                Design minimalista. <br />Engenharia máxima.
+              </p>
+            </div>
 
-              <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
-                <AnimatePresence mode="wait">
-                  <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
-                    <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
-                    <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
-                    <div className="space-y-5">
-                      {showcaseFeatures[activeFeature].highlights.map(h => (
-                        <div key={h} className="flex items-center gap-4 group">
-                          <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
+            <div className="flex flex-col lg:flex-row gap-10 items-center h-[600px]">
+
+              {/* Vertical Card Carousel */}
+              <div className="lg:w-[400px] relative h-full flex flex-col justify-center">
+                <div className="relative h-[500px] flex flex-col items-center justify-center">
+                  {showcaseFeatures.map((f, i) => {
+                    const offset = i - activeFeature;
+                    const isActive = i === activeFeature;
+                    const isPrev = offset === -1;
+                    const isNext = offset === 1;
+                    const isVisible = Math.abs(offset) <= 1;
+
+                    return (
+                      <motion.div
+                        key={f.id}
+                        animate={{
+                          y: offset * 140,
+                          scale: isActive ? 1 : 0.85,
+                          opacity: isActive ? 1 : isPrev || isNext ? 0.3 : 0,
+                          filter: isActive ? 'blur(0px)' : 'blur(2px)'
+                        }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className={`absolute w-full p-8 rounded-[48px] cursor-pointer flex items-center gap-6 ${isActive
+                          ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_30px_#a855f7] z-20'
+                          : 'bg-[#0a0a0f]/50 border border-white/5 z-10'
+                          }`}
+                        style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
+                        onClick={() => setActiveFeature(i)}
+                      >
+                        <div className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${isActive ? 'bg-purple-600 text-white shadow-[0_0_20px_#a855f7]' : 'bg-white/5 text-gray-500'
+                          }`}>
+                          {f.icon}
                         </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
+                        <div className="flex-1">
+                          <h3 className="text-sm font-black italic uppercase tracking-[0.15em]">{f.title}</h3>
+                          {isActive && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-2" />}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                {/* Scroll Indicators */}
+                <div className="flex justify-center gap-2 mt-8">
+                  {showcaseFeatures.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveFeature(i)}
+                      className={`w-2 h-2 rounded-full transition-all ${i === activeFeature ? 'bg-purple-500 w-8' : 'bg-white/20'
+                        }`}
+                    />
+                  ))}
+                </div>
               </div>
+
+              {/* Content Display */}
+              <div className="flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex flex-col lg:flex-row shadow-inner h-full">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
+
+                <div className="flex-1 relative min-h-[400px]">
+                  <AnimatePresence mode="wait">
+                    <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
+                  </AnimatePresence>
+                </div>
+
+                <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
+                  <AnimatePresence mode="wait">
+                    <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
+                      <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
+                      <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
+                      <div className="space-y-5">
+                        {showcaseFeatures[activeFeature].highlights.map(h => (
+                          <div key={h} className="flex items-center gap-4 group">
+                            <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
+
+        {/* Spacer for scroll-jacking - creates space for scrolling through all cards */}
+        <div style={{ height: `${showcaseFeatures.length * 100}vh` }} />
       </section>
 
       {/* SECTION 2: CHECKOUT QUE VENDE */}
@@ -596,29 +647,152 @@ const App: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              { title: 'Alta Conversão', desc: 'Design otimizado para maximizar vendas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg> },
-              { title: 'Mobile First', desc: 'Experiência perfeita em smartphones', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> },
-              { title: 'Order Bump & Upsell', desc: 'Aumente o ticket médio automaticamente', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
-              { title: 'Recuperação de Carrinho', desc: 'Não perca nenhuma venda', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg> }
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
-              >
-                <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
-                  {feature.icon}
-                </div>
-                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
-                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
+          {/* Grid Layout: Showcase Card + Feature Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+            {/* Virtual Checkout Visualization */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group"
+            >
+              {/* Radial Gradient Background */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.1)_0%,_transparent_70%)]" />
+
+              {/* Virtual Checkout Elements */}
+              <div className="relative z-10 space-y-6">
+
+                {/* Product Header with Image Placeholder */}
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
+                  className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
+                >
+                  <div className="w-16 h-16 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                    <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <div className="h-3 w-3/4 bg-white/10 rounded-full mb-2" />
+                    <div className="h-2 w-1/2 bg-white/5 rounded-full" />
+                  </div>
+                </motion.div>
+
+                {/* Form Fields (Email & Name) */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="space-y-3"
+                >
+                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                    <div className="h-2 w-1/4 bg-white/10 rounded-full mb-3" />
+                    <div className="h-3 w-full bg-white/5 rounded-full" />
+                  </div>
+                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                    <div className="h-2 w-1/3 bg-white/10 rounded-full mb-3" />
+                    <div className="h-3 w-full bg-white/5 rounded-full" />
+                  </div>
+                </motion.div>
+
+                {/* Payment Methods (Pix & Card) */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="flex gap-3"
+                >
+                  <div className="flex-1 p-4 bg-purple-600/10 border border-purple-500/20 rounded-2xl flex items-center justify-center gap-2">
+                    <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="h-2 w-12 bg-purple-400/30 rounded-full" />
+                  </div>
+                  <div className="flex-1 p-4 bg-white/[0.02] border border-white/5 rounded-2xl flex items-center justify-center gap-2">
+                    <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    <div className="h-2 w-12 bg-white/10 rounded-full" />
+                  </div>
+                </motion.div>
+
+                {/* Order Bump */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="p-4 bg-green-600/5 border border-green-500/20 rounded-2xl"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded bg-green-500/20 flex items-center justify-center mt-1">
+                      <div className="w-2 h-2 rounded-sm bg-green-500" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <div className="h-2 w-2/3 bg-green-400/20 rounded-full" />
+                      <div className="h-2 w-full bg-white/5 rounded-full" />
+                      <div className="h-2 w-4/5 bg-white/5 rounded-full" />
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Payment Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                  className="pt-4"
+                >
+                  <div className="w-full p-5 bg-gradient-to-r from-purple-600 to-purple-500 rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-shadow">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <div className="h-3 w-32 bg-white/90 rounded-full" />
+                  </div>
+                </motion.div>
+
+              </div>
+            </motion.div>
+
+            {/* Feature Cards */}
+            <div className="grid grid-cols-1 gap-6">
+              {[
+                { title: 'Alta Conversão', desc: 'Design otimizado para maximizar vendas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg> },
+                { title: 'Mobile First', desc: 'Experiência perfeita em smartphones', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> },
+                { title: 'Order Bump & Upsell', desc: 'Aumente o ticket médio automaticamente', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+                { title: 'Recuperação de Carrinho', desc: 'Não perca nenhuma venda', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg> }
+              ].map((feature, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  className="relative p-8 bg-[#0a0a0f] border-2 border-purple-500/20 rounded-[32px] group hover:border-purple-500/40 hover:scale-[1.02] hover:shadow-[0_0_15px_#a855f7] transition-all duration-500 shadow-2xl overflow-hidden"
+                >
+                  {/* Gradient Fill - Always Active */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-purple-900/10 group-hover:from-purple-600/25 group-hover:to-purple-900/15 transition-all duration-700 pointer-events-none" />
+
+                  {/* Content */}
+                  <div className="relative z-10">
+                    <div className="text-purple-500 mb-6 group-hover:scale-110 group-hover:text-purple-400 transition-all duration-500">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
+                    <p className="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors">{feature.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
@@ -763,29 +937,145 @@ const App: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              { title: 'Vitrine de Produtos', desc: 'Layout tipo Netflix para seus cursos', span: 'md:col-span-2', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg> },
-              { title: 'Acesso Centralizado', desc: 'Todos os produtos em um só lugar', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> },
-              { title: 'Branding Próprio', desc: 'Sua marca em destaque', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
-              { title: 'Experiência Premium', desc: 'Interface moderna e intuitiva', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> }
-            ].map((feature, i) => (
+          {/* Grid Layout: Card + Text */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            {/* Premium Showcase Card with Auto-Scroll */}
+            <div className="relative group">
+
+              {/* Atmospheric Glow */}
               <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className={`${feature.span || ''} p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500`}
+                style={{ opacity: glowOpacity }}
+                className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
+              />
+
+              <motion.div
+                style={{
+                  scale: dashScale,
+                  opacity: dashOpacity,
+                  y: dashY
+                }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 100, damping: 30 }}
+                className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
               >
-                <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
-                  {feature.icon}
+                {/* Inner Content Container */}
+                <div className="w-full h-full relative">
+                  {/* Aurora Background Animation */}
+                  <div className="absolute inset-0 z-0 opacity-30">
+                    <Aurora
+                      color1="#9232ea"
+                      colorStops={['#9232ea', '#a855f7', '#9232ea']}
+                      amplitude={1.2}
+                      blend={0.6}
+                      speed={0.8}
+                    />
+                  </div>
+
+                  {/* Glass Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
+
+                  {/* Gradient Overlay for Depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
+
+                  {/* Auto-Scrolling Image Container */}
+                  <div className="w-full h-full flex items-start justify-center relative z-10 overflow-hidden">
+                    <motion.img
+                      src="/members-area-showcase.png"
+                      alt="Área de Membros - Vitrine de Produtos"
+                      className="w-full h-auto min-h-full object-cover object-top opacity-80"
+                      style={{
+                        filter: "grayscale(15%) brightness(0.85) contrast(0.95)"
+                      }}
+                      animate={{
+                        y: [0, -800, 0]
+                      }}
+                      transition={{
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "linear",
+                        repeatDelay: 2
+                      }}
+                      whileHover={{
+                        style: { filter: "grayscale(0%) brightness(1) contrast(1)" },
+                        className: "opacity-100",
+                        transition: { duration: 0.6 }
+                      }}
+                    />
+                  </div>
+
+                  {/* Scan Line Effect */}
+                  <motion.div
+                    animate={{ y: ["-100%", "300%"] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                    className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
+                  />
                 </div>
-                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
-                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
+
+                {/* Neon Borders */}
+                <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
+                <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
               </motion.div>
-            ))}
+
+              {/* Floating Feature Badges */}
+              <motion.div
+                style={{ y: yParallax }}
+                className="absolute -right-4 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] z-40"
+              >
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
+                  <div>
+                    <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Layout Premium</p>
+                    <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Streaming</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                animate={{ y: [0, -20, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -left-4 md:-left-6 bottom-[15%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl z-40"
+              >
+                <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Experiência</p>
+                <p className="text-base md:text-lg font-black text-white italic">Premium</p>
+              </motion.div>
+            </div>
+
+            {/* Text Content with Bullet Points */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h3 className="text-5xl md:text-6xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
+                Experiência <br /> <span className="text-purple-500">Premium.</span>
+              </h3>
+              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
+                Interface moderna tipo streaming para seus produtos digitais
+              </p>
+              <div className="space-y-6">
+                {[
+                  'Vitrine de Produtos',
+                  'Acesso Centralizado',
+                  'Branding Próprio',
+                  'Experiência Premium'
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    className="flex items-center gap-4 group"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
+                    <span className="text-lg font-black uppercase tracking-wide">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>

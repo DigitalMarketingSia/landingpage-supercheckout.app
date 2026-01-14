@@ -338,64 +338,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* STATS COUNTER - REAL-TIME METRICS */}
-      <section className="py-20 px-6 relative z-10 border-y border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { value: '25+', label: 'Integrações Nativas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { value: '99.9%', label: 'Uptime Garantido', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
-              { value: '∞', label: 'Produtos Ilimitados', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg> },
-              { value: '<0.8s', label: 'Tempo de Carga', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-8 bg-white/[0.02] border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
-              >
-                {/* Strong Glow Effect - Bottom Left */}
-                <div
-                  className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                  style={{
-                    background: i === 0
-                      ? 'radial-gradient(circle, rgba(146, 50, 234, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                      : i === 1
-                        ? 'radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.4) 40%, transparent 70%)'
-                        : i === 2
-                          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.8) 0%, rgba(146, 50, 234, 0.4) 40%, transparent 70%)'
-                          : 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                  }}
-                />
-
-                {/* Subtle top-right accent */}
-                <div
-                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-20"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 60%)'
-                  }}
-                />
-
-                <div className="relative z-10">
-                  <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                    {stat.icon}
-                  </div>
-                  <div className="text-5xl font-black mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
-                    {stat.value}
-                  </div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
-                    {stat.label}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* PERFORMANCE METRICS */}
       <section className="pt-32 pb-64 px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
@@ -522,6 +464,64 @@ const App: React.FC = () => {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* STATS COUNTER - REAL-TIME METRICS */}
+      <section className="py-20 px-6 relative z-10 border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { value: '25+', label: 'Integrações Nativas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+              { value: '99.9%', label: 'Uptime Garantido', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
+              { value: '∞', label: 'Produtos Ilimitados', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg> },
+              { value: '<0.8s', label: 'Tempo de Carga', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className="p-8 bg-white/[0.02] border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
+              >
+                {/* Strong Glow Effect - Bottom Left */}
+                <div
+                  className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                  style={{
+                    background: i === 0
+                      ? 'radial-gradient(circle, rgba(146, 50, 234, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
+                      : i === 1
+                        ? 'radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.4) 40%, transparent 70%)'
+                        : i === 2
+                          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.8) 0%, rgba(146, 50, 234, 0.4) 40%, transparent 70%)'
+                          : 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
+                  }}
+                />
+
+                {/* Subtle top-right accent */}
+                <div
+                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-20"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 60%)'
+                  }}
+                />
+
+                <div className="relative z-10">
+                  <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
+                    {stat.icon}
+                  </div>
+                  <div className="text-5xl font-black mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
+                    {stat.label}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -111,7 +111,7 @@ const App: React.FC = () => {
     { id: 'checkout', icon: <Icons.Checkout />, title: "Checkout Brutal", desc: "Aumente sua conversão com a tecnologia de carregamento mais rápida do mercado.", highlights: ["Conversão Imediata", "Order Bump 1-Click", "Mobile First"] },
     { id: 'members', icon: <Icons.Members />, title: "Área de Membros Pro", desc: "Seus alunos merecem uma experiência de streaming, não uma pasta de arquivos.", highlights: ["Layout Netflix", "Hospedagem Inclusa", "Engajamento Real"] },
     { id: 'domains', icon: <Icons.Domains />, title: "Brand Experience", desc: "Whitelabel total para você usar seu domínio e fortalecer sua autoridade.", highlights: ["SSL Ilimitado", "Setup Instantâneo", "Marca Própria"] },
-    { id: 'products', icon: <Icons.Products />, title: "Escala Infinita", desc: "Infraestrutura resiliente pronta para suportar milhares de vendas simultâneas.", highlights: ["Sem Taxas Ocultas", "Dashboard Realtime", "Suporte 24h"] }
+    { id: 'products', icon: <Icons.Products />, title: "Escala Infinita", desc: "Infraestrutura preparada para escalar no seu ritmo.", highlights: ["Escala sob demanda", "Sem limite artificial de vendas", "Sem taxas ocultas"] }
   ];
 
   // Scroll-based card navigation for vertical carousel
@@ -166,139 +166,87 @@ const App: React.FC = () => {
       </div>
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-10 py-6 flex justify-between items-center backdrop-blur-2xl border-b border-white/5">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-purple-600 rounded-2xl flex items-center justify-center font-black italic shadow-[0_0_30px_rgba(168,85,247,0.5)]">S</div>
-          <span className="text-xl font-bold tracking-tighter uppercase italic">Super Checkout <span className="text-purple-500">.app</span></span>
-        </div>
-        <div className="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">
-          <a href="#features" className="hover:text-white transition-all">Tecnologia</a>
-          <a href="#plans" className="hover:text-white transition-all">Planos</a>
-          <button className="px-10 py-3 bg-white text-black rounded-full text-[9px] font-black hover:bg-purple-600 hover:text-white transition-all shadow-xl">LOGAR</button>
+      <nav className="fixed top-0 left-0 w-full z-50 py-6 backdrop-blur-2xl border-b border-white/5 bg-black/20">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center w-full">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center font-black italic shadow-[0_0_30px_rgba(168,85,247,0.5)] text-sm md:text-base">S</div>
+            <span className="text-lg md:text-xl font-bold tracking-tighter uppercase italic">Super Checkout <span className="text-purple-500">.app</span></span>
+          </div>
+          <div className="hidden md:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">
+            <a href="#features" className="hover:text-white transition-all">Tecnologia</a>
+            <a href="#plans" className="hover:text-white transition-all">Planos</a>
+            <button className="px-8 py-2.5 bg-white text-black rounded-full text-[9px] font-black hover:bg-purple-600 hover:text-white transition-all shadow-xl">LOGAR</button>
+          </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32">
+      {/* Hero */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-28">
         <div className="text-center z-10 max-w-7xl">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] mb-12 max-w-xs md:max-w-none">
+            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] mb-4 max-w-xs md:max-w-none">
               <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#a855f7]"></span>
               Um sistema que não trava seu crescimento.
             </div>
-            <h1 className="text-[11vw] md:text-[9vw] font-black leading-[0.8] tracking-tighter mb-16 uppercase italic">
+            <h1 className="text-[10vw] md:text-[8vw] font-black leading-[0.95] tracking-tighter mb-10 uppercase italic text-white">
               VENDA MAIS <br />
-              <span className="text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.25)" }}>ESCALE</span> <br />
               <GradientText
                 isBackground
-                colors={["#a855f7", "#ffffff", "#22c55e"]}
+                colors={["#a855f7", "#86efac"]}
                 animationSpeed={0.1}
-                className="inline-block text-white px-2 mb-2 md:mb-8"
+                className="inline-block px-6 mb-2"
               >
-                SEM LIMITES!
-              </GradientText>
+                <span className="text-black mix-blend-multiply selection:bg-purple-500/30">E ESCALE&nbsp;</span>
+              </GradientText> <br />
+              SEM LIMITES!&nbsp;
             </h1>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-14 mt-6">
-              <p className="text-gray-500 text-[13px] font-bold uppercase tracking-tight leading-loose text-left border-l-4 border-purple-600 pl-10 max-w-sm flex flex-col md:flex-row md:flex-wrap gap-1">
+            <div className="flex flex-col items-center justify-center gap-6 mt-4">
+              <p className="text-gray-500 text-[12px] font-bold uppercase tracking-tight leading-relaxed text-center max-w-[400px] flex flex-row flex-wrap justify-center gap-x-8 gap-y-2 mb-4">
                 <span className="flex items-center">
-                  <svg className="inline-block w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  <svg className="inline-block w-3.5 h-3.5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                   Seu checkout.
                 </span>
                 <span className="flex items-center">
-                  <svg className="inline-block w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                  <svg className="inline-block w-3.5 h-3.5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                   Suas regras.
                 </span>
                 <span className="flex items-center">
-                  <svg className="inline-block w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <svg className="inline-block w-3.5 h-3.5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   Seu dinheiro.
                 </span>
               </p>
-              <div className="flex flex-col items-center gap-6">
+              <div className="flex flex-col items-center gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
-                  className="px-20 py-10 bg-purple-600 text-white rounded-[50px] font-black text-2xl uppercase italic tracking-tighter shadow-2xl transition-all"
+                  className="px-14 py-7 bg-purple-600 text-white rounded-[40px] font-black text-xl uppercase italic tracking-tighter shadow-2xl transition-all"
                 >
                   Ativar Agora →
                 </motion.button>
 
                 {/* Social Proof */}
-                <div className="flex flex-col items-center gap-3">
+                <div className="flex flex-col items-center gap-2">
                   <div className="flex -space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
                       A
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
                       B
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
                       C
                     </div>
                   </div>
-                  <p className="text-gray-500 text-xs font-bold uppercase tracking-wide mb-8">
-                    Junte-se à seleta comunidade
+                  <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wide flex items-center gap-2">
+                    Faça parte
+                    <svg className="w-3 h-3 text-yellow-500 fill-current" viewBox="0 0 24 24">
+                      <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                   </p>
                 </div>
               </div>
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* STATS COUNTER - REAL-TIME METRICS */}
-      <section className="py-20 px-6 relative z-10 border-y border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { value: '25+', label: 'Integrações Nativas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { value: '99.9%', label: 'Uptime Garantido', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
-              { value: '∞', label: 'Produtos Ilimitados', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg> },
-              { value: '<0.8s', label: 'Tempo de Carga', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-8 bg-white/[0.02] border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
-              >
-                {/* Strong Glow Effect - Bottom Left */}
-                <div
-                  className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                  style={{
-                    background: i === 0
-                      ? 'radial-gradient(circle, rgba(146, 50, 234, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                      : i === 1
-                        ? 'radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.4) 40%, transparent 70%)'
-                        : i === 2
-                          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.8) 0%, rgba(146, 50, 234, 0.4) 40%, transparent 70%)'
-                          : 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                  }}
-                />
-
-                {/* Subtle top-right accent */}
-                <div
-                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-20"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 60%)'
-                  }}
-                />
-
-                <div className="relative z-10">
-                  <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                    {stat.icon}
-                  </div>
-                  <div className="text-5xl font-black mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
-                    {stat.value}
-                  </div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
-                    {stat.label}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -315,12 +263,12 @@ const App: React.FC = () => {
           <motion.div
             style={{
               scale: dashScale,
-              opacity: dashOpacity,
+              opacity: useTransform(scrollYProgress, [0, 0.15], [0.2, 1]),
               y: dashY
             }}
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 100, damping: 30 }}
-            className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
+            className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/20 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
           >
             {/* Inner Content */}
             <div className="w-full h-full relative">
@@ -390,44 +338,57 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* PERFORMANCE METRICS */}
-      <section className="py-32 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-              Performance <br /> <span className="text-purple-500">Brutal.</span>
-            </h2>
-          </div>
-
-          <div className="space-y-8">
+      {/* STATS COUNTER - REAL-TIME METRICS */}
+      <section className="py-20 px-6 relative z-10 border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { label: 'Velocidade de Carga', value: 98, color: 'from-purple-600 to-purple-400' },
-              { label: 'Taxa de Conversão', value: 94, color: 'from-green-600 to-green-400' },
-              { label: 'Uptime & Estabilidade', value: 99, color: 'from-blue-600 to-blue-400' },
-              { label: 'Segurança & LGPD', value: 100, color: 'from-orange-600 to-orange-400' }
-            ].map((metric, i) => (
+              { value: '25+', label: 'Integrações Nativas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+              { value: '99.9%', label: 'Uptime Garantido', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
+              { value: '∞', label: 'Produtos Ilimitados', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg> },
+              { value: '<0.8s', label: 'Tempo de Carga', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
+            ].map((stat, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="group"
+                whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className="p-8 bg-white/[0.02] border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
               >
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm font-black uppercase tracking-wider">{metric.label}</span>
-                  <span className="text-2xl font-black text-purple-400">{metric.value}%</span>
-                </div>
-                <div className="h-3 bg-white/5 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${metric.value}%` }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 + 0.3, duration: 1, ease: "easeOut" }}
-                    className={`h-full bg-gradient-to-r ${metric.color} rounded-full relative`}
-                  >
-                    <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                  </motion.div>
+                {/* Strong Glow Effect - Bottom Left */}
+                <div
+                  className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                  style={{
+                    background: i === 0
+                      ? 'radial-gradient(circle, rgba(146, 50, 234, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
+                      : i === 1
+                        ? 'radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.4) 40%, transparent 70%)'
+                        : i === 2
+                          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.8) 0%, rgba(146, 50, 234, 0.4) 40%, transparent 70%)'
+                          : 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
+                  }}
+                />
+
+                {/* Subtle top-right accent */}
+                <div
+                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-20"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 60%)'
+                  }}
+                />
+
+                <div className="relative z-10">
+                  <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
+                    {stat.icon}
+                  </div>
+                  <div className="text-5xl font-black mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
+                    {stat.label}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -435,119 +396,135 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* INFRASTRUCTURE SECTION - BACKGROUND TEXT EFFECT */}
-      <section className="py-40 px-6 relative z-10 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          {/* Large Background Text */}
-          <div className="relative">
-            <div className="absolute top-0 left-0 text-[15vw] font-black uppercase tracking-tighter opacity-5 pointer-events-none whitespace-nowrap overflow-hidden">
-              INFRAESTRUTURA
-            </div>
-
-            {/* Main Title */}
-            <div className="relative z-10 mb-20">
-              <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-                A engenharia por <br />
-                <span className="text-purple-500">trás do sucesso.</span>
-              </h2>
-            </div>
+      {/* PERFORMANCE METRICS */}
+      <section className="pt-32 pb-64 px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+              Performance <br /> <span className="text-purple-500">Brutal.</span>
+            </h2>
           </div>
 
-          {/* Feature Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-            {/* Card 1 - Núcleo Reativo (Large) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="md:col-span-2 p-10 bg-gradient-to-br from-purple-950/20 to-transparent border border-purple-500/20 rounded-[32px] relative overflow-hidden group hover:border-purple-500/40 transition-all duration-500"
-            >
-              {/* Icon */}
-              <div className="w-12 h-12 bg-purple-600/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600/30 transition-all">
-                <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="max-w-4xl mx-auto space-y-16">
+            {[
+              { label: 'Velocidade de Carga', value: 98, color: '#a855f7', path: "M0,80 Q50,75 100,30 T200,40 T300,10" },
+              { label: 'Taxa de Conversão', value: 94, color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
+              { label: 'Uptime & Estabilidade', value: 99, color: '#3b82f6', path: "M0,70 Q150,65 300,68" },
+              { label: 'Segurança & LGPD', value: 100, color: '#f97316', path: "M0,85 Q50,30 100,50 T200,20 T300,5" }
+            ].map((metric, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="relative group"
+              >
+                <div className="flex justify-between items-end mb-4">
+                  <div>
+                    <span className="text-xs font-black uppercase tracking-[0.3em] text-gray-500 mb-2 block">{metric.label}</span>
+                    <div className="h-1 w-12 bg-white/10 rounded-full" />
+                  </div>
+                  <span className="text-4xl font-black italic text-white flex items-end gap-1">
+                    {metric.value}<span className="text-lg opacity-30 mt-1">%</span>
+                  </span>
+                </div>
+
+                <div className="h-40 w-full relative">
+                  <svg className="w-full h-full overflow-visible" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id={`grad-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={metric.color} stopOpacity="0.3" />
+                        <stop offset="100%" stopColor={metric.color} stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Reference Grid */}
+                    <line x1="0" y1="100" x2="300" y2="100" stroke="white" strokeWidth="0.5" strokeOpacity="0.1" />
+
+                    {/* Area Fill */}
+                    <motion.path
+                      d={`${metric.path} L300,100 L0,100 Z`}
+                      fill={`url(#grad-${i})`}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.5, delay: 0.8 }}
+                    />
+
+                    {/* Main Stroke */}
+                    <motion.path
+                      d={metric.path}
+                      fill="none"
+                      stroke={metric.color}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0 }}
+                      whileInView={{ pathLength: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+                    />
+
+                    {/* Laser Pulse Effect */}
+                    <motion.path
+                      d={metric.path}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0.1, pathOffset: 0, opacity: 0 }}
+                      animate={{
+                        pathOffset: [0, 1.2],
+                        opacity: [0, 1, 1, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                        delay: 1.5 + (i * 0.4)
+                      }}
+                      style={{ filter: `drop-shadow(0 0 8px white)` }}
+                    />
+                  </svg>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* New Card: Núcleo Reativo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-20 p-12 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[48px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)]"
+          >
+            {/* Ambient Glow */}
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+              <div className="w-20 h-20 bg-purple-600/20 rounded-3xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
 
-              <h3 className="text-2xl font-black mb-4">Núcleo Reativo</h3>
-              <p className="text-gray-400 text-sm mb-8 max-w-2xl">
-                Processamos dados em milissegundos usando arquitetura serverless de última geração. Nada de espera, apenas resultados.
-              </p>
-
-              {/* Progress Bar */}
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-black uppercase tracking-wider text-purple-400">LOAD SPEED</span>
-                  <span className="text-sm font-black text-white">120ms</span>
-                </div>
-                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "95%" }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3, duration: 1.5, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full relative"
-                  >
-                    <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Card 2 - Omni-Channel */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="p-8 bg-white/[0.02] border border-white/10 rounded-[24px] hover:bg-white/[0.04] hover:border-purple-500/20 transition-all duration-500"
-            >
-              <h4 className="text-sm font-black uppercase mb-3 tracking-wider">OMNI-CHANNEL</h4>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                Integração nativa com 40+ gateways e CRM de alta performance.
-              </p>
-            </motion.div>
-
-            {/* Card 3 - AI Security */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="p-8 bg-white/[0.02] border border-white/10 rounded-[24px] hover:bg-white/[0.04] hover:border-purple-500/20 transition-all duration-500"
-            >
-              <h4 className="text-sm font-black uppercase mb-3 tracking-wider">AI SECURITY</h4>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                Proteção contra fraudes em tempo real usando modelos preditivos.
-              </p>
-            </motion.div>
-
-            {/* Card 4 - One-Click Buy (Large with Icon) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="md:col-span-2 p-10 bg-gradient-to-br from-purple-900/10 to-transparent border border-purple-500/20 rounded-[32px] relative overflow-hidden group hover:border-purple-500/40 transition-all duration-500 flex items-center justify-between"
-            >
-              <div>
-                <h3 className="text-xl font-black mb-3">One-Click Buy</h3>
-                <p className="text-gray-400 text-sm max-w-md">
-                  Armazenamento seguro de tokens para compras instantâneas em toda a rede.
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-3xl font-black mb-4 italic uppercase tracking-tight">Núcleo Reativo</h3>
+                <p className="text-gray-400 text-lg leading-relaxed max-w-3xl">
+                  Processamos dados em milissegundos usando arquitetura serverless de última geração. <span className="text-purple-400 font-bold">Nada de espera, apenas resultados.</span>
                 </p>
               </div>
 
-              {/* Icon Circle */}
-              <div className="hidden md:flex w-24 h-24 bg-purple-600/10 rounded-full items-center justify-center group-hover:bg-purple-600/20 transition-all">
-                <svg className="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+              <div className="px-8 py-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-500 mb-1">LOAD SPEED</div>
+                <div className="text-3xl font-black italic">120ms</div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
+
 
 
 
@@ -707,10 +684,10 @@ const App: React.FC = () => {
 
         {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
         <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 15}vh` }} />
-      </section>
+      </section >
 
       {/* SECTION 2: CHECKOUT QUE VENDE */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -876,11 +853,11 @@ const App: React.FC = () => {
 
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 3: PAGAMENTOS SEM FRICÇÃO */}
-      <section className="py-32 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-32 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
           <div className="text-center mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -895,29 +872,118 @@ const App: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: 'Gateways Integrados', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg> },
-              { title: 'Aprovação Instantânea', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { title: 'Pagamento Seguro', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> },
-              { title: 'Pix, Cartão, Boleto', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg> }
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className="p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-500"
-              >
-                <div className="w-12 h-12 bg-purple-600/20 rounded-2xl flex items-center justify-center mx-auto mb-6 text-purple-500 group-hover:bg-purple-600/30 group-hover:scale-110 transition-all">
-                  {feature.icon}
+          {/* BENTO GRID LAYOUT */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[240px]">
+            {/* Main Feature: Gateways Integrados (Large) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="md:col-span-2 md:row-span-2 group relative p-10 bg-[#0a0a0f] border-2 border-purple-500/20 rounded-[48px] overflow-hidden hover:border-purple-500/40 transition-all duration-500 shadow-2xl"
+            >
+              {/* Background Glow Flare */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/5 blur-[80px] rounded-full group-hover:bg-purple-600/10 transition-all" />
+
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent pointer-events-none" />
+              <div className="relative z-10 h-full flex flex-col justify-between">
+                <div>
+                  <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-all">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                  </div>
+                  <h3 className="text-3xl font-black italic uppercase tracking-tight mb-4">Gateways <br /> Integrados</h3>
+                  <p className="text-gray-500 text-sm font-medium leading-relaxed max-w-xs">Conexão nativa com os principais processadores do mundo para garantir que cada venda passe sem obstáculos.</p>
                 </div>
-                <h3 className="text-sm font-black italic uppercase tracking-wider">{feature.title}</h3>
-              </motion.div>
-            ))}
+
+                {/* Visual Accent */}
+                <div className="flex gap-2 mt-8 opacity-20 group-hover:opacity-40 transition-opacity">
+                  <div className="h-2 w-20 bg-white rounded-full" />
+                  <div className="h-2 w-10 bg-purple-500 rounded-full" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Feature 2: Aprovação Instantânea (Tall) */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="md:col-span-2 md:row-span-1 group relative p-8 bg-white/[0.02] border border-white/10 rounded-[40px] overflow-hidden hover:bg-white/[0.04] transition-all duration-500"
+            >
+              <div className="flex items-center gap-6 h-full">
+                <div className="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-black italic uppercase tracking-tight mb-2">Aprovação Instantânea</h3>
+                  <p className="text-xs text-gray-500 uppercase tracking-widest font-black">Zero abandono. Alta velocidade.</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Feature 3: Pix, Cartão, Boleto (Wide) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="md:col-span-2 md:row-span-1 group relative p-8 bg-white/[0.02] border border-white/10 rounded-[40px] overflow-hidden hover:bg-white/[0.04] transition-all duration-500"
+            >
+              <div className="flex flex-col justify-center h-full">
+                <div className="flex gap-4 mb-4">
+                  <div className="text-purple-500">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  </div>
+                  <h3 className="text-xl font-black italic uppercase tracking-tight">Multi-Pagamentos</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {['PIX', 'CARTÃO DE CRÉDITO', 'BOLETO'].map(tag => (
+                    <span key={tag} className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">{tag}</span>
+                  ))}
+                  <span className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">
+                    CRIPTO <span className="text-white/40 ml-1">( breve )</span>
+                  </span>
+                </div>
+              </div>
+            </motion.div>
           </div>
+        </div>
+
+        {/* TRULY FULL-WIDTH INFINITE SCROLL GATEWAY BAND (Refined) */}
+        <div className="mt-16 border-y border-white/5 py-10 relative overflow-hidden bg-white/[0.01] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+          <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#030303] to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#030303] to-transparent z-10" />
+
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+            className="flex items-center gap-16 whitespace-nowrap"
+          >
+            {[
+              { name: 'Mercado Pago', status: 'Ativado' },
+              { name: 'Stripe', status: 'em breve' },
+              { name: 'PagSeguro', status: 'em breve' },
+              { name: 'Asaas', status: 'em breve' },
+              { name: 'Pagar.me', status: 'em breve' },
+              { name: 'PayPal', status: 'em breve' },
+              // Repeated for seamless cycle
+              { name: 'Mercado Pago', status: 'Ativado' },
+              { name: 'Stripe', status: 'em breve' },
+              { name: 'PagSeguro', status: 'em breve' },
+              { name: 'Asaas', status: 'em breve' },
+              { name: 'Pagar.me', status: 'em breve' },
+              { name: 'PayPal', status: 'em breve' }
+            ].map((gw, i) => (
+              <div key={i} className="flex flex-col items-center group min-w-[200px]">
+                <span className={`text-4xl font-black italic uppercase tracking-tighter transition-colors ${gw.status === 'Ativado' ? 'text-white' : 'text-white/20'}`}>
+                  {gw.name}
+                </span>
+                <span className={`text-[7px] font-black uppercase tracking-[0.5em] mt-2 ${gw.status === 'Ativado' ? 'text-purple-500' : 'text-white/5'}`}>
+                  {gw.status}
+                </span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -997,10 +1063,10 @@ const App: React.FC = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 5: ÁREA DE MEMBROS PROFISSIONAL */}
-      <section className="py-32 px-6 relative z-10">
+      < section className="py-32 px-6 relative z-10" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -1159,10 +1225,10 @@ const App: React.FC = () => {
 
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 6: AUTOMAÇÃO - TUDO CONECTADO */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -1178,35 +1244,106 @@ const App: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
-              { title: 'Automações com n8n', desc: 'Workflows poderosos sem código', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { title: 'Fluxos Personalizados', desc: 'Crie automações sob medida', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
-              { title: 'Eventos em Tempo Real', desc: 'Notificações instantâneas de vendas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> }
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
-              >
-                <div className="text-purple-500 mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                  {feature.icon}
+          <div className="relative min-h-[600px] flex items-center justify-center py-20">
+            {/* SVG Connections Layer (Background) */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="rgba(168, 85, 247, 0.1)" />
+                  <stop offset="50%" stopColor="rgba(168, 85, 247, 0.4)" />
+                  <stop offset="100%" stopColor="rgba(168, 85, 247, 0.1)" />
+                </linearGradient>
+              </defs>
+
+              {/* Central to Feature Paths */}
+              {[
+                { x: 300, y: 150 }, // Top Left
+                { x: 900, y: 150 }, // Top Right
+                { x: 300, y: 450 }, // Bottom Left
+                { x: 900, y: 450 }  // Bottom Right
+              ].map((pos, i) => (
+                <g key={i}>
+                  <motion.path
+                    d={`M 600 300 L ${pos.x} ${pos.y}`}
+                    stroke="rgba(168, 85, 247, 0.2)"
+                    strokeWidth="2"
+                    fill="none"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    whileInView={{ pathLength: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, delay: i * 0.2 }}
+                  />
+                  <motion.circle
+                    r="3"
+                    fill="#a855f7"
+                    initial={{ offset: 0 }}
+                    animate={{
+                      cx: [600, pos.x],
+                      cy: [300, pos.y]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: i * 0.5
+                    }}
+                  />
+                </g>
+              ))}
+            </svg>
+
+            {/* Central Node (Core Engine) */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              className="relative z-20 group"
+            >
+              <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
+                <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
+                <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+
+                <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
+                  <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
+                  <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
                 </div>
-                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
-                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
+              </div>
+              <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
+            </motion.div>
+
+            {/* Feature Nodes Grid */}
+            <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-y-20 lg:gap-x-[400px] pointer-events-none lg:p-0 p-6 pt-32 lg:pt-0">
+              {[
+                { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'lg:justify-end' },
+                { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'lg:justify-start' },
+                { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'lg:justify-end' },
+                { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'lg:justify-start' }
+              ].map((feature, i) => (
+                <div key={i} className={`flex items-center ${feature.align}`}>
+                  <motion.div
+                    initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
+                    className="pointer-events-auto group max-w-[280px]"
+                  >
+                    <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                      <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
+                        {feature.icon}
+                      </div>
+                      <h3 className="text-xl font-black italic uppercase tracking-tight mb-2 group-hover:text-purple-400 transition-colors">{feature.title}</h3>
+                      <p className="text-[11px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors uppercase tracking-wider">{feature.desc}</p>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 7: TRÁFEGO & DADOS */}
-      <section className="py-32 px-6 relative z-10">
+      < section className="py-32 px-6 relative z-10" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -1257,10 +1394,10 @@ const App: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 8: GESTÃO - CONTROLE TOTAL */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -1328,10 +1465,10 @@ const App: React.FC = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 9: MARCA - SUA MARCA EM PRIMEIRO LUGAR */}
-      <section className="py-32 px-6 relative z-10">
+      < section className="py-32 px-6 relative z-10" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -1372,10 +1509,10 @@ const App: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 10: INFRA & SEGURANÇA - ENHANCED */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -1393,35 +1530,50 @@ const App: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              { title: 'Infraestrutura Cloud', desc: 'Servidores de alta performance globais', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg> },
-              { title: 'Alta Performance', desc: 'Velocidade máxima em qualquer escala', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { title: 'Segurança e LGPD', desc: 'Proteção total dos dados dos clientes', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
-              { title: 'Estabilidade Garantida', desc: '99.9% de uptime SLA', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> }
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
-              >
-                <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
-                  {feature.icon}
-                </div>
-                <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
-                <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
+          <div className="max-w-3xl mx-auto relative">
+            {/* Linha Lateral Conectora */}
+            <div className="absolute left-[27px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-purple-600/50 via-purple-600/20 to-transparent mb-10" />
+
+            <div className="space-y-16">
+              {[
+                { title: 'Infraestrutura Cloud', desc: 'Servidores de alta performance globais com latência reduzida.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg> },
+                { title: 'Alta Performance', desc: 'Velocidade máxima em qualquer escala, suportando milhares de acessos simultâneos.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+                { title: 'Segurança e LGPD', desc: 'Proteção total dos dados dos clientes com criptografia de ponta a ponta.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
+                { title: 'Estabilidade Garantida', desc: '99.9% de uptime SLA para que sua operação nunca pare.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> }
+              ].map((feature, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  className="relative pl-24 group"
+                >
+                  {/* Ícone com Círculo */}
+                  <div className="absolute left-0 top-0 w-14 h-14 bg-[#030303] flex items-center justify-center rounded-2xl border border-white/10 group-hover:border-purple-500/50 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-500 z-10">
+                    <div className="text-purple-500 group-hover:scale-110 transition-transform duration-500">
+                      {feature.icon}
+                    </div>
+                  </div>
+
+                  {/* Texto */}
+                  <div className="flex flex-col pt-1">
+                    <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tight transition-colors duration-500 group-hover:text-purple-500">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm font-medium mt-2 max-w-xl group-hover:text-gray-400 transition-colors duration-500">
+                      {feature.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 11: CTA INTERMEDIÁRIO - COMECE AGORA */}
-      <section className="py-40 px-6 relative z-10 overflow-hidden">
+      < section className="py-40 px-6 relative z-10 overflow-hidden" >
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1452,11 +1604,11 @@ const App: React.FC = () => {
           </motion.div>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />
-      </section>
+      </section >
 
       {/* PLANOS - HIGH CONTRAST */}
-      <section id="plans" className="py-40 px-6 bg-white text-black relative z-10">
-        <div className="max-w-7xl mx-auto">
+      <section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
           <div className="text-center mb-40">
             <h2 className="text-8xl md:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10">Escala de <br /> <span className="text-purple-600">Verdade.</span></h2>
           </div>
@@ -1500,8 +1652,8 @@ const App: React.FC = () => {
       </section>
 
       {/* CTA FINAL */}
-      <section className="py-64 px-6 text-center relative overflow-hidden bg-black">
-        <div className="max-w-5xl mx-auto relative z-10">
+      <section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
           <h2 className="text-[12vw] md:text-[9vw] font-black leading-none tracking-tighter mb-20 uppercase italic">
             Ative seu <br /> <span className="text-purple-500">Poder.</span>
           </h2>
@@ -1515,8 +1667,8 @@ const App: React.FC = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />
       </section>
 
-      <footer className="py-32 px-12 bg-black border-t border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.6em] text-gray-800">
+      <footer className="py-32 bg-black border-t border-white/5 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+        <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.6em] text-gray-800">
           <div className="text-left">
             <h2 className="text-5xl font-black italic text-white mb-8 uppercase tracking-tighter">SUPER<span className="text-purple-500">CHECKOUT</span></h2>
             <p className="max-w-sm leading-loose">A plataforma definitiva para produtos digitais de alta escala. Built for the 1%.</p>
@@ -1524,7 +1676,7 @@ const App: React.FC = () => {
           <p className="max-w-sm md:text-right leading-loose">© 2026 SUPER CHECKOUT .APP — BRUTAL PERFORMANCE ENGINE. ALL RIGHTS RESERVED.</p>
         </div>
       </footer>
-    </div>
+    </div >
   );
 };
 

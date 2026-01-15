@@ -129,10 +129,11 @@ const App: React.FC = () => {
         // Calculate progress through the section (0 to 1)
         const scrollProgress = Math.abs(rect.top) / (sectionHeight - viewportHeight);
 
-        // Map progress to card index
+        // Map progress to card index with reduced sensitivity
         const totalCards = showcaseFeatures.length;
+        const scrollMultiplier = 1.8;
         const cardIndex = Math.min(
-          Math.floor(scrollProgress * totalCards),
+          Math.floor((scrollProgress * totalCards) / scrollMultiplier),
           totalCards - 1
         );
 
@@ -339,7 +340,7 @@ const App: React.FC = () => {
       </section>
 
       {/* PERFORMANCE METRICS */}
-      <section className="pt-32 pb-64 px-6 relative z-10">
+      <section className="pt-32 pb-8 px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
@@ -439,7 +440,7 @@ const App: React.FC = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-20 p-12 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[48px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)]"
+            className="mt-16 p-12 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[48px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)]"
           >
             {/* Ambient Glow */}
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -468,9 +469,9 @@ const App: React.FC = () => {
       </section>
 
       {/* STATS COUNTER - REAL-TIME METRICS */}
-      <section className="py-20 px-6 relative z-10 border-y border-white/5">
+      <section className="mt-16 md:mt-24 py-6 md:py-12 px-6 relative z-10 border-y border-white/5">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {[
               { value: '25+', label: 'Integrações Nativas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
               { value: '99.9%', label: 'Uptime Garantido', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
@@ -484,7 +485,7 @@ const App: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-8 bg-white/[0.02] border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
+                className="p-6 md:p-8 bg-white/[0.02] border border-white/10 rounded-[20px] md:rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
               >
                 {/* Strong Glow Effect - Bottom Left */}
                 <div
@@ -509,13 +510,15 @@ const App: React.FC = () => {
                 />
 
                 <div className="relative z-10">
-                  <div className="text-purple-500 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                    {stat.icon}
+                  <div className="text-purple-500 mb-2 md:mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
+                    <div className="w-4 h-4 md:w-8 md:h-8">
+                      {stat.icon}
+                    </div>
                   </div>
-                  <div className="text-5xl font-black mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
+                  <div className="text-2xl md:text-5xl font-black mb-1 md:mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
                     {stat.value}
                   </div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
+                  <div className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-gray-500 leading-tight">
                     {stat.label}
                   </div>
                 </div>
@@ -529,7 +532,7 @@ const App: React.FC = () => {
 
 
       {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
-      <section id="features" className="relative z-10">
+      <section id="features" className="relative z-10 mt-12 md:mt-48">
         <div className="py-32 lg:h-screen lg:sticky lg:top-0 flex items-center justify-center px-6">
           <div className="max-w-7xl mx-auto w-full">
             <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
@@ -683,11 +686,11 @@ const App: React.FC = () => {
         </div>
 
         {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
-        <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 15}vh` }} />
+        <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 25}vh` }} />
       </section >
 
       {/* SECTION 2: CHECKOUT QUE VENDE */}
-      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+      < section className="py-0 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -705,8 +708,8 @@ const App: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Grid Layout: Showcase Card + Feature Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Grid Layout: Checkout Mockup + Feature Bullets */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
             {/* Virtual Checkout Visualization */}
             <motion.div
@@ -714,7 +717,7 @@ const App: React.FC = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group"
+              className="relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group order-2 lg:order-1"
             >
               {/* Radial Gradient Background */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.1)_0%,_transparent_70%)]" />
@@ -820,32 +823,61 @@ const App: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Feature Cards */}
-            <div className="grid grid-cols-1 gap-6">
+            {/* Modern Bullet Points List */}
+            <div className="space-y-8 order-1 lg:order-2">
               {[
-                { title: 'Alta Conversão', desc: 'Design otimizado para maximizar vendas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg> },
-                { title: 'Mobile First', desc: 'Experiência perfeita em smartphones', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> },
-                { title: 'Order Bump & Upsell', desc: 'Aumente o ticket médio automaticamente', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
-                { title: 'Recuperação de Carrinho', desc: 'Não perca nenhuma venda', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg> }
+                {
+                  title: 'Alta Conversão',
+                  desc: 'Design otimizado para maximizar vendas com UX testada',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                },
+                {
+                  title: 'Mobile First',
+                  desc: 'Experiência perfeita em smartphones e tablets',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                },
+                {
+                  title: 'Order Bump & Upsell',
+                  desc: 'Aumente o ticket médio automaticamente com ofertas inteligentes',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                },
+                {
+                  title: 'Recuperação de Carrinho',
+                  desc: 'Não perca nenhuma venda com automação inteligente',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                },
+                {
+                  title: 'Checkout Seguro',
+                  desc: 'SSL e criptografia de ponta a ponta para proteção total',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                },
+                {
+                  title: 'Carregamento Instantâneo',
+                  desc: 'Menos de 0.8s para garantir que nenhum cliente desista',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                }
               ].map((feature, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="relative p-8 bg-[#0a0a0f] border-2 border-purple-500/20 rounded-[32px] group hover:border-purple-500/40 hover:scale-[1.02] hover:shadow-[0_0_15px_#a855f7] transition-all duration-500 shadow-2xl overflow-hidden"
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="flex items-start gap-4 group cursor-pointer"
                 >
-                  {/* Gradient Fill - Always Active */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-purple-900/10 group-hover:from-purple-600/25 group-hover:to-purple-900/15 transition-all duration-700 pointer-events-none" />
+                  {/* Icon */}
+                  <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all duration-300">
+                    {feature.icon}
+                  </div>
 
                   {/* Content */}
-                  <div className="relative z-10">
-                    <div className="text-purple-500 mb-6 group-hover:scale-110 group-hover:text-purple-400 transition-all duration-500">
-                      {feature.icon}
-                    </div>
-                    <h3 className="text-2xl font-black italic uppercase mb-3 tracking-tight">{feature.title}</h3>
-                    <p className="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors">{feature.desc}</p>
+                  <div className="flex-1 pt-1">
+                    <h3 className="text-lg font-black uppercase tracking-tight mb-1 group-hover:text-purple-400 transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400 transition-colors">
+                      {feature.desc}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -873,13 +905,13 @@ const App: React.FC = () => {
           </div>
 
           {/* BENTO GRID LAYOUT */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[240px]">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-auto md:auto-rows-[240px]">
             {/* Main Feature: Gateways Integrados (Large) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="md:col-span-2 md:row-span-2 group relative p-10 bg-[#0a0a0f] border-2 border-purple-500/20 rounded-[48px] overflow-hidden hover:border-purple-500/40 transition-all duration-500 shadow-2xl"
+              className="md:col-span-2 md:row-span-2 group relative p-6 md:p-10 bg-[#0a0a0f] border-2 border-purple-500/20 rounded-[48px] overflow-hidden hover:border-purple-500/40 transition-all duration-500 shadow-2xl"
             >
               {/* Background Glow Flare */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/5 blur-[80px] rounded-full group-hover:bg-purple-600/10 transition-all" />
@@ -1135,7 +1167,7 @@ const App: React.FC = () => {
                         filter: "grayscale(15%) brightness(0.85) contrast(0.95)"
                       }}
                       animate={{
-                        y: [0, -800, 0]
+                        y: [0, -400, 0]
                       }}
                       transition={{
                         duration: 20,
@@ -1228,7 +1260,7 @@ const App: React.FC = () => {
       </section >
 
       {/* SECTION 6: AUTOMAÇÃO - TUDO CONECTADO */}
-      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+      < section className="py-16 md:py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -1244,8 +1276,8 @@ const App: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="relative min-h-[600px] flex items-center justify-center py-20">
-            {/* SVG Connections Layer (Background) */}
+          <div className="relative min-h-[900px] md:min-h-[600px] flex flex-col lg:flex-row items-center justify-center py-12 md:py-20">
+            {/* SVG Connections Layer (Background) - Desktop Only */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
               <defs>
                 <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1292,51 +1324,112 @@ const App: React.FC = () => {
               ))}
             </svg>
 
-            {/* Central Node (Core Engine) */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              className="relative z-20 group"
-            >
-              <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
-                <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
-                <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+            {/* Mobile Layout: Vertical Stack */}
+            <div className="flex flex-col items-center gap-8 lg:hidden w-full px-6">
+              {/* Central Node (Core Engine) - Top on Mobile */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                className="relative z-20 group"
+              >
+                <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
+                  <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
+                  <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
 
-                <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
-                  <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
-                  <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
+                  <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
+                    <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
+                    <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
+                  </div>
                 </div>
-              </div>
-              <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
-            </motion.div>
+                <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
+              </motion.div>
 
-            {/* Feature Nodes Grid */}
-            <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-y-20 lg:gap-x-[400px] pointer-events-none lg:p-0 p-6 pt-32 lg:pt-0">
-              {[
-                { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'lg:justify-end' },
-                { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'lg:justify-start' },
-                { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'lg:justify-end' },
-                { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'lg:justify-start' }
-              ].map((feature, i) => (
-                <div key={i} className={`flex items-center ${feature.align}`}>
-                  <motion.div
-                    initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
-                    className="pointer-events-auto group max-w-[280px]"
-                  >
-                    <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
-                      <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
-                        {feature.icon}
+              {/* Vertical Line Connector */}
+              <div className="w-0.5 h-8 bg-gradient-to-b from-purple-500/50 to-purple-500/20" />
+
+              {/* Feature Cards - Vertical Stack on Mobile */}
+              <div className="flex flex-col gap-8 w-full max-w-[320px]">
+                {[
+                  { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
+                  { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+                  { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
+                  { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> }
+                ].map((feature, i) => (
+                  <div key={i} className="relative">
+                    {/* Connector Line */}
+                    {i < 3 && (
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full w-0.5 h-8 bg-gradient-to-b from-purple-500/20 to-purple-500/10" />
+                    )}
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.6 }}
+                      className="group w-full"
+                    >
+                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                        <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
+                          {feature.icon}
+                        </div>
+                        <h3 className="text-xl font-black italic uppercase tracking-tight mb-2 group-hover:text-purple-400 transition-colors">{feature.title}</h3>
+                        <p className="text-[11px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors uppercase tracking-wider">{feature.desc}</p>
                       </div>
-                      <h3 className="text-xl font-black italic uppercase tracking-tight mb-2 group-hover:text-purple-400 transition-colors">{feature.title}</h3>
-                      <p className="text-[11px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors uppercase tracking-wider">{feature.desc}</p>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop Layout: Original Absolute Positioning */}
+            <div className="hidden lg:block absolute inset-0">
+              {/* Central Node (Core Engine) */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 group"
+              >
+                <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
+                  <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
+                  <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+
+                  <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
+                    <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
+                    <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
+                  </div>
                 </div>
-              ))}
+                <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
+              </motion.div>
+
+              {/* Feature Nodes Grid */}
+              <div className="absolute inset-0 grid grid-cols-2 gap-y-20 gap-x-[400px] pointer-events-none">
+                {[
+                  { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'justify-end' },
+                  { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'justify-start' },
+                  { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'justify-end' },
+                  { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'justify-start' }
+                ].map((feature, i) => (
+                  <div key={i} className={`flex items-center ${feature.align}`}>
+                    <motion.div
+                      initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
+                      className="pointer-events-auto group w-full max-w-[280px]"
+                    >
+                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                        <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
+                          {feature.icon}
+                        </div>
+                        <h3 className="text-xl font-black italic uppercase tracking-tight mb-2 group-hover:text-purple-400 transition-colors">{feature.title}</h3>
+                        <p className="text-[11px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors uppercase tracking-wider">{feature.desc}</p>
+                      </div>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

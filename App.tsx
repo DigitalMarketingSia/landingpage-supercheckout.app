@@ -1259,7 +1259,7 @@ const App: React.FC = () => {
 
           <div className="relative min-h-[900px] md:min-h-[600px] flex flex-col lg:flex-row items-center justify-center py-12 md:py-20">
             {/* SVG Connections Layer (Background) - Desktop Only */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+            <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(168, 85, 247, 0.1)" />
@@ -1365,24 +1365,27 @@ const App: React.FC = () => {
 
             {/* Desktop Layout: Original Absolute Positioning */}
             <div className="hidden lg:block absolute inset-0">
-              {/* Central Node (Core Engine) */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 group"
-              >
-                <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
-                  <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
-                  <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+              {/* Central Node Wrapper - Uses Flexbox for absolute center matching SVG */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  className="relative group pointer-events-auto"
+                >
+                  <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
+                    <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
+                    <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
 
-                  <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
-                    <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
-                    <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
+                    <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
+                      <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
+                      <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
+                    </div>
                   </div>
-                </div>
-                <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
-              </motion.div>
+                  <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
+                </motion.div>
+              </div>
+
 
               {/* Feature Nodes Grid */}
               <div className="absolute inset-0 grid grid-cols-2 gap-y-20 gap-x-[400px] pointer-events-none">
@@ -1400,7 +1403,8 @@ const App: React.FC = () => {
                       transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
                       className="pointer-events-auto group w-full max-w-[280px]"
                     >
-                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/20 rounded-[32px] group-hover:border-purple-500/50 transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:shadow-[0_0_50px_rgba(168,85,247,0.4)] relative overflow-hidden">
+                        <div className="absolute inset-0 bg-purple-600/5 opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
                           {feature.icon}
                         </div>
@@ -1646,156 +1650,159 @@ const App: React.FC = () => {
         </div>
       </section >
 
-      {/* SECTION 11: CTA INTERMEDIÁRIO - COMECE AGORA */}
-      < section className="py-40 px-6 relative z-10 overflow-hidden" >
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-7xl md:text-[8vw] font-black leading-none tracking-tighter mb-12 uppercase italic">
-              Comece <br /> <span className="text-purple-500">Agora.</span>
-            </h2>
-            <p className="text-gray-400 text-lg font-medium mb-16 max-w-2xl mx-auto">
-              Cadastro gratuito • Sem cartão • Ativação instantânea
-            </p>
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
-                className="px-16 py-8 bg-purple-600 text-white rounded-full font-black text-xl uppercase italic tracking-tighter shadow-2xl transition-all"
-              >
-                Criar Conta Grátis →
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className="px-16 py-8 bg-transparent border-2 border-white/20 text-white rounded-full font-black text-xl uppercase italic tracking-tighter transition-all hover:border-purple-500/50"
-              >
-                Ver Demo
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />
-      </section >
+
 
       {/* PLANOS - HIGH CONTRAST */}
-      <section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+      < section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
           <div className="text-center mb-40">
-            <h2 className="text-8xl md:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10">Escala de <br /> <span className="text-purple-600">Verdade.</span></h2>
+            <h2 className="text-8xl md:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10 text-black">Comece <br /> <span className="text-purple-600">Agora.</span></h2>
+
+            {/* Header Objection Killer */}
+            <div className="mt-12">
+              <div className="hidden md:flex flex-col items-center text-center space-y-4">
+                <div className="flex items-center gap-3 text-2xl font-black italic uppercase tracking-tighter text-black">
+                  <span className="text-3xl">🔒</span>
+                  O sistema roda em infraestrutura moderna serverless.
+                </div>
+                <p className="text-gray-500/60 font-medium italic">
+                  Sem VPS, sem servidor, sem mensalidades obrigatórias e sem complicação técnica.
+                </p>
+              </div>
+
+              <div className="md:hidden flex flex-col items-center text-center space-y-2 px-6">
+                <div className="flex items-center gap-2 text-xl font-black italic uppercase tracking-tighter text-black">
+                  <span className="text-2xl">⚡</span>
+                  Sem VPS. Sem servidor.
+                </div>
+                <p className="text-gray-500 font-bold text-[10px] uppercase tracking-[0.2em] opacity-40">
+                  Sem custo fixo obrigatório.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* STARTER */}
-            <div className="p-12 border-4 border-black rounded-[60px] hover:bg-black hover:text-white transition-all duration-700 group flex flex-col justify-between min-h-[750px] relative overflow-hidden">
+            {/* PROFISSIONAL (formerly STARTER) */}
+            <div className="p-12 border-4 border-black rounded-[60px] hover:bg-black hover:text-white transition-all duration-700 group flex flex-col justify-between min-h-[850px] relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Icons.Checkout />
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Uso próprio</span>
-                <h3 className="text-5xl font-black mb-6 italic">STARTER</h3>
-                <div className="text-6xl font-black mb-14 tracking-tighter">R$ 197</div>
+              <div className="relative z-10">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Sistema completo para uso próprio</span>
+                <h3 className="text-3xl lg:text-5xl font-black mb-6 italic">PROFISSIONAL</h3>
+                <div className="mb-8">
+                  <div className="text-6xl font-black tracking-tighter">R$ 167</div>
+                  <div className="border-y border-black/5 py-4 my-8">
+                    <p className="text-sm font-bold opacity-40 leading-relaxed italic">
+                      Ideal para quem quer vender seus próprios produtos com tecnologia de nível profissional, sem taxas e sem limitações.
+                    </p>
+                  </div>
+                </div>
                 <ul className="space-y-4 mb-16">
                   {[
-                    '✓ 1 instalação',
-                    '✓ Uso individual',
+                    '✓ 1 instalação completa',
+                    '✓ Sistema 100% completo',
                     '✓ Produtos ilimitados',
+                    '✓ Clientes ilimitados',
+                    '✓ Checkout de alta conversão',
+                    '✓ Área de membros profissional (Streaming-like)',
+                    '✓ Pagamentos automáticos (PIX, Cartão, Boleto)',
+                    '✓ Dashboard em tempo real',
                     '✓ Branding próprio',
-                    '✓ Zero taxas por venda',
-                    '✓ Sem bloqueios',
-                    '✓ Controle total',
-                    '✓ Infra própria (GitHub + Vercel + Supabase)',
+                    '✓ ZERO taxas por venda',
+                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
                     '✓ Segurança nível enterprise',
                     '✓ Atualizações gratuitas por 12 meses'
                   ].map(item => (
-                    <li key={item} className="text-[10px] font-black uppercase tracking-widest leading-tight">{item}</li>
+                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('ZERO taxas') ? 'bg-purple-600/10 text-purple-600 px-2 py-1 rounded-md -ml-2 w-fit group-hover:bg-white/20 group-hover:text-white transition-colors' : ''}`}>{item}</li>
                   ))}
                 </ul>
               </div>
-              <button className="w-full py-8 border-2 border-black group-hover:border-white rounded-full font-black text-xs uppercase tracking-[0.3em] transition-all">Começar Agora</button>
+              <button className="w-full py-8 border-2 border-black group-hover:border-white rounded-full font-black text-xs uppercase tracking-[0.3em] transition-all">COMEÇAR AGORA</button>
             </div>
 
-            {/* AGENCY */}
-            <div className="p-12 bg-black text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(59,130,246,0.2)] border-2 border-blue-600 flex flex-col justify-between min-h-[750px]">
-              <div className="absolute top-10 right-10 bg-blue-600 px-6 py-2 rounded-full text-[9px] font-black uppercase tracking-[0.3em] animate-pulse">Recomendado</div>
+            {/* AGÊNCIA (formerly AGENCY) */}
+            <div className="p-12 bg-black text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(59,130,246,0.2)] border-2 border-blue-600 flex flex-col justify-between min-h-[850px]">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-blue-600 px-6 py-3 rounded-b-2xl text-[9px] font-black uppercase tracking-[0.3em] animate-pulse shadow-[0_10px_20px_rgba(37,99,235,0.3)]">Recomendado</div>
               <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_30%,_rgba(59,130,246,0.1)_0%,_transparent_70%)]" />
-              <div className="relative z-10">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Para revenda</span>
-                <h3 className="text-5xl font-black mb-6 italic text-blue-500">AGENCY</h3>
-                <div className="text-6xl font-black mb-14 tracking-tighter">R$ 697</div>
+              <div className="relative z-10 pt-8">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Para quem quer vender o sistema para clientes</span>
+                <h3 className="text-5xl font-black mb-6 italic text-blue-500">AGÊNCIA</h3>
+                <div className="mb-8">
+                  <div className="text-6xl font-black tracking-tighter">R$ 697</div>
+                  <div className="border-y border-white/10 py-4 my-8">
+                    <p className="text-sm font-bold opacity-60 leading-relaxed italic">
+                      <span className="text-blue-500 font-black not-italic uppercase tracking-[0.2em] text-[10px] block mb-2">Tudo do plano Profissional +</span>
+                      Crie uma nova fonte de renda vendendo o sistema para seus próprios clientes.
+                    </p>
+                  </div>
+                </div>
+
                 <ul className="space-y-4 mb-16">
                   {[
-                    '✓ Até 10 instalações',
-                    '✓ Direito de revenda',
-                    '✓ Cobrança livre por cliente',
-                    '✓ Produtos ilimitados',
-                    '✓ Branding próprio',
-                    '✓ Zero taxas por venda',
-                    '✓ Sem bloqueios',
-                    '✓ Controle total',
-                    '✓ Instalação individual por cliente',
-                    '✓ Sistema de licenciamento',
+                    '✓ Até 10 instalações independentes',
+                    '✓ Direito de revenda do sistema',
+                    '✓ Cobrança livre por instalação ou projeto',
+                    '✓ Licenciamento individual por cliente',
+                    '✓ Cada cliente com ambiente próprio',
+                    '✓ Controle total das ativações',
+                    '✓ Operação limpa (sem hospedagem compartilhada)',
+                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
                     '✓ Segurança nível enterprise',
                     '✓ Atualizações gratuitas por 12 meses'
                   ].map(item => (
-                    <li key={item} className="text-[10px] font-black uppercase tracking-widest leading-tight">{item}</li>
+                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('Direito de revenda') ? 'bg-blue-500/20 text-blue-400 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
                   ))}
                 </ul>
               </div>
-              <button className="relative z-10 w-full py-8 bg-blue-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-blue-500 shadow-[0_0_40px_rgba(59,130,246,0.3)] transition-all">Escalar Negócio</button>
+              <button className="relative z-10 w-full py-8 bg-blue-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-blue-500 shadow-[0_0_40px_rgba(59,130,246,0.3)] transition-all">COMEÇAR A VENDER</button>
             </div>
 
-            {/* MASTER */}
-            <div className="p-12 bg-[#050505] text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(168,85,247,0.3)] border-2 border-purple-600 flex flex-col justify-between min-h-[750px]">
-              <div className="absolute top-10 right-10 bg-purple-600 px-6 py-2 rounded-full text-[9px] font-black uppercase tracking-[0.3em]">Escala Total</div>
+            {/* EMPRESA (formerly MASTER) */}
+            <div className="p-12 bg-[#050505] text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(168,85,247,0.3)] border-2 border-purple-600 flex flex-col justify-between min-h-[850px]">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-purple-600 px-6 py-3 rounded-b-2xl text-[9px] font-black uppercase tracking-[0.3em] shadow-[0_10px_20px_rgba(168,85,247,0.3)]">Escala Total</div>
               <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-transparent" />
-              <div className="relative z-10">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Revenda em escala</span>
+              <div className="relative z-10 pt-8">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Para escalar a revenda como negócio profissional e lucrativo</span>
                 <h3 className="text-5xl font-black mb-6 italic text-purple-500">MASTER</h3>
-                <div className="text-6xl font-black mb-14 tracking-tighter">R$ 1.497</div>
+                <div className="mb-8">
+                  <div className="text-6xl font-black tracking-tighter">R$ 1.497</div>
+                  <div className="border-y border-white/10 py-4 my-8">
+                    <p className="text-sm font-bold opacity-60 leading-relaxed italic">
+                      <span className="text-purple-500 font-black not-italic uppercase tracking-[0.2em] text-[10px] block mb-2">Tudo do plano Agência +</span>
+                      Máxima escala e margem para transformar o Super Checkout em um negócio de revenda profissional.
+                    </p>
+                  </div>
+                </div>
+
                 <ul className="space-y-4 mb-16">
                   {[
-                    '✓ Até 50 instalações',
-                    '✓ Revenda ilimitada',
+                    '✓ Até 50 instalações independentes',
+                    '✓ Revenda em escala profissional',
                     '✓ Custo reduzido por instalação',
                     '✓ Margem máxima de lucro',
-                    '✓ Produtos ilimitados',
-                    '✓ Branding próprio',
-                    '✓ Zero taxas por venda',
-                    '✓ Sem bloqueios',
-                    '✓ Controle total',
-                    '✓ Instalação individual por cliente',
-                    '✓ Sistema de licenciamento avançado',
-                    '✓ Prioridade em suporte',
+                    '✓ Licenciamento avançado',
+                    '✓ Prioridade no suporte',
+                    '✓ Ideal para agências, devs e produtores técnicos',
+                    '✓ Controle total da operação',
+                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
+                    '✓ Segurança nível enterprise',
                     '✓ Atualizações gratuitas por 12 meses'
                   ].map(item => (
-                    <li key={item} className="text-[10px] font-black uppercase tracking-widest leading-tight">{item}</li>
+                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('Revenda em escala') ? 'bg-purple-500/20 text-purple-400 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
                   ))}
                 </ul>
               </div>
-              <button className="relative z-10 w-full py-8 bg-purple-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all">Dominar o Mercado</button>
+              <button className="relative z-10 w-full py-8 bg-purple-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all">ESCALAR NEGÓCIO</button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* CTA FINAL */}
-      <section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="max-w-5xl mx-auto px-6 relative z-10">
-          <h2 className="text-[12vw] md:text-[9vw] font-black leading-none tracking-tighter mb-20 uppercase italic">
-            Ative seu <br /> <span className="text-purple-500">Poder.</span>
-          </h2>
-          <motion.button
-            whileHover={{ scale: 1.1, rotate: -3 }}
-            className="px-32 py-14 bg-white text-black rounded-full font-black text-5xl uppercase italic tracking-tighter shadow-2xl transition-all hover:bg-purple-600 hover:text-white"
-          >
-            Cadastrar Grátis
-          </motion.button>
+
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />
-      </section>
+      </section >
+
+
 
       <footer className="py-32 bg-black border-t border-white/5 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.6em] text-gray-800">

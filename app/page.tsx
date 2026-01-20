@@ -1284,7 +1284,7 @@ const App: React.FC = () => {
 
           <div className="relative min-h-[900px] md:min-h-[600px] flex flex-col lg:flex-row items-center justify-center py-12 md:py-20">
             {/* SVG Connections Layer (Background) - Desktop Only */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+            <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(168, 85, 247, 0.1)" />
@@ -1388,61 +1388,67 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Desktop Layout: Original Absolute Positioning */}
+            {/* Desktop Layout: Flexbox Centering for Perfect Alignment */}
             <div className="hidden lg:block absolute inset-0">
-              {/* Central Node (Core Engine) */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 group"
-              >
-                <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
-                  <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
-                  <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+              {/* Central Node Wrapper - Uses Flexbox for absolute center */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  className="group pointer-events-auto"
+                >
+                  <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
+                    <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
+                    <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
 
-                  <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
-                    <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
-                    <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
+                    <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
+                      <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
+                      <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
+                    </div>
                   </div>
-                </div>
-                <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
-              </motion.div>
+                  <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
+                </motion.div>
+              </div>
 
               {/* Feature Nodes Grid */}
-              <div className="absolute inset-0 grid grid-cols-2 gap-y-20 gap-x-[400px] pointer-events-none">
-                {[
-                  { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'justify-end' },
-                  { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'justify-start' },
-                  { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'justify-end' },
-                  { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'justify-start' }
-                ].map((feature, i) => (
-                  <div key={i} className={`flex items-center ${feature.align}`}>
-                    <motion.div
-                      initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
-                      className="pointer-events-auto group w-full max-w-[280px]"
-                    >
-                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
-                        <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
-                          {feature.icon}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="grid grid-cols-2 gap-y-20 gap-x-[400px] w-full max-w-[1000px]">
+                  {[
+                    { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'justify-end' },
+                    { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'justify-start' },
+                    { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'justify-end' },
+                    { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'justify-start' }
+                  ].map((feature, i) => (
+                    <div key={i} className={`flex items-center ${feature.align}`}>
+                      <motion.div
+                        initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
+                        className="pointer-events-auto group w-full max-w-[280px]"
+                      >
+                        <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] group-hover:border-purple-500/50 transition-all duration-300 hover:shadow-[0_0_50px_rgba(168,85,247,0.4)] relative overflow-hidden">
+                          {/* Glow Effect Overlay */}
+                          <div className="absolute inset-0 bg-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
+                            {feature.icon}
+                          </div>
+                          <h3 className="text-xl font-black italic uppercase tracking-tight mb-2 group-hover:text-purple-400 transition-colors relative z-10">{feature.title}</h3>
+                          <p className="text-[11px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors uppercase tracking-wider relative z-10">{feature.desc}</p>
                         </div>
-                        <h3 className="text-xl font-black italic uppercase tracking-tight mb-2 group-hover:text-purple-400 transition-colors">{feature.title}</h3>
-                        <p className="text-[11px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors uppercase tracking-wider">{feature.desc}</p>
-                      </div>
-                    </motion.div>
-                  </div>
-                ))}
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* SECTION 7: TRÁFEGO & DADOS */}
-      < section className="py-32 px-6 relative z-10" >
+      <section className="py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -1706,7 +1712,7 @@ const App: React.FC = () => {
       </section >
 
       {/* PLANOS - HIGH CONTRAST */}
-      <section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+      < section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
           <div className="text-center mb-40">
             <h2 className="text-8xl md:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10">Escala de <br /> <span className="text-purple-600">Verdade.</span></h2>
@@ -1748,10 +1754,10 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* CTA FINAL */}
-      <section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+      < section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-5xl mx-auto px-6 relative z-10">
           <h2 className="text-[12vw] md:text-[9vw] font-black leading-none tracking-tighter mb-20 uppercase italic">
             Ative seu <br /> <span className="text-purple-500">Poder.</span>
@@ -1764,7 +1770,7 @@ const App: React.FC = () => {
           </motion.button>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />
-      </section>
+      </section >
 
       <footer className="py-32 bg-black border-t border-white/5 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.6em] text-gray-800">

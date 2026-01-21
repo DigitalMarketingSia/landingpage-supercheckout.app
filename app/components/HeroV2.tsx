@@ -81,9 +81,10 @@ const HeroV2: React.FC = () => {
                         <motion.button
                             whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(168,85,247,0.4)" }}
                             whileTap={{ scale: 0.98 }}
+                            onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
                             className="px-10 py-5 bg-purple-600 text-white rounded-2xl font-black text-lg uppercase italic tracking-tighter shadow-[0_20px_50px_rgba(168,85,247,0.3)] transition-all flex items-center justify-center gap-3 group"
                         >
-                            🚀 CRIAR MINHA INFRAESTRUTURA AGORA
+                            🚀 CRIAR INFRAESTRUTURA AGORA
                             <motion.span
                                 animate={{ x: [0, 5, 0] }}
                                 transition={{ duration: 1.5, repeat: Infinity }}

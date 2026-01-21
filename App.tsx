@@ -71,7 +71,7 @@ const FeatureVisual: React.FC<{ type: string }> = ({ type }) => {
         <motion.div {...animations} className="w-full h-full flex items-center justify-center p-8">
           <div className="w-full max-w-sm bg-white/[0.02] border border-purple-500/20 rounded-3xl p-8 text-center shadow-inner">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
               <p className="text-[11px] font-mono text-purple-400">checkout.seunegocio.com.br</p>
             </div>
             <div className="h-1.5 bg-white/5 w-full rounded-full overflow-hidden">
@@ -193,7 +193,7 @@ const App: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
             >
               <h2 className="text-[12vw] md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
@@ -235,6 +235,7 @@ const App: React.FC = () => {
                     <motion.img
                       src="/members-area-showcase.png"
                       alt="Área de Membros - Vitrine de Produtos"
+                      loading="lazy"
                       className="w-full h-auto object-cover object-top mix-blend-lighten opacity-90"
                       style={{
                         filter: "contrast(0.95) saturate(1.2)",
@@ -297,7 +298,7 @@ const App: React.FC = () => {
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
             >
               <h3 className="text-5xl md:text-6xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
                 Experiência <br /> <span className="text-purple-500">Premium.</span>
@@ -317,7 +318,7 @@ const App: React.FC = () => {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    transition={{ delay: i * 0.05, duration: 0.4 }}
                     className="flex items-center gap-4 group"
                   >
                     <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
@@ -333,7 +334,7 @@ const App: React.FC = () => {
             initial={{ opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="mt-12 relative group md:max-w-lg mx-auto"
           >
             {/* Ambient Glow */}
@@ -357,11 +358,12 @@ const App: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
 
                 {/* Image */}
-                <div className="w-full h-full flex items-center justify-center relative z-30">
+                <div className="w-full h-full flex items-center justify-center relative z-30 p-4 md:p-6">
                   <img
                     src="/assets/nova-aula.png"
                     alt="Nova Aula Dashboard"
-                    className="w-full h-full object-cover rounded-[20px]"
+                    loading="lazy"
+                    className="w-full h-full object-contain rounded-[12px]"
                   />
                 </div>
 
@@ -381,72 +383,211 @@ const App: React.FC = () => {
         </div>
       </section >
 
-      {/* STATS COUNTER - REAL-TIME METRICS */}
-      <section className="mt-8 md:mt-12 py-6 md:py-12 px-6 relative z-10 border-y border-white/5">
+      {/* SECTION: INDEPENDENT INSTALLATION & SERVERLESS INFRA */}
+      <section className="py-24 px-6 relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {[
-              { value: 'Member Pro', label: 'Experiência de Streaming', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg> },
-              { value: '<0.8s', label: 'Carregamento Instantâneo', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { value: '100%', label: 'Branding Próprio', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
-              { value: 'Auto', label: 'Liberação Automática', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> }
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-6 md:p-8 bg-white/[0.02] border border-white/10 rounded-[20px] md:rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
-              >
-                {/* Strong Glow Effect - Bottom Left */}
-                <div
-                  className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                  style={{
-                    background: i === 0
-                      ? 'radial-gradient(circle, rgba(146, 50, 234, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                      : i === 1
-                        ? 'radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.4) 40%, transparent 70%)'
-                        : i === 2
-                          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.8) 0%, rgba(146, 50, 234, 0.4) 40%, transparent 70%)'
-                          : 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                  }}
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-                {/* Subtle top-right accent */}
-                <div
-                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-20"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 60%)'
-                  }}
-                />
+            {/* Left: Deep Info & Interactive Visual */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
+                Arquitetura de Isolamento Total
+              </div>
+              <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-8 leading-[0.9]">
+                Instalação completa <br /> <span className="text-purple-500">e independente.</span>
+              </h2>
+              <p className="text-gray-400 text-lg font-medium leading-relaxed max-w-xl mb-10">
+                Cada instalação é <span className="text-white">100% isolada</span>, com sua própria estrutura, dados e controle total. Ideal tanto para uso próprio quanto para atender clientes com autoridade máxima.
+              </p>
 
-                <div className="relative z-10">
-                  <div className="text-purple-500 mb-2 md:mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                    <div className="w-4 h-4 md:w-8 md:h-8">
-                      {stat.icon}
+              {/* Static Isolation Nodes Visual */}
+              <div className="relative h-48 w-full hidden md:block mt-8">
+                {[0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="absolute p-4 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl flex items-center gap-3 transition-transform hover:translate-y-[-4px]"
+                    style={{
+                      left: `${15 + i * 28}%`,
+                      top: `${10 + i * 12}%`,
+                      zIndex: 10 - i,
+                      opacity: 1 - (i * 0.15)
+                    }}
+                  >
+                    <div className="w-10 h-10 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-400">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Instância #{i + 1}</div>
+                      <div className="text-[10px] font-bold text-white italic">Ambiente Isolado</div>
                     </div>
                   </div>
-                  <div className="text-2xl md:text-5xl font-black mb-1 md:mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
-                    {stat.value}
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right: Cloud Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative group"
+            >
+              {/* Dynamic Aura Glow */}
+              <div className="absolute -inset-10 bg-purple-600/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+
+              <div className="relative bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl overflow-hidden group-hover:border-purple-500/30 transition-all duration-700">
+                {/* Cloud Header */}
+                <div className="flex items-center gap-6 mb-10">
+                  <div className="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/30">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                    </svg>
                   </div>
-                  <div className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-gray-500 leading-tight">
-                    {stat.label}
+                  <div>
+                    <h3 className="text-2xl font-black italic uppercase tracking-tighter text-white leading-tight">Infraestrutura própria</h3>
+                    <div className="text-purple-400 text-[10px] font-black uppercase tracking-[0.2em]">Zero Custos de Servidor</div>
                   </div>
                 </div>
-              </motion.div>
-            ))}
+
+                <div className="space-y-8">
+                  <p className="text-gray-400 font-medium leading-relaxed">
+                    O sistema roda em infraestrutura moderna <span className="text-white font-bold">serverless</span>. Você usa sua própria conta, mas sem precisar contratar ou gerenciar servidores físicos.
+                  </p>
+
+                  {/* Feature Checklist Grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      "Sem VPS",
+                      "Sem servidor",
+                      "Sem mensalidades",
+                      "Sem manutenção"
+                    ].map((feat, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 p-4 bg-white/[0.03] rounded-2xl border border-purple-500/20 group/feat hover:bg-white/[0.06] transition-colors"
+                      >
+                        <div className="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-white/80 whitespace-nowrap">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative Label - Top Centered */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-2 bg-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20 border border-purple-400/30">
+                <p className="text-[10px] font-black italic text-white uppercase tracking-[0.2em] whitespace-nowrap">Tecnologia Serverless</p>
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
+
+      {/* SECTION: AUTOMATED BUSINESS & METRICS */}
+      <section className="py-24 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+            {/* Left Column: Text & Metrics */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="mb-8">
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-500 mb-2">Automated Business</div>
+                <div className="h-1 w-12 bg-purple-600 rounded-full" />
+              </div>
+              <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-6 leading-[0.9] text-white">
+                Você foca em vender. <br />
+                <span className="text-purple-500">A tecnologia cuida do resto.</span>
+              </h2>
+
+              <div className="space-y-6 mt-12">
+                {[
+                  "Tempo de carga médio < 0.8s",
+                  "Uptime garantido 99.9%",
+                  "Escala automática conforme o uso"
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    className="flex items-center gap-4 group/item"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <span className="text-sm md:text-base font-black uppercase tracking-tight text-gray-300 group-hover/item:text-white transition-colors">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right Column: Standalone Animated Graphic */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex items-center justify-center"
+            >
+              <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
+                {/* Background Glow for Graphic */}
+                <div className="absolute inset-0 bg-purple-600/5 blur-[100px] rounded-full" />
+
+                <div className="relative z-10 flex items-end gap-3 h-32">
+                  {[0.4, 0.7, 0.5, 0.9, 0.6, 1, 0.8, 0.5, 0.7].map((h, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{
+                        height: [`${h * 20}%`, `${h * 100}%`, `${h * 20}%`],
+                        opacity: [0.3, 1, 0.3]
+                      }}
+                      transition={{
+                        duration: 1.5 + (i * 0.1),
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 0.1
+                      }}
+                      className="w-4 bg-gradient-to-t from-purple-600 via-purple-400 to-white rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+                    />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
 
       {/* Existing Hero */}
       <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 pt-12">
         <div className="text-center z-10 max-w-7xl">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] mb-4 max-w-xs md:max-w-none">
-              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#a855f7]"></span>
+              <span className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7]"></span>
               Um sistema que não trava seu crescimento.
             </div>
             <h1 className="text-[10vw] md:text-[8vw] font-black leading-[0.95] tracking-tighter mb-10 uppercase italic text-white">
@@ -479,23 +620,18 @@ const App: React.FC = () => {
               <div className="flex flex-col items-center gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
+                  onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
                   className="px-14 py-7 bg-purple-600 text-white rounded-[40px] font-black text-xl uppercase italic tracking-tighter shadow-2xl transition-all"
                 >
-                  Ativar Agora →
+                  Criar Sistema →
                 </motion.button>
 
                 {/* Social Proof */}
                 <div className="flex flex-col items-center gap-2">
                   <div className="flex -space-x-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
-                      A
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
-                      B
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
-                      C
-                    </div>
+                    <img src="/assets/avatar1.png" alt="User" className="w-8 h-8 rounded-full border-2 border-[#030303] object-cover" />
+                    <img src="/assets/avatar2.png" alt="User" className="w-8 h-8 rounded-full border-2 border-[#030303] object-cover" />
+                    <img src="/assets/avatar3.png" alt="User" className="w-8 h-8 rounded-full border-2 border-[#030303] object-cover" />
                   </div>
                   <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wide flex items-center gap-2">
                     Faça parte
@@ -612,7 +748,7 @@ const App: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
+                transition={{ delay: i * 0.05, duration: 0.5 }}
                 className="relative group"
               >
                 <div className="flex justify-between items-end mb-4">
@@ -749,7 +885,7 @@ const App: React.FC = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.6 }}
+                    transition={{ delay: i * 0.05, duration: 0.5 }}
                     onClick={() => setActiveFeature(i)}
                     className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
                       ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
@@ -1303,6 +1439,9 @@ const App: React.FC = () => {
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Tudo <br /> <span className="text-purple-500">Conectado.</span>
               </h2>
+              <p className="text-gray-400 text-lg font-medium max-w-2xl mx-auto uppercase tracking-widest">
+                Arquitetura aberta para automações reais
+              </p>
               <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
             </motion.div>
           </div>
@@ -1382,10 +1521,10 @@ const App: React.FC = () => {
               {/* Feature Cards - Vertical Stack on Mobile */}
               <div className="flex flex-col gap-8 w-full max-w-[320px]">
                 {[
-                  { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
-                  { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-                  { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
-                  { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> }
+                  { title: 'Webhooks Nativos', desc: 'Eventos de venda e pagamento em tempo real.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
+                  { title: 'Eventos Realtime', desc: 'Dados instantâneos a cada ação do sistema.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> },
+                  { title: 'Arquitetura Aberta', desc: 'Compatível com n8n, Zapier, Make e sistemas próprios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
+                  { title: 'Automação Livre', desc: 'Você define a lógica. O sistema entrega os dados.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
                 ].map((feature, i) => (
                   <div key={i} className="relative">
                     {/* Connector Line */}
@@ -1397,10 +1536,10 @@ const App: React.FC = () => {
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: i * 0.1, duration: 0.6 }}
+                      transition={{ delay: i * 0.05, duration: 0.5 }}
                       className="group w-full"
                     >
-                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/30 rounded-[32px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,0,0,0.5)] md:hover:border-white/5 md:hover:shadow-none">
                         <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
                           {feature.icon}
                         </div>
@@ -1440,10 +1579,10 @@ const App: React.FC = () => {
               {/* Feature Nodes Grid */}
               <div className="absolute inset-0 grid grid-cols-2 gap-y-20 gap-x-[400px] pointer-events-none">
                 {[
-                  { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'justify-end' },
-                  { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'justify-start' },
-                  { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'justify-end' },
-                  { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'justify-start' }
+                  { title: 'Webhooks Nativos', desc: 'Eventos de venda e pagamento em tempo real.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'justify-end' },
+                  { title: 'Eventos Realtime', desc: 'Dados instantâneos a cada ação do sistema.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'justify-start' },
+                  { title: 'Arquitetura Aberta', desc: 'Compatível com n8n, Zapier, Make e sistemas próprios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'justify-end' },
+                  { title: 'Automação Livre', desc: 'Você define a lógica. O sistema entrega os dados.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'justify-start' }
                 ].map((feature, i) => (
                   <div key={i} className={`flex items-center ${feature.align}`}>
                     <motion.div
@@ -1453,8 +1592,8 @@ const App: React.FC = () => {
                       transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
                       className="pointer-events-auto group w-full max-w-[280px]"
                     >
-                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/20 rounded-[32px] group-hover:border-purple-500/50 transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:shadow-[0_0_50px_rgba(168,85,247,0.4)] relative overflow-hidden">
-                        <div className="absolute inset-0 bg-purple-600/5 opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/50 rounded-[32px] transition-all duration-300 shadow-[0_0_50px_rgba(168,85,247,0.4)] group-hover:border-purple-500/20 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] relative overflow-hidden">
+                        <div className="absolute inset-0 bg-purple-600/5 opacity-100 group-hover:opacity-50 transition-opacity duration-300" />
                         <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
                           {feature.icon}
                         </div>
@@ -1502,8 +1641,12 @@ const App: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-500 overflow-hidden"
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: feature.color + '1a',
+                  borderColor: feature.color + '4d'
+                }}
+                className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group transition-all duration-500 overflow-hidden"
                 style={{
                   borderLeftWidth: '4px',
                   borderLeftColor: feature.color
@@ -1513,7 +1656,13 @@ const App: React.FC = () => {
                 <div className={`absolute inset-y-0 left-0 w-[100px] bg-gradient-to-r ${feature.glow} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                  <div className="w-12 h-12 bg-purple-600/20 rounded-2xl flex items-center justify-center mb-6 text-purple-500 group-hover:bg-purple-600/30 group-hover:scale-110 transition-all">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all"
+                    style={{
+                      backgroundColor: feature.color + '33',
+                      color: feature.color
+                    }}
+                  >
                     {feature.icon}
                   </div>
                   <h3 className="text-xs font-black italic uppercase tracking-wider leading-tight text-white">{feature.title}</h3>
@@ -1608,23 +1757,26 @@ const App: React.FC = () => {
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Sua Marca em <br /> <span className="text-purple-500">Primeiro Lugar.</span>
               </h2>
+              <p className="text-gray-400 text-lg font-medium mt-8 max-w-2xl mx-auto">
+                A experiência é do seu produto. O sistema apenas opera nos bastidores.
+              </p>
               <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
             </motion.div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { title: 'Domínios Personalizados', desc: 'Use seu próprio domínio profissional', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" /></svg> },
-              { title: 'Marca Própria', desc: 'Logo, cores e identidade visual', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
-              { title: 'Experiência White-Label', desc: 'Sem marcas de terceiros', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> },
-              { title: 'Autoridade Visual', desc: 'Fortaleça sua presença no mercado', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> }
+              { title: 'Domínios Personalizados', desc: 'Checkout e área de membros no domínio do seu produto', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" /></svg> },
+              { title: 'Identidade do Produto', desc: 'Logo, cores e visual aplicados à experiência do cliente final', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
+              { title: 'Experiência Sem Ruído', desc: 'Nada de marcas de marketplace or plataformas genéricas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> },
+              { title: 'Autoridade Visual', desc: 'Seu cliente vê um produto profissional, não uma ferramenta', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> }
             ].map((feature, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
+                transition={{ delay: i * 0.05, duration: 0.5 }}
                 whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
                 className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
               >
@@ -1674,7 +1826,7 @@ const App: React.FC = () => {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  transition={{ delay: i * 0.05, duration: 0.5 }}
                   className="relative pl-24 group"
                 >
                   {/* Ícone com Círculo */}
@@ -1734,7 +1886,7 @@ const App: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* PROFISSIONAL (formerly STARTER) */}
-            <div className="p-12 border-4 border-black rounded-[60px] hover:bg-black hover:text-white transition-all duration-700 group flex flex-col justify-between min-h-[850px] relative overflow-hidden">
+            <div className="p-12 border-4 border-black rounded-[60px] group flex flex-col justify-between min-h-[850px] relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Icons.Checkout />
               </div>
@@ -1751,29 +1903,26 @@ const App: React.FC = () => {
                 </div>
                 <ul className="space-y-4 mb-16">
                   {[
-                    '✓ 1 instalação completa',
+                    '✓ 1 licença de uso',
                     '✓ Sistema 100% completo',
                     '✓ Produtos ilimitados',
                     '✓ Clientes ilimitados',
-                    '✓ Checkout de alta conversão',
-                    '✓ Área de membros profissional (Streaming-like)',
-                    '✓ Pagamentos automáticos (PIX, Cartão, Boleto)',
-                    '✓ Dashboard em tempo real',
+                    '✓ Instalação passo a passo (aulas completas)',
                     '✓ Branding próprio',
                     '✓ ZERO taxas por venda',
                     '✓ Infraestrutura própria (sem VPS, sem servidor)',
                     '✓ Segurança nível enterprise',
                     '✓ Atualizações gratuitas por 12 meses'
                   ].map(item => (
-                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('ZERO taxas') ? 'bg-purple-600/10 text-purple-600 px-2 py-1 rounded-md -ml-2 w-fit group-hover:bg-white/20 group-hover:text-white transition-colors' : ''}`}>{item}</li>
+                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('ZERO taxas') ? 'bg-purple-600/10 text-purple-600 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
                   ))}
                 </ul>
               </div>
-              <button className="w-full py-8 border-2 border-black group-hover:border-white rounded-full font-black text-xs uppercase tracking-[0.3em] transition-all">COMEÇAR AGORA</button>
+              <button className="w-full py-8 border-2 border-black text-black hover:bg-black hover:text-white rounded-full font-black text-xs uppercase tracking-[0.3em] transition-all">COMEÇAR AGORA</button>
             </div>
 
             {/* AGÊNCIA (formerly AGENCY) */}
-            <div className="p-12 bg-black text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(59,130,246,0.2)] border-2 border-blue-600 flex flex-col justify-between min-h-[850px]">
+            <div className="p-12 bg-blue-950 text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(59,130,246,0.2)] border-2 border-blue-600 flex flex-col justify-between min-h-[850px]">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-blue-600 px-6 py-3 rounded-b-2xl text-[9px] font-black uppercase tracking-[0.3em] animate-pulse shadow-[0_10px_20px_rgba(37,99,235,0.3)]">Recomendado</div>
               <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_30%,_rgba(59,130,246,0.1)_0%,_transparent_70%)]" />
               <div className="relative z-10 pt-8">
@@ -1791,13 +1940,13 @@ const App: React.FC = () => {
 
                 <ul className="space-y-4 mb-16">
                   {[
-                    '✓ Até 10 instalações independentes',
-                    '✓ Direito de revenda do sistema',
+                    '✓ 1 licença comercial',
+                    '✓ Até 10 ativações independentes',
+                    '✓ Direito de revenda para clientes',
+                    '✓ Cada cliente com ambiente próprio',
                     '✓ Cobrança livre por instalação ou projeto',
                     '✓ Licenciamento individual por cliente',
-                    '✓ Cada cliente com ambiente próprio',
                     '✓ Controle total das ativações',
-                    '✓ Operação limpa (sem hospedagem compartilhada)',
                     '✓ Infraestrutura própria (sem VPS, sem servidor)',
                     '✓ Segurança nível enterprise',
                     '✓ Atualizações gratuitas por 12 meses'
@@ -1828,13 +1977,13 @@ const App: React.FC = () => {
 
                 <ul className="space-y-4 mb-16">
                   {[
-                    '✓ Até 50 instalações independentes',
+                    '✓ 1 licença comercial avançada',
+                    '✓ Até 50 ativações independentes',
                     '✓ Revenda em escala profissional',
-                    '✓ Custo reduzido por instalação',
+                    '✓ Custo reduzido por ativação',
                     '✓ Margem máxima de lucro',
                     '✓ Licenciamento avançado',
-                    '✓ Prioridade no suporte',
-                    '✓ Ideal para agências, devs e produtores técnicos',
+                    '✓ Prioridade em suporte',
                     '✓ Controle total da operação',
                     '✓ Infraestrutura própria (sem VPS, sem servidor)',
                     '✓ Segurança nível enterprise',

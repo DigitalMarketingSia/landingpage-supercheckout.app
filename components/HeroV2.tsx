@@ -81,6 +81,7 @@ const HeroV2: React.FC = () => {
                         <motion.button
                             whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(168,85,247,0.4)" }}
                             whileTap={{ scale: 0.98 }}
+                            onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
                             className="relative px-8 py-3.5 text-white rounded-2xl font-black text-base uppercase italic tracking-tighter shadow-[0_20px_50px_rgba(168,85,247,0.3)] transition-all flex items-center justify-center gap-2 group overflow-hidden"
                         >
                             {/* Animated Gradient Background */}
@@ -95,7 +96,7 @@ const HeroV2: React.FC = () => {
                                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
                                 </svg>
-                                CRIAR MINHA INFRAESTRUTURA AGORA
+                                CRIAR INFRAESTRUTURA AGORA
                                 <motion.span
                                     animate={{ x: [0, 5, 0] }}
                                     transition={{ duration: 1.5, repeat: Infinity }}

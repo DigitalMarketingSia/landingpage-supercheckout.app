@@ -438,9 +438,10 @@ const App: React.FC = () => {
               <div className="flex flex-col items-center gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
+                  onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
                   className="px-14 py-7 bg-purple-600 text-white rounded-[40px] font-black text-xl uppercase italic tracking-tighter shadow-2xl transition-all"
                 >
-                  Ativar Agora →
+                  Criar Sistema →
                 </motion.button>
 
                 {/* Social Proof */}
@@ -686,65 +687,107 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* STATS COUNTER - REAL-TIME METRICS */}
-      <section className="mt-16 md:mt-24 py-6 md:py-12 px-6 relative z-10 border-y border-white/5">
+      {/* STATS COUNTER - MODERN STACK SECTION */}
+      <section className="mt-16 md:mt-24 py-12 md:py-24 px-6 relative z-10 border-y border-white/5">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {[
-              { value: '25+', label: 'Integrações Nativas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-              { value: '99.9%', label: 'Uptime Garantido', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
-              { value: '∞', label: 'Produtos Ilimitados', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg> },
-              { value: '<0.8s', label: 'Tempo de Carga', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ scale: 1.05, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-                className="p-6 md:p-8 bg-white/[0.02] border border-white/10 rounded-[20px] md:rounded-[32px] text-center group hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
-              >
-                {/* Strong Glow Effect - Bottom Left */}
-                <div
-                  className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                  style={{
-                    background: i === 0
-                      ? 'radial-gradient(circle, rgba(146, 50, 234, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                      : i === 1
-                        ? 'radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.4) 40%, transparent 70%)'
-                        : i === 2
-                          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.8) 0%, rgba(146, 50, 234, 0.4) 40%, transparent 70%)'
-                          : 'radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(168, 85, 247, 0.4) 40%, transparent 70%)'
-                  }}
-                />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            {/* Card 1: Technology Stack */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
+            >
+              <div className="absolute -inset-10 bg-purple-600/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10">
+                <div className="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 mb-8 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-4 text-white leading-tight">
+                  Stack moderna, <br /><span className="text-purple-500">rápida e escalável</span>
+                </h3>
+                <p className="text-gray-400 text-sm font-medium leading-relaxed">
+                  Arquitetura pensada para performance, segurança e crescimento.
+                </p>
+              </div>
+            </motion.div>
 
-                {/* Subtle top-right accent */}
-                <div
-                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-20"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 60%)'
-                  }}
-                />
-
-                <div className="relative z-10">
-                  <div className="text-purple-500 mb-2 md:mb-4 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                    <div className="w-4 h-4 md:w-8 md:h-8">
-                      {stat.icon}
+            {/* Card 2: Performance Metrics */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10, borderColor: 'rgba(34, 197, 94, 0.4)' }}
+              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
+            >
+              <div className="absolute -inset-10 bg-green-500/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10 space-y-6">
+                {[
+                  "Tempo de carga médio < 0.8s",
+                  "Uptime garantido 99.9%",
+                  "Escala automática conforme o uso"
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    className="flex items-center gap-4 group/item"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)] group-hover/item:scale-110 transition-transform">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
                     </div>
-                  </div>
-                  <div className="text-2xl md:text-5xl font-black mb-1 md:mb-2 bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">
-                    {stat.value}
-                  </div>
-                  <div className="text-[7px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-gray-500 leading-tight">
-                    {stat.label}
+                    <span className="text-sm md:text-base font-black uppercase tracking-tight text-gray-300 group-hover/item:text-white transition-colors">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Card 3: Automation Focus */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
+            >
+              <div className="absolute -inset-10 bg-purple-600/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10">
+                <div className="mb-8">
+                  <div className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-500 mb-2">Automated Business</div>
+                  <div className="h-1 w-12 bg-purple-600 rounded-full" />
+                </div>
+                <h3 className="text-3xl font-black italic uppercase tracking-tighter mb-4 text-white leading-[0.9]">
+                  Você foca em vender.
+                </h3>
+                <p className="text-xl font-bold italic text-purple-500 mb-6">A tecnologia cuida do resto.</p>
+                <div className="w-full aspect-video bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center p-4 group-hover:border-purple-500/30 transition-all duration-700">
+                  <div className="flex items-end gap-1 h-12">
+                    {[0.4, 0.7, 0.5, 0.9, 0.6, 1].map((h, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ height: [`${h * 20}%`, `${h * 100}%`, `${h * 20}%`] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                        className="w-2 bg-purple-500/40 rounded-t-sm"
+                      />
+                    ))}
                   </div>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
+
 
 
 
@@ -1329,6 +1372,9 @@ const App: React.FC = () => {
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Tudo <br /> <span className="text-purple-500">Conectado.</span>
               </h2>
+              <p className="text-gray-400 text-lg font-medium max-w-2xl mx-auto uppercase tracking-widest">
+                Arquitetura aberta para automações reais
+              </p>
               <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
             </motion.div>
           </div>
@@ -1408,10 +1454,10 @@ const App: React.FC = () => {
               {/* Feature Cards - Vertical Stack on Mobile */}
               <div className="flex flex-col gap-8 w-full max-w-[320px]">
                 {[
-                  { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
-                  { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-                  { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
-                  { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> }
+                  { title: 'Webhooks Nativos', desc: 'Eventos de venda e pagamento em tempo real.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
+                  { title: 'Eventos Realtime', desc: 'Dados instantâneos a cada ação do sistema.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> },
+                  { title: 'Arquitetura Aberta', desc: 'Compatível com n8n, Zapier, Make e sistemas próprios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
+                  { title: 'Automação Livre', desc: 'Você define a lógica. O sistema entrega os dados.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
                 ].map((feature, i) => (
                   <div key={i} className="relative">
                     {/* Connector Line */}
@@ -1426,7 +1472,7 @@ const App: React.FC = () => {
                       transition={{ delay: i * 0.1, duration: 0.6 }}
                       className="group w-full"
                     >
-                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] hover:border-purple-500/30 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                      <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/30 rounded-[32px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,0,0,0.5)] md:hover:border-white/5 md:hover:shadow-none">
                         <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
                           {feature.icon}
                         </div>
@@ -1466,10 +1512,10 @@ const App: React.FC = () => {
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="grid grid-cols-2 gap-y-20 gap-x-[400px] w-full max-w-[1000px]">
                   {[
-                    { title: 'Webhooks Nativos', desc: 'Integre com qualquer sistema em tempo real com facilidade total.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'justify-end' },
-                    { title: 'Automações n8n', desc: 'Workflows poderosos sem código para escalar sua operação.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'justify-start' },
-                    { title: 'Fluxos Custom', desc: 'Crie automações sob medida com lógica avançada de negócios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'justify-end' },
-                    { title: 'Eventos Realtime', desc: 'Notificações instantâneas de cada venda convertida pela engine.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'justify-start' }
+                    { title: 'Webhooks Nativos', desc: 'Eventos de venda e pagamento em tempo real.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>, align: 'justify-end' },
+                    { title: 'Eventos Realtime', desc: 'Dados instantâneos a cada ação do sistema.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>, align: 'justify-start' },
+                    { title: 'Arquitetura Aberta', desc: 'Compatível com n8n, Zapier, Make e sistemas próprios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>, align: 'justify-end' },
+                    { title: 'Automação Livre', desc: 'Você define a lógica. O sistema entrega os dados.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, align: 'justify-start' }
                   ].map((feature, i) => (
                     <div key={i} className={`flex items-center ${feature.align}`}>
                       <motion.div
@@ -1479,9 +1525,9 @@ const App: React.FC = () => {
                         transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
                         className="pointer-events-auto group w-full max-w-[280px]"
                       >
-                        <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/5 rounded-[32px] group-hover:border-purple-500/50 transition-all duration-300 hover:shadow-[0_0_50px_rgba(168,85,247,0.4)] relative overflow-hidden">
+                        <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/50 rounded-[32px] transition-all duration-300 shadow-[0_0_50px_rgba(168,85,247,0.4)] group-hover:border-purple-500/20 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] relative overflow-hidden">
                           {/* Glow Effect Overlay */}
-                          <div className="absolute inset-0 bg-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute inset-0 bg-purple-600/5 opacity-100 group-hover:opacity-50 transition-opacity duration-300" />
                           <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
                             {feature.icon}
                           </div>
@@ -1530,8 +1576,12 @@ const App: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-500 overflow-hidden"
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: feature.color + '1a',
+                  borderColor: feature.color + '4d'
+                }}
+                className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group transition-all duration-500 overflow-hidden"
                 style={{
                   borderLeftWidth: '4px',
                   borderLeftColor: feature.color
@@ -1541,7 +1591,13 @@ const App: React.FC = () => {
                 <div className={`absolute inset-y-0 left-0 w-[100px] bg-gradient-to-r ${feature.glow} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                  <div className="w-12 h-12 bg-purple-600/20 rounded-2xl flex items-center justify-center mb-6 text-purple-500 group-hover:bg-purple-600/30 group-hover:scale-110 transition-all">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all"
+                    style={{
+                      backgroundColor: feature.color + '33',
+                      color: feature.color
+                    }}
+                  >
                     {feature.icon}
                   </div>
                   <h3 className="text-xs font-black italic uppercase tracking-wider leading-tight text-white">{feature.title}</h3>
@@ -1636,16 +1692,19 @@ const App: React.FC = () => {
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Sua Marca em <br /> <span className="text-purple-500">Primeiro Lugar.</span>
               </h2>
+              <p className="text-gray-400 text-lg font-medium mt-8 max-w-2xl mx-auto">
+                A experiência é do seu produto. O sistema apenas opera nos bastidores.
+              </p>
               <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
             </motion.div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { title: 'Domínios Personalizados', desc: 'Use seu próprio domínio profissional', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" /></svg> },
-              { title: 'Marca Própria', desc: 'Logo, cores e identidade visual', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
-              { title: 'Experiência White-Label', desc: 'Sem marcas de terceiros', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> },
-              { title: 'Autoridade Visual', desc: 'Fortaleça sua presença no mercado', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> }
+              { title: 'Domínios Personalizados', desc: 'Checkout e área de membros no domínio do seu produto', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" /></svg> },
+              { title: 'Identidade do Produto', desc: 'Logo, cores e visual aplicados à experiência do cliente final', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg> },
+              { title: 'Experiência Sem Ruído', desc: 'Nada de marcas de marketplace ou plataformas genéricas', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> },
+              { title: 'Autoridade Visual', desc: 'Seu cliente vê um produto profissional, não uma ferramenta', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg> }
             ].map((feature, i) => (
               <motion.div
                 key={i}
@@ -1766,42 +1825,142 @@ const App: React.FC = () => {
       < section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
           <div className="text-center mb-40">
-            <h2 className="text-8xl md:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10">Escala de <br /> <span className="text-purple-600">Verdade.</span></h2>
+            <h2 className="text-8xl md:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10 text-black">Comece <br /> <span className="text-purple-600">Agora.</span></h2>
+
+            {/* Header Objection Killer */}
+            <div className="mt-12">
+              <div className="hidden md:flex flex-col items-center text-center space-y-4">
+                <div className="flex items-center gap-3 text-2xl font-black italic uppercase tracking-tighter text-black">
+                  <span className="text-3xl">🔒</span>
+                  O sistema roda em infraestrutura moderna serverless.
+                </div>
+                <p className="text-gray-500/60 font-medium italic">
+                  Sem VPS, sem servidor, sem mensalidades obrigatórias e sem complicação técnica.
+                </p>
+              </div>
+
+              <div className="md:hidden flex flex-col items-center text-center space-y-2 px-6">
+                <div className="flex items-center gap-2 text-xl font-black italic uppercase tracking-tighter text-black">
+                  <span className="text-2xl">⚡</span>
+                  Sem VPS. Sem servidor.
+                </div>
+                <p className="text-gray-500 font-bold text-[10px] uppercase tracking-[0.2em] opacity-40">
+                  Sem custo fixo obrigatório.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-            {/* Free */}
-            <div className="p-16 border-4 border-black rounded-[70px] hover:bg-black hover:text-white transition-all duration-700 group flex flex-col justify-between h-[650px] relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {/* PROFISSIONAL (formerly STARTER) */}
+            <div className="p-12 border-4 border-black rounded-[60px] group flex flex-col justify-between min-h-[850px] relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Icons.Checkout />
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Bootstrap Level</span>
-                <h3 className="text-6xl font-black mb-6 italic">GRÁTIS</h3>
-                <div className="text-7xl font-black mb-14 tracking-tighter">R$ 0<span className="text-2xl opacity-40">/mês</span></div>
-                <ul className="space-y-5 mb-16">
-                  {['✓ Checkout Mobile-First', '✓ Produtos Ilimitados', '✓ Branding Próprio', '✓ Taxas Transparentes'].map(item => (
-                    <li key={item} className="text-xs font-black uppercase tracking-widest">{item}</li>
+              <div className="relative z-10">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Sistema completo para uso próprio</span>
+                <h3 className="text-3xl lg:text-5xl font-black mb-6 italic">PROFISSIONAL</h3>
+                <div className="mb-8">
+                  <div className="text-6xl font-black tracking-tighter">R$ 167</div>
+                  <div className="border-y border-black/5 py-4 my-8">
+                    <p className="text-sm font-bold opacity-40 leading-relaxed italic">
+                      Ideal para quem quer vender seus próprios produtos com tecnologia de nível profissional, sem taxas e sem limitações.
+                    </p>
+                  </div>
+                </div>
+                <ul className="space-y-4 mb-16">
+                  {[
+                    '✓ 1 licença de uso',
+                    '✓ Sistema 100% completo',
+                    '✓ Produtos ilimitados',
+                    '✓ Clientes ilimitados',
+                    '✓ Instalação passo a passo (aulas completas)',
+                    '✓ Branding próprio',
+                    '✓ ZERO taxas por venda',
+                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
+                    '✓ Segurança nível enterprise',
+                    '✓ Atualizações gratuitas por 12 meses'
+                  ].map(item => (
+                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('ZERO taxas') ? 'bg-purple-600/10 text-purple-600 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
                   ))}
                 </ul>
               </div>
-              <button className="w-full py-10 border-2 border-black group-hover:border-white rounded-full font-black text-xs uppercase tracking-[0.3em] transition-all">Começar Agora</button>
+              <button className="w-full py-8 border-2 border-black text-black hover:bg-black hover:text-white rounded-full font-black text-xs uppercase tracking-[0.3em] transition-all">COMEÇAR AGORA</button>
             </div>
 
-            {/* Pro */}
-            <div className="p-16 bg-black text-white rounded-[70px] relative overflow-hidden shadow-[0_40px_100px_rgba(168,85,247,0.3)] border-2 border-purple-600 flex flex-col justify-between h-[650px]">
-              <div className="absolute top-12 right-12 bg-purple-600 px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] animate-pulse">Recomendado</div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Massive Volume</span>
-                <h3 className="text-6xl font-black mb-6 italic">PRO</h3>
-                <div className="text-7xl font-black mb-14 tracking-tighter">R$ 297<span className="text-2xl opacity-40">/mês</span></div>
-                <ul className="space-y-5 mb-16">
-                  {['✓ Tudo do Grátis', '✓ Webhooks Full API', '✓ Suporte VIP 24/7', '✓ Infraestrutura de Elite'].map(item => (
-                    <li key={item} className="text-xs font-black uppercase tracking-widest">{item}</li>
+            {/* AGÊNCIA (formerly AGENCY) */}
+            <div className="p-12 bg-blue-950 text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(59,130,246,0.2)] border-2 border-blue-600 flex flex-col justify-between min-h-[850px]">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-blue-600 px-6 py-3 rounded-b-2xl text-[9px] font-black uppercase tracking-[0.3em] animate-pulse shadow-[0_10px_20px_rgba(37,99,235,0.3)]">Recomendado</div>
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_30%,_rgba(59,130,246,0.1)_0%,_transparent_70%)]" />
+              <div className="relative z-10 pt-8">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Para quem quer vender o sistema para clientes</span>
+                <h3 className="text-5xl font-black mb-6 italic text-blue-500">AGÊNCIA</h3>
+                <div className="mb-8">
+                  <div className="text-6xl font-black tracking-tighter">R$ 697</div>
+                  <div className="border-y border-white/10 py-4 my-8">
+                    <p className="text-sm font-bold opacity-60 leading-relaxed italic">
+                      <span className="text-blue-500 font-black not-italic uppercase tracking-[0.2em] text-[10px] block mb-2">Tudo do plano Profissional +</span>
+                      Crie uma nova fonte de renda vendendo o sistema para seus próprios clientes.
+                    </p>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-16">
+                  {[
+                    '✓ 1 licença comercial',
+                    '✓ Até 10 ativações independentes',
+                    '✓ Direito de revenda para clientes',
+                    '✓ Cada cliente com ambiente próprio',
+                    '✓ Cobrança livre por instalação ou projeto',
+                    '✓ Licenciamento individual por cliente',
+                    '✓ Controle total das ativações',
+                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
+                    '✓ Segurança nível enterprise',
+                    '✓ Atualizações gratuitas por 12 meses'
+                  ].map(item => (
+                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('Direito de revenda') ? 'bg-blue-500/20 text-blue-400 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
                   ))}
                 </ul>
               </div>
-              <button className="w-full py-10 bg-purple-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all">Escalar Império</button>
+              <button className="relative z-10 w-full py-8 bg-blue-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-blue-500 shadow-[0_0_40px_rgba(59,130,246,0.3)] transition-all">COMEÇAR A VENDER</button>
+            </div>
+
+            {/* EMPRESA (formerly MASTER) */}
+            <div className="p-12 bg-[#050505] text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(168,85,247,0.3)] border-2 border-purple-600 flex flex-col justify-between min-h-[850px]">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-purple-600 px-6 py-3 rounded-b-2xl text-[9px] font-black uppercase tracking-[0.3em] shadow-[0_10px_20px_rgba(168,85,247,0.3)]">Escala Total</div>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-transparent" />
+              <div className="relative z-10 pt-8">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Para escalar a revenda como negócio profissional e lucrativo</span>
+                <h3 className="text-5xl font-black mb-6 italic text-purple-500">MASTER</h3>
+                <div className="mb-8">
+                  <div className="text-6xl font-black tracking-tighter">R$ 1.497</div>
+                  <div className="border-y border-white/10 py-4 my-8">
+                    <p className="text-sm font-bold opacity-60 leading-relaxed italic">
+                      <span className="text-purple-500 font-black not-italic uppercase tracking-[0.2em] text-[10px] block mb-2">Tudo do plano Agência +</span>
+                      Máxima escala e margem para transformar o Super Checkout em um negócio de revenda profissional.
+                    </p>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-16">
+                  {[
+                    '✓ 1 licença comercial avançada',
+                    '✓ Até 50 ativações independentes',
+                    '✓ Revenda em escala profissional',
+                    '✓ Custo reduzido por ativação',
+                    '✓ Margem máxima de lucro',
+                    '✓ Licenciamento avançado',
+                    '✓ Prioridade em suporte',
+                    '✓ Controle total da operação',
+                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
+                    '✓ Segurança nível enterprise',
+                    '✓ Atualizações gratuitas por 12 meses'
+                  ].map(item => (
+                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('Revenda em escala') ? 'bg-purple-500/20 text-purple-400 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <button className="relative z-10 w-full py-8 bg-purple-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all">ESCALAR NEGÓCIO</button>
             </div>
           </div>
         </div>

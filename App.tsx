@@ -326,8 +326,58 @@ const App: React.FC = () => {
                 ))}
               </div>
             </motion.div>
-
           </div>
+
+          {/* NEW CARD: Member Area Dashboard Style */}
+          <motion.div
+            initial={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-12 relative group md:max-w-lg mx-auto"
+          >
+            {/* Ambient Glow */}
+            <div className="absolute -inset-10 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+            <div className="relative w-full aspect-video bg-[#050508] rounded-[24px] border border-white/10 shadow-2xl overflow-hidden">
+              {/* Inner Content */}
+              <div className="w-full h-full relative">
+                {/* Aurora Background Animation */}
+                <div className="absolute inset-0 z-0 opacity-30">
+                  <Aurora
+                    color1="#9232ea"
+                    colorStops={['#9232ea', '#a855f7', '#9232ea']}
+                    amplitude={1.0}
+                    blend={0.5}
+                    speed={0.5}
+                  />
+                </div>
+
+                {/* Glass Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
+
+                {/* Image */}
+                <div className="w-full h-full flex items-center justify-center relative z-30">
+                  <img
+                    src="/assets/nova-aula.png"
+                    alt="Nova Aula Dashboard"
+                    className="w-full h-full object-cover rounded-[20px]"
+                  />
+                </div>
+
+                {/* Scan Line Effect */}
+                <motion.div
+                  animate={{ y: ["-100%", "300%"] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
+                  className="absolute top-0 left-0 w-full h-[20%] bg-gradient-to-b from-transparent via-purple-500/10 to-transparent z-30 pointer-events-none blur-sm"
+                />
+              </div>
+
+              {/* Neon Borders */}
+              <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/50 transition-colors duration-500" />
+              <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
+            </div>
+          </motion.div>
         </div>
       </section >
 

@@ -187,769 +187,6 @@ const App: React.FC = () => {
       {/* New Hero Section */}
       <HeroV2 />
 
-      {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
-      < section className="py-32 px-6 relative z-10" >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
-              </h2>
-              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
-                Uma experiência digna de streaming para seus clientes
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Grid Layout: Card + Text */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-            {/* Premium Showcase Card with Auto-Scroll */}
-            <div className="relative group">
-
-              {/* Atmospheric Glow */}
-              <motion.div
-                style={{ opacity: glowOpacity }}
-                className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
-              />
-
-              <motion.div
-                style={{
-                  scale: dashScale,
-                  opacity: dashOpacity,
-                  y: dashY
-                }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 100, damping: 30 }}
-                className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
-              >
-                {/* Inner Content Container */}
-                <div className="w-full h-full relative">
-                  {/* Aurora Background Animation */}
-                  <div className="absolute inset-0 z-0 opacity-30">
-                    <Aurora
-                      color1="#9232ea"
-                      colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                      amplitude={1.2}
-                      blend={0.6}
-                      speed={0.8}
-                    />
-                  </div>
-
-                  {/* Glass Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-                  {/* Gradient Overlay for Depth */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
-
-                  {/* Auto-Scrolling Image Container */}
-                  <div className="w-full h-full flex items-start justify-center relative z-10 overflow-hidden">
-                    <motion.img
-                      src="/members-area-showcase.png"
-                      alt="Área de Membros - Vitrine de Produtos"
-                      className="w-full h-auto min-h-full object-cover object-top opacity-80"
-                      style={{
-                        filter: "grayscale(15%) brightness(0.85) contrast(0.95)"
-                      }}
-                      animate={{
-                        y: [0, -400, 0]
-                      }}
-                      transition={{
-                        duration: 20,
-                        repeat: Infinity,
-                        ease: "linear",
-                        repeatDelay: 2
-                      }}
-                      whileHover={{
-                        filter: "grayscale(0%) brightness(1) contrast(1)",
-                        transition: { duration: 0.6 }
-                      }}
-
-                    />
-                  </div>
-
-                  {/* Scan Line Effect */}
-                  <motion.div
-                    animate={{ y: ["-100%", "300%"] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-                    className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
-                  />
-                </div>
-
-                {/* Neon Borders */}
-                <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
-                <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-              </motion.div>
-
-              {/* Floating Feature Badges */}
-              <motion.div
-                style={{ y: yParallax }}
-                className="absolute -right-4 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] z-40"
-              >
-                <div className="flex items-center gap-2 md:gap-3">
-                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
-                  <div>
-                    <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Layout Premium</p>
-                    <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Streaming</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -left-4 md:-left-6 bottom-[15%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl z-40"
-              >
-                <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Experiência</p>
-                <p className="text-base md:text-lg font-black text-white italic">Premium</p>
-              </motion.div>
-            </div>
-
-            {/* Text Content with Bullet Points */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h3 className="text-5xl md:text-6xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
-                Experiência <br /> <span className="text-purple-500">Premium.</span>
-              </h3>
-              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
-                Interface moderna tipo streaming para seus produtos digitais
-              </p>
-              <div className="space-y-6">
-                {[
-                  'Vitrine de Produtos',
-                  'Acesso Centralizado',
-                  'Branding Próprio',
-                  'Experiência Premium'
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                    className="flex items-center gap-4 group"
-                  >
-                    <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
-                    <span className="text-lg font-black uppercase tracking-wide">{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* NEW CARD: Member Area Dashboard Style */}
-              <motion.div
-                initial={{ opacity: 1, y: 0 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="mt-12 relative group"
-              >
-                {/* Ambient Glow */}
-                <div className="absolute -inset-10 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                <div className="relative w-full aspect-video bg-[#050508] rounded-[24px] border border-white/10 shadow-2xl overflow-hidden">
-                  {/* Inner Content */}
-                  <div className="w-full h-full relative">
-                    {/* Aurora Background Animation */}
-                    <div className="absolute inset-0 z-0 opacity-30">
-                      <Aurora
-                        color1="#9232ea"
-                        colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                        amplitude={1.0}
-                        blend={0.5}
-                        speed={0.5}
-                      />
-                    </div>
-
-                    {/* Glass Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-                    {/* Image */}
-                    <div className="w-full h-full flex items-center justify-center relative z-30">
-                      <img
-                        src="/assets/nova-aula.png"
-                        alt="Nova Aula Dashboard"
-                        className="w-full h-full object-cover rounded-[20px]"
-                      />
-                    </div>
-
-                    {/* Scan Line Effect */}
-                    <motion.div
-                      animate={{ y: ["-100%", "300%"] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
-                      className="absolute top-0 left-0 w-full h-[20%] bg-gradient-to-b from-transparent via-purple-500/10 to-transparent z-30 pointer-events-none blur-sm"
-                    />
-                  </div>
-
-                  {/* Neon Borders */}
-                  <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/50 transition-colors duration-500" />
-                  <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-                </div>
-              </motion.div>
-            </motion.div>
-
-          </div>
-        </div>
-      </section >
-
-      {/* Existing Hero (below new one) */}
-      <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 pt-12">
-        <div className="text-center z-10 max-w-7xl">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] mb-4 max-w-xs md:max-w-none">
-              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#a855f7]"></span>
-              Um sistema que não trava seu crescimento.
-            </div>
-            <h1 className="text-[10vw] md:text-[8vw] font-black leading-[0.95] tracking-tighter mb-10 uppercase italic text-white">
-              VENDA MAIS <br />
-              <GradientText
-                isBackground
-                colors={["#a855f7", "#86efac"]}
-                animationSpeed={0.1}
-                className="inline-block px-6 mb-2"
-              >
-                <span className="text-black mix-blend-multiply selection:bg-purple-500/30">E ESCALE&nbsp;</span>
-              </GradientText> <br />
-              SEM LIMITES!&nbsp;
-            </h1>
-            <div className="flex flex-col items-center justify-center gap-6 mt-4">
-              <p className="text-gray-500 text-[12px] font-bold uppercase tracking-tight leading-relaxed text-center max-w-[400px] flex flex-row flex-wrap justify-center gap-x-8 gap-y-2 mb-4">
-                <span className="flex items-center">
-                  <svg className="inline-block w-3.5 h-3.5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                  Seu checkout.
-                </span>
-                <span className="flex items-center">
-                  <svg className="inline-block w-3.5 h-3.5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                  Suas regras.
-                </span>
-                <span className="flex items-center">
-                  <svg className="inline-block w-3.5 h-3.5 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  Seu dinheiro.
-                </span>
-              </p>
-              <div className="flex flex-col items-center gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(168,85,247,0.4)" }}
-                  onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-14 py-7 bg-purple-600 text-white rounded-[40px] font-black text-xl uppercase italic tracking-tighter shadow-2xl transition-all"
-                >
-                  Criar Sistema →
-                </motion.button>
-
-                {/* Social Proof */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="flex -space-x-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
-                      A
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
-                      B
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 border-2 border-[#030303] flex items-center justify-center text-white font-bold text-[10px]">
-                      C
-                    </div>
-                  </div>
-                  <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wide flex items-center gap-2">
-                    Faça parte
-                    <svg className="w-3 h-3 text-yellow-500 fill-current" viewBox="0 0 24 24">
-                      <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* DASHBOARD SECTION - SMOOTH & FLUID */}
-      <section className="py-16 px-6 relative z-10 overflow-visible">
-        <div className="max-w-[900px] mx-auto relative group">
-
-          {/* Luz Atmosférica Dinâmica em volta do card */}
-          <motion.div
-            style={{ opacity: glowOpacity }}
-            className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
-          />
-
-          <motion.div
-            style={{
-              scale: dashScale,
-              opacity: useTransform(scrollYProgress, [0, 0.15], [0.2, 1]),
-              y: dashY
-            }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 100, damping: 30 }}
-            className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/20 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
-          >
-            {/* Inner Content */}
-            <div className="w-full h-full relative">
-              {/* Aurora Background Animation */}
-              <div className="absolute inset-0 z-0 opacity-30">
-                <Aurora
-                  color1="#9232ea"
-                  colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                  amplitude={1.2}
-                  blend={0.6}
-                  speed={0.8}
-                />
-              </div>
-
-              {/* Efeito de Vidro (Reflexos) */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-              {/* Overlay de Gradiente Suave para Profundidade */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
-
-              {/* A IMAGEM ATUALIZADA */}
-              <div className="w-full h-full p-3 md:p-6 flex items-center justify-center relative z-10">
-                <motion.img
-                  src="/assets/dashboard.png"
-                  alt="Super Checkout .app Dashboard"
-                  className="w-full h-full object-contain"
-                  initial={{ filter: "grayscale(0%)" }}
-                  whileHover={{ filter: "brightness(1.1)", transition: { duration: 0.6 } }}
-                />
-              </div>
-
-              {/* Linha de Scan Laser Animada */}
-              <motion.div
-                animate={{ y: ["-100%", "300%"] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-                className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
-              />
-            </div>
-
-            {/* Borda Neon Refinada */}
-            <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
-            <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-          </motion.div>
-
-          {/* Elementos Flutuantes Interativos (Widgets) */}
-          <motion.div
-            style={{ y: yParallax }}
-            className="absolute -right-2 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[16px] md:rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] block z-40 scale-75 md:scale-100"
-          >
-            <div className="flex items-center gap-2 md:gap-3">
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
-              <div>
-                <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Status da Engine</p>
-                <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Alta Performance</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -left-2 md:-left-6 bottom-[10%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[16px] md:rounded-[20px] shadow-2xl block z-40 scale-75 md:scale-100"
-          >
-            <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Conversão Ativa</p>
-            <p className="text-base md:text-lg font-black text-white italic">+94.0%</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* PERFORMANCE METRICS */}
-      <section className="pt-32 pb-8 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-              Performance <br /> <span className="text-purple-500">Brutal.</span>
-            </h2>
-          </div>
-
-          <div className="max-w-4xl mx-auto space-y-16">
-            {[
-              { label: 'Velocidade de Carga', value: 98, color: '#a855f7', path: "M0,80 Q50,75 100,30 T200,40 T300,10" },
-              { label: 'Taxa de Conversão', value: 94, color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
-              { label: 'Uptime & Estabilidade', value: 99, color: '#3b82f6', path: "M0,70 Q150,65 300,68" },
-              { label: 'Segurança & LGPD', value: 100, color: '#f97316', path: "M0,85 Q50,30 100,50 T200,20 T300,5" }
-            ].map((metric, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="relative group"
-              >
-                <div className="flex justify-between items-end mb-4">
-                  <div>
-                    <span className="text-xs font-black uppercase tracking-[0.3em] text-gray-500 mb-2 block">{metric.label}</span>
-                    <div className="h-1 w-12 bg-white/10 rounded-full" />
-                  </div>
-                  <span className="text-4xl font-black italic text-white flex items-end gap-1">
-                    {metric.value}<span className="text-lg opacity-30 mt-1">%</span>
-                  </span>
-                </div>
-
-                <div className="h-40 w-full relative">
-                  <svg className="w-full h-full overflow-visible" viewBox="0 0 300 100" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id={`grad-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor={metric.color} stopOpacity="0.3" />
-                        <stop offset="100%" stopColor={metric.color} stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Reference Grid */}
-                    <line x1="0" y1="100" x2="300" y2="100" stroke="white" strokeWidth="0.5" strokeOpacity="0.1" />
-
-                    {/* Area Fill */}
-                    <motion.path
-                      d={`${metric.path} L300,100 L0,100 Z`}
-                      fill={`url(#grad-${i})`}
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.5, delay: 0.8 }}
-                    />
-
-                    {/* Main Stroke */}
-                    <motion.path
-                      d={metric.path}
-                      fill="none"
-                      stroke={metric.color}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0 }}
-                      whileInView={{ pathLength: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
-                    />
-
-                    {/* Laser Pulse Effect */}
-                    <motion.path
-                      d={metric.path}
-                      fill="none"
-                      stroke="white"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0.1, pathOffset: 0, opacity: 0 }}
-                      animate={{
-                        pathOffset: [0, 1.2],
-                        opacity: [0, 1, 1, 0]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "linear",
-                        delay: 1.5 + (i * 0.4)
-                      }}
-                      style={{ filter: `drop-shadow(0 0 8px white)` }}
-                    />
-                  </svg>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* New Card: Núcleo Reativo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-16 p-12 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[48px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)]"
-          >
-            {/* Ambient Glow */}
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-            <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
-              <div className="w-20 h-20 bg-purple-600/20 rounded-3xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
-                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-3xl font-black mb-4 italic uppercase tracking-tight">Núcleo Reativo</h3>
-                <p className="text-gray-400 text-lg leading-relaxed max-w-3xl">
-                  Processamos dados em milissegundos usando arquitetura serverless de última geração. <span className="text-purple-400 font-bold">Nada de espera, apenas resultados.</span>
-                </p>
-              </div>
-
-              <div className="px-8 py-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
-                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-500 mb-1">LOAD SPEED</div>
-                <div className="text-3xl font-black italic">120ms</div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* STATS COUNTER - MODERN STACK SECTION */}
-      <section className="mt-16 md:mt-24 py-12 md:py-24 px-6 relative z-10 border-y border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-            {/* Card 1: Technology Stack */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -10, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
-            >
-              <div className="absolute -inset-10 bg-purple-600/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative z-10">
-                <div className="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 mb-8 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-4 text-white leading-tight">
-                  Stack moderna, <br /><span className="text-purple-500">rápida e escalável</span>
-                </h3>
-                <p className="text-gray-400 text-sm font-medium leading-relaxed">
-                  Arquitetura pensada para performance, segurança e crescimento.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Card 2: Performance Metrics */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -10, borderColor: 'rgba(34, 197, 94, 0.4)' }}
-              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
-            >
-              <div className="absolute -inset-10 bg-green-500/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative z-10 space-y-6">
-                {[
-                  "Tempo de carga médio < 0.8s",
-                  "Uptime garantido 99.9%",
-                  "Escala automática conforme o uso"
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    className="flex items-center gap-4 group/item"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)] group-hover/item:scale-110 transition-transform">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-sm md:text-base font-black uppercase tracking-tight text-gray-300 group-hover/item:text-white transition-colors">{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Card 3: Automation Focus */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -10, borderColor: 'rgba(168, 85, 247, 0.4)' }}
-              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
-            >
-              <div className="absolute -inset-10 bg-purple-600/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative z-10">
-                <div className="mb-8">
-                  <div className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-500 mb-2">Automated Business</div>
-                  <div className="h-1 w-12 bg-purple-600 rounded-full" />
-                </div>
-                <h3 className="text-3xl font-black italic uppercase tracking-tighter mb-4 text-white leading-[0.9]">
-                  Você foca em vender.
-                </h3>
-                <p className="text-xl font-bold italic text-purple-500 mb-6">A tecnologia cuida do resto.</p>
-                <div className="w-full aspect-video bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center p-4 group-hover:border-purple-500/30 transition-all duration-700">
-                  <div className="flex items-end gap-1 h-12">
-                    {[0.4, 0.7, 0.5, 0.9, 0.6, 1].map((h, i) => (
-                      <motion.div
-                        key={i}
-                        animate={{ height: [`${h * 20}%`, `${h * 100}%`, `${h * 20}%`] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                        className="w-2 bg-purple-500/40 rounded-t-sm"
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-
-
-
-
-      {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
-      <section id="features" className="relative z-10 mt-12 md:mt-48">
-        <div className="py-32 lg:h-screen lg:sticky lg:top-0 flex items-center justify-center px-6">
-          <div className="max-w-7xl mx-auto w-full">
-            <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
-              <div>
-                <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                  Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
-                </h2>
-                <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
-              </div>
-              <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
-                Design minimalista. <br />Engenharia máxima.
-              </p>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
-
-              {/* MOBILE: Simple Stacked Cards */}
-              <div className="lg:hidden w-full space-y-4">
-                {showcaseFeatures.map((f, i) => (
-                  <motion.div
-                    key={f.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.6 }}
-                    onClick={() => setActiveFeature(i)}
-                    className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
-                      ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
-                      : 'bg-[#0a0a0f]/50 border border-white/10'
-                      }`}
-                  >
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_15px_#a855f7]' : 'bg-white/5 text-gray-500'
-                        }`}>
-                        {f.icon}
-                      </div>
-                      <h3 className="text-base font-black italic uppercase tracking-wide">{f.title}</h3>
-                    </div>
-
-                    {/* Expandable Content */}
-                    <AnimatePresence>
-                      {activeFeature === i && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pt-4 border-t border-white/10">
-                            <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
-                            <div className="space-y-3">
-                              {f.highlights.map(h => (
-                                <div key={h} className="flex items-center gap-3">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
-                                  <span className="text-xs font-bold uppercase tracking-wider text-white/70">{h}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* DESKTOP: Vertical Card Carousel */}
-              <div className="hidden lg:flex lg:w-[400px] relative h-full flex-col justify-center">
-                <div className="relative h-[500px] flex flex-col items-center justify-center">
-                  {showcaseFeatures.map((f, i) => {
-                    const offset = i - activeFeature;
-                    const isActive = i === activeFeature;
-                    const isPrev = offset === -1;
-                    const isNext = offset === 1;
-                    const isVisible = Math.abs(offset) <= 1;
-
-                    return (
-                      <motion.div
-                        key={f.id}
-                        animate={{
-                          y: offset * 140,
-                          scale: isActive ? 1 : 0.85,
-                          opacity: isActive ? 1 : isPrev || isNext ? 0.3 : 0,
-                          filter: isActive ? 'blur(0px)' : 'blur(2px)'
-                        }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className={`absolute w-full p-8 rounded-[48px] cursor-pointer flex items-center gap-6 ${isActive
-                          ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_30px_#a855f7] z-20'
-                          : 'bg-[#0a0a0f]/50 border border-white/5 z-10'
-                          }`}
-                        style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
-                        onClick={() => setActiveFeature(i)}
-                      >
-                        <div className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${isActive ? 'bg-purple-600 text-white shadow-[0_0_20px_#a855f7]' : 'bg-white/5 text-gray-500'
-                          }`}>
-                          {f.icon}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-sm font-black italic uppercase tracking-[0.15em]">{f.title}</h3>
-                          {isActive && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-2" />}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-
-                {/* Scroll Indicators */}
-                <div className="flex justify-center gap-2 mt-8">
-                  {showcaseFeatures.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveFeature(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${i === activeFeature ? 'bg-purple-500 w-8' : 'bg-white/20'
-                        }`}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* DESKTOP: Content Display */}
-              <div className="hidden lg:flex flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex-col lg:flex-row shadow-inner h-full">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
-
-                <div className="flex-1 relative min-h-[400px]">
-                  <AnimatePresence mode="wait">
-                    <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
-                  </AnimatePresence>
-                </div>
-
-                <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
-                  <AnimatePresence mode="wait">
-                    <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
-                      <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
-                      <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
-                      <div className="space-y-5">
-                        {showcaseFeatures[activeFeature].highlights.map(h => (
-                          <div key={h} className="flex items-center gap-4 group">
-                            <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
-        <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 25}vh` }} />
-      </section >
-
       {/* SECTION 2: CHECKOUT QUE VENDE */}
       < section className="py-0 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
@@ -1279,6 +516,767 @@ const App: React.FC = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
+
+
+      {/* DASHBOARD SECTION - SMOOTH & FLUID */}
+      <section className="py-16 px-6 relative z-10 overflow-visible">
+        <div className="max-w-[900px] mx-auto relative group">
+
+          {/* Luz Atmosférica Dinâmica em volta do card */}
+          <motion.div
+            style={{ opacity: glowOpacity }}
+            className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
+          />
+
+          <motion.div
+            style={{
+              scale: dashScale,
+              opacity: useTransform(scrollYProgress, [0, 0.15], [0.2, 1]),
+              y: dashY
+            }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 100, damping: 30 }}
+            className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/20 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
+          >
+            {/* Inner Content */}
+            <div className="w-full h-full relative">
+              {/* Aurora Background Animation */}
+              <div className="absolute inset-0 z-0 opacity-30">
+                <Aurora
+                  color1="#9232ea"
+                  colorStops={['#9232ea', '#a855f7', '#9232ea']}
+                  amplitude={1.2}
+                  blend={0.6}
+                  speed={0.8}
+                />
+              </div>
+
+              {/* Efeito de Vidro (Reflexos) */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
+
+              {/* Overlay de Gradiente Suave para Profundidade */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
+
+              {/* A IMAGEM ATUALIZADA */}
+              <div className="w-full h-full p-3 md:p-6 flex items-center justify-center relative z-10">
+                <motion.img
+                  src="/assets/dashboard.png"
+                  alt="Super Checkout .app Dashboard"
+                  className="w-full h-full object-contain"
+                  initial={{ filter: "grayscale(0%)" }}
+                  whileHover={{ filter: "brightness(1.1)", transition: { duration: 0.6 } }}
+                />
+              </div>
+
+              {/* Linha de Scan Laser Animada */}
+              <motion.div
+                animate={{ y: ["-100%", "300%"] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
+              />
+            </div>
+
+            {/* Borda Neon Refinada */}
+            <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
+            <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
+          </motion.div>
+
+          {/* Elementos Flutuantes Interativos (Widgets) */}
+          <motion.div
+            style={{ y: yParallax }}
+            className="absolute -right-2 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[16px] md:rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] block z-40 scale-75 md:scale-100"
+          >
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
+              <div>
+                <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Status da Engine</p>
+                <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Alta Performance</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -left-2 md:-left-6 bottom-[10%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[16px] md:rounded-[20px] shadow-2xl block z-40 scale-75 md:scale-100"
+          >
+            <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Conversão Ativa</p>
+            <p className="text-base md:text-lg font-black text-white italic">+94.0%</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* PERFORMANCE METRICS */}
+      <section className="pt-32 pb-8 px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+              Performance <br /> <span className="text-purple-500">Brutal.</span>
+            </h2>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-16">
+            {[
+              { label: 'Velocidade de Carga', value: 98, color: '#a855f7', path: "M0,80 Q50,75 100,30 T200,40 T300,10" },
+              { label: 'Taxa de Conversão', value: 94, color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
+              { label: 'Uptime & Estabilidade', value: 99, color: '#3b82f6', path: "M0,70 Q150,65 300,68" },
+              { label: 'Segurança & LGPD', value: 100, color: '#f97316', path: "M0,85 Q50,30 100,50 T200,20 T300,5" }
+            ].map((metric, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="relative group"
+              >
+                <div className="flex justify-between items-end mb-4">
+                  <div>
+                    <span className="text-xs font-black uppercase tracking-[0.3em] text-gray-500 mb-2 block">{metric.label}</span>
+                    <div className="h-1 w-12 bg-white/10 rounded-full" />
+                  </div>
+                  <span className="text-4xl font-black italic text-white flex items-end gap-1">
+                    {metric.value}<span className="text-lg opacity-30 mt-1">%</span>
+                  </span>
+                </div>
+
+                <div className="h-40 w-full relative">
+                  <svg className="w-full h-full overflow-visible" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id={`grad-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={metric.color} stopOpacity="0.3" />
+                        <stop offset="100%" stopColor={metric.color} stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Reference Grid */}
+                    <line x1="0" y1="100" x2="300" y2="100" stroke="white" strokeWidth="0.5" strokeOpacity="0.1" />
+
+                    {/* Area Fill */}
+                    <motion.path
+                      d={`${metric.path} L300,100 L0,100 Z`}
+                      fill={`url(#grad-${i})`}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.5, delay: 0.8 }}
+                    />
+
+                    {/* Main Stroke */}
+                    <motion.path
+                      d={metric.path}
+                      fill="none"
+                      stroke={metric.color}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0 }}
+                      whileInView={{ pathLength: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+                    />
+
+                    {/* Laser Pulse Effect */}
+                    <motion.path
+                      d={metric.path}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0.1, pathOffset: 0, opacity: 0 }}
+                      animate={{
+                        pathOffset: [0, 1.2],
+                        opacity: [0, 1, 1, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                        delay: 1.5 + (i * 0.4)
+                      }}
+                      style={{ filter: `drop-shadow(0 0 8px white)` }}
+                    />
+                  </svg>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* New Card: Núcleo Reativo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-16 p-12 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[48px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)]"
+          >
+            {/* Ambient Glow */}
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+              <div className="w-20 h-20 bg-purple-600/20 rounded-3xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-3xl font-black mb-4 italic uppercase tracking-tight">Núcleo Reativo</h3>
+                <p className="text-gray-400 text-lg leading-relaxed max-w-3xl">
+                  Processamos dados em milissegundos usando arquitetura serverless de última geração. <span className="text-purple-400 font-bold">Nada de espera, apenas resultados.</span>
+                </p>
+              </div>
+
+              <div className="px-8 py-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-500 mb-1">LOAD SPEED</div>
+                <div className="text-3xl font-black italic">120ms</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* STATS COUNTER - MODERN STACK SECTION */}
+      <section className="mt-16 md:mt-24 py-12 md:py-24 px-6 relative z-10 border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            {/* Card 1: Technology Stack */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
+            >
+              <div className="absolute -inset-10 bg-purple-600/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10">
+                <div className="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 mb-8 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-4 text-white leading-tight">
+                  Stack moderna, <br /><span className="text-purple-500">rápida e escalável</span>
+                </h3>
+                <p className="text-gray-400 text-sm font-medium leading-relaxed">
+                  Arquitetura pensada para performance, segurança e crescimento.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 2: Performance Metrics */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10, borderColor: 'rgba(34, 197, 94, 0.4)' }}
+              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
+            >
+              <div className="absolute -inset-10 bg-green-500/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10 space-y-6">
+                {[
+                  "Tempo de carga médio < 0.8s",
+                  "Uptime garantido 99.9%",
+                  "Escala automática conforme o uso"
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    className="flex items-center gap-4 group/item"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)] group-hover/item:scale-110 transition-transform">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm md:text-base font-black uppercase tracking-tight text-gray-300 group-hover/item:text-white transition-colors">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Card 3: Automation Focus */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+              className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] relative overflow-hidden transition-all duration-500"
+            >
+              <div className="absolute -inset-10 bg-purple-600/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10">
+                <div className="mb-8">
+                  <div className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-500 mb-2">Automated Business</div>
+                  <div className="h-1 w-12 bg-purple-600 rounded-full" />
+                </div>
+                <h3 className="text-3xl font-black italic uppercase tracking-tighter mb-4 text-white leading-[0.9]">
+                  Você foca em vender.
+                </h3>
+                <p className="text-xl font-bold italic text-purple-500 mb-6">A tecnologia cuida do resto.</p>
+                <div className="w-full aspect-video bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center p-4 group-hover:border-purple-500/30 transition-all duration-700">
+                  <div className="flex items-end gap-1 h-12">
+                    {[0.4, 0.7, 0.5, 0.9, 0.6, 1].map((h, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ height: [`${h * 20}%`, `${h * 100}%`, `${h * 20}%`] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                        className="w-2 bg-purple-500/40 rounded-t-sm"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+      {/* SECTION: INFRA & SEGURANÇA */}
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Pronto para <br /> <span className="text-purple-500">Escalar.</span>
+              </h2>
+              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
+                Infraestrutura de nível empresarial para seu negócio
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="max-w-3xl mx-auto relative">
+            {/* Linha Lateral Conectora */}
+            <div className="absolute left-[27px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-purple-600/50 via-purple-600/20 to-transparent mb-10" />
+
+            <div className="space-y-16">
+              {[
+                { title: 'Infraestrutura Cloud', desc: 'Servidores de alta performance globais com latência reduzida.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg> },
+                { title: 'Alta Performance', desc: 'Velocidade máxima em qualquer escala, suportando milhares de acessos simultâneos.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+                { title: 'Segurança e LGPD', desc: 'Proteção total dos dados dos clientes com criptografia de ponta a ponta.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
+                { title: 'Estabilidade Garantida', desc: '99.9% de uptime SLA para que sua operação nunca pare.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> }
+              ].map((feature, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  className="relative pl-24 group"
+                >
+                  {/* Ícone com Círculo */}
+                  <div className="absolute left-0 top-0 w-14 h-14 bg-[#030303] flex items-center justify-center rounded-2xl border border-white/10 group-hover:border-purple-500/50 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-500 z-10">
+                    <div className="text-purple-500 group-hover:scale-110 transition-transform duration-500">
+                      {feature.icon}
+                    </div>
+                  </div>
+
+                  {/* Texto */}
+                  <div className="flex flex-col pt-1">
+                    <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tight transition-colors duration-500 group-hover:text-purple-500">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm font-medium mt-2 max-w-xl group-hover:text-gray-400 transition-colors duration-500">
+                      {feature.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section >
+
+      {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
+      < section className="py-32 px-6 relative z-10" >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
+              </h2>
+              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
+                Uma experiência digna de streaming para seus clientes
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Grid Layout: Card + Text */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            {/* Premium Showcase Card with Auto-Scroll */}
+            <div className="relative group">
+
+              {/* Atmospheric Glow */}
+              <motion.div
+                style={{ opacity: glowOpacity }}
+                className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
+              />
+
+              <motion.div
+                style={{
+                  scale: dashScale,
+                  opacity: dashOpacity,
+                  y: dashY
+                }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 100, damping: 30 }}
+                className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
+              >
+                {/* Inner Content Container */}
+                <div className="w-full h-full relative">
+                  {/* Aurora Background Animation */}
+                  <div className="absolute inset-0 z-0 opacity-30">
+                    <Aurora
+                      color1="#9232ea"
+                      colorStops={['#9232ea', '#a855f7', '#9232ea']}
+                      amplitude={1.2}
+                      blend={0.6}
+                      speed={0.8}
+                    />
+                  </div>
+
+                  {/* Glass Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
+
+                  {/* Gradient Overlay for Depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
+
+                  {/* Auto-Scrolling Image Container */}
+                  <div className="w-full h-full flex items-start justify-center relative z-10 overflow-hidden">
+                    <motion.img
+                      src="/members-area-showcase.png"
+                      alt="Área de Membros - Vitrine de Produtos"
+                      className="w-full h-auto min-h-full object-cover object-top opacity-80"
+                      style={{
+                        filter: "grayscale(15%) brightness(0.85) contrast(0.95)"
+                      }}
+                      animate={{
+                        y: [0, -400, 0]
+                      }}
+                      transition={{
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "linear",
+                        repeatDelay: 2
+                      }}
+                      whileHover={{
+                        filter: "grayscale(0%) brightness(1) contrast(1)",
+                        transition: { duration: 0.6 }
+                      }}
+
+                    />
+                  </div>
+
+                  {/* Scan Line Effect */}
+                  <motion.div
+                    animate={{ y: ["-100%", "300%"] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                    className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
+                  />
+                </div>
+
+                {/* Neon Borders */}
+                <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
+                <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
+              </motion.div>
+
+              {/* Floating Feature Badges */}
+              <motion.div
+                style={{ y: yParallax }}
+                className="absolute -right-4 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] z-40"
+              >
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
+                  <div>
+                    <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Layout Premium</p>
+                    <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Streaming</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                animate={{ y: [0, -20, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -left-4 md:-left-6 bottom-[15%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl z-40"
+              >
+                <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Experiência</p>
+                <p className="text-base md:text-lg font-black text-white italic">Premium</p>
+              </motion.div>
+            </div>
+
+            {/* Text Content with Bullet Points */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h3 className="text-5xl md:text-6xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
+                Experiência <br /> <span className="text-purple-500">Premium.</span>
+              </h3>
+              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
+                Interface moderna tipo streaming para seus produtos digitais
+              </p>
+              <div className="space-y-6">
+                {[
+                  'Vitrine de Produtos',
+                  'Acesso Centralizado',
+                  'Branding Próprio',
+                  'Experiência Premium'
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    className="flex items-center gap-4 group"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
+                    <span className="text-lg font-black uppercase tracking-wide">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* NEW CARD: Member Area Dashboard Style */}
+              <motion.div
+                initial={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="mt-12 relative group"
+              >
+                {/* Ambient Glow */}
+                <div className="absolute -inset-10 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                <div className="relative w-full aspect-video bg-[#050508] rounded-[24px] border border-white/10 shadow-2xl overflow-hidden">
+                  {/* Inner Content */}
+                  <div className="w-full h-full relative">
+                    {/* Aurora Background Animation */}
+                    <div className="absolute inset-0 z-0 opacity-30">
+                      <Aurora
+                        color1="#9232ea"
+                        colorStops={['#9232ea', '#a855f7', '#9232ea']}
+                        amplitude={1.0}
+                        blend={0.5}
+                        speed={0.5}
+                      />
+                    </div>
+
+                    {/* Glass Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
+
+                    {/* Image */}
+                    <div className="w-full h-full flex items-center justify-center relative z-30">
+                      <img
+                        src="/assets/nova-aula.png"
+                        alt="Nova Aula Dashboard"
+                        className="w-full h-full object-cover rounded-[20px]"
+                      />
+                    </div>
+
+                    {/* Scan Line Effect */}
+                    <motion.div
+                      animate={{ y: ["-100%", "300%"] }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
+                      className="absolute top-0 left-0 w-full h-[20%] bg-gradient-to-b from-transparent via-purple-500/10 to-transparent z-30 pointer-events-none blur-sm"
+                    />
+                  </div>
+
+                  {/* Neon Borders */}
+                  <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/50 transition-colors duration-500" />
+                  <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
+                </div>
+              </motion.div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section >
+
+      {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
+
+      <section id="features" className="relative z-10 mt-12 md:mt-48">
+        <div className="py-32 lg:h-screen lg:sticky lg:top-0 flex items-center justify-center px-6">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
+              <div>
+                <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                  Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
+                </h2>
+                <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
+              </div>
+              <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
+                Design minimalista. <br />Engenharia máxima.
+              </p>
+            </div>
+
+            <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
+
+              {/* MOBILE: Simple Stacked Cards */}
+              <div className="lg:hidden w-full space-y-4">
+                {showcaseFeatures.map((f, i) => (
+                  <motion.div
+                    key={f.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.6 }}
+                    onClick={() => setActiveFeature(i)}
+                    className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
+                      ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
+                      : 'bg-[#0a0a0f]/50 border border-white/10'
+                      }`}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_15px_#a855f7]' : 'bg-white/5 text-gray-500'
+                        }`}>
+                        {f.icon}
+                      </div>
+                      <h3 className="text-base font-black italic uppercase tracking-wide">{f.title}</h3>
+                    </div>
+
+                    {/* Expandable Content */}
+                    <AnimatePresence>
+                      {activeFeature === i && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-4 border-t border-white/10">
+                            <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
+                            <div className="space-y-3">
+                              {f.highlights.map(h => (
+                                <div key={h} className="flex items-center gap-3">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
+                                  <span className="text-xs font-bold uppercase tracking-wider text-white/70">{h}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* DESKTOP: Vertical Card Carousel */}
+              <div className="hidden lg:flex lg:w-[400px] relative h-full flex-col justify-center">
+                <div className="relative h-[500px] flex flex-col items-center justify-center">
+                  {showcaseFeatures.map((f, i) => {
+                    const offset = i - activeFeature;
+                    const isActive = i === activeFeature;
+                    const isPrev = offset === -1;
+                    const isNext = offset === 1;
+                    const isVisible = Math.abs(offset) <= 1;
+
+                    return (
+                      <motion.div
+                        key={f.id}
+                        animate={{
+                          y: offset * 140,
+                          scale: isActive ? 1 : 0.85,
+                          opacity: isActive ? 1 : isPrev || isNext ? 0.3 : 0,
+                          filter: isActive ? 'blur(0px)' : 'blur(2px)'
+                        }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className={`absolute w-full p-8 rounded-[48px] cursor-pointer flex items-center gap-6 ${isActive
+                          ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_30px_#a855f7] z-20'
+                          : 'bg-[#0a0a0f]/50 border border-white/5 z-10'
+                          }`}
+                        style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
+                        onClick={() => setActiveFeature(i)}
+                      >
+                        <div className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${isActive ? 'bg-purple-600 text-white shadow-[0_0_20px_#a855f7]' : 'bg-white/5 text-gray-500'
+                          }`}>
+                          {f.icon}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-sm font-black italic uppercase tracking-[0.15em]">{f.title}</h3>
+                          {isActive && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-2" />}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                {/* Scroll Indicators */}
+                <div className="flex justify-center gap-2 mt-8">
+                  {showcaseFeatures.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveFeature(i)}
+                      className={`w-2 h-2 rounded-full transition-all ${i === activeFeature ? 'bg-purple-500 w-8' : 'bg-white/20'
+                        }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* DESKTOP: Content Display */}
+              <div className="hidden lg:flex flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex-col lg:flex-row shadow-inner h-full">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
+
+                <div className="flex-1 relative min-h-[400px]">
+                  <AnimatePresence mode="wait">
+                    <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
+                  </AnimatePresence>
+                </div>
+
+                <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
+                  <AnimatePresence mode="wait">
+                    <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
+                      <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
+                      <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
+                      <div className="space-y-5">
+                        {showcaseFeatures[activeFeature].highlights.map(h => (
+                          <div key={h} className="flex items-center gap-4 group">
+                            <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
+        <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 25}vh` }} />
+      </section >
+
+
 
       {/* SECTION 4: PRODUTOS DIGITAIS */}
       <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
@@ -1726,66 +1724,7 @@ const App: React.FC = () => {
         </div>
       </section >
 
-      {/* SECTION 10: INFRA & SEGURANÇA - ENHANCED */}
-      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Pronto para <br /> <span className="text-purple-500">Escalar.</span>
-              </h2>
-              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
-                Infraestrutura de nível empresarial para seu negócio
-              </p>
-            </motion.div>
-          </div>
 
-          <div className="max-w-3xl mx-auto relative">
-            {/* Linha Lateral Conectora */}
-            <div className="absolute left-[27px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-purple-600/50 via-purple-600/20 to-transparent mb-10" />
-
-            <div className="space-y-16">
-              {[
-                { title: 'Infraestrutura Cloud', desc: 'Servidores de alta performance globais com latência reduzida.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg> },
-                { title: 'Alta Performance', desc: 'Velocidade máxima em qualquer escala, suportando milhares de acessos simultâneos.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-                { title: 'Segurança e LGPD', desc: 'Proteção total dos dados dos clientes com criptografia de ponta a ponta.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
-                { title: 'Estabilidade Garantida', desc: '99.9% de uptime SLA para que sua operação nunca pare.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> }
-              ].map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="relative pl-24 group"
-                >
-                  {/* Ícone com Círculo */}
-                  <div className="absolute left-0 top-0 w-14 h-14 bg-[#030303] flex items-center justify-center rounded-2xl border border-white/10 group-hover:border-purple-500/50 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-500 z-10">
-                    <div className="text-purple-500 group-hover:scale-110 transition-transform duration-500">
-                      {feature.icon}
-                    </div>
-                  </div>
-
-                  {/* Texto */}
-                  <div className="flex flex-col pt-1">
-                    <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tight transition-colors duration-500 group-hover:text-purple-500">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm font-medium mt-2 max-w-xl group-hover:text-gray-400 transition-colors duration-500">
-                      {feature.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section >
 
       {/* SECTION 11: CTA INTERMEDIÁRIO - COMECE AGORA */}
       < section className="py-40 px-6 relative z-10 overflow-hidden" >
@@ -1965,6 +1904,48 @@ const App: React.FC = () => {
           </div>
         </div>
       </section >
+
+      {/* SECTION: FAQ */}
+      <section className="py-32 px-6 relative z-10 bg-black/50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-5xl md:text-6xl font-black italic uppercase tracking-tighter mb-6">
+              Dúvidas <span className="text-purple-600">Frequentes.</span>
+            </h2>
+            <p className="text-gray-500 text-lg">Tudo o que você precisa saber para começar agora.</p>
+          </motion.div>
+
+          <div className="space-y-6">
+            {[
+              { q: 'Preciso saber programar?', a: 'Não. O Super Checkout foi desenvolvido para ser utilizado por qualquer pessoa. Nossa interface é intuitiva e dispensa qualquer conhecimento técnico avançado.' },
+              { q: 'Como recebo meu dinheiro?', a: 'O valor das vendas cai diretamente na sua conta do gateway de pagamento (Mercado Pago, Stripe, etc). O sistema não "segura" seu dinheiro.' },
+              { q: 'Posso cancelar a qualquer momento?', a: 'Sim. Você tem total liberdade e o controle é 100% seu. Sem contratos de fidelidade abusivos.' },
+              { q: 'O sistema cobra taxas por venda?', a: 'Não. O Plano Profissional é isento de taxas sobre suas vendas. Você fatura 100% do valor do seu produto.' }
+            ].map((faq, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group border border-white/10 rounded-3xl p-8 bg-white/5 hover:bg-white/[0.08] transition-all cursor-pointer"
+              >
+                <h3 className="text-xl font-bold italic uppercase tracking-wide text-white mb-3 group-hover:text-purple-400 transition-colors">
+                  {faq.q}
+                </h3>
+                <p className="text-gray-400 leading-relaxed font-medium">
+                  {faq.a}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA FINAL */}
       < section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >

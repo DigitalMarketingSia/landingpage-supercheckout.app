@@ -5,6 +5,7 @@ import BlurText from './components/BlurText';
 import Aurora from './components/Aurora';
 import GradientText from './components/GradientText';
 import HeroV2 from './components/HeroV2';
+import FAQ from './components/FAQ';
 
 // Ícones Minimalistas Premium (SVG Single-Tone)
 const Icons = {
@@ -711,8 +712,8 @@ const App: React.FC = () => {
 
               <div className="relative bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl overflow-hidden group-hover:border-purple-500/30 transition-all duration-700">
                 {/* Cloud Header */}
-                <div className="flex items-center gap-6 mb-10">
-                  <div className="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/30">
+                <div className="flex items-center gap-6 mb-10 mt-6 md:mt-0">
+                  <div className="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/30 shrink-0">
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                     </svg>
@@ -729,7 +730,7 @@ const App: React.FC = () => {
                   </p>
 
                   {/* Feature Checklist Grid */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-2 md:gap-3">
                     {[
                       "Sem VPS",
                       "Sem servidor",
@@ -738,14 +739,14 @@ const App: React.FC = () => {
                     ].map((feat, i) => (
                       <div
                         key={i}
-                        className="flex items-center gap-3 p-4 bg-white/[0.03] rounded-2xl border border-purple-500/20 group/feat hover:bg-white/[0.06] transition-colors"
+                        className="flex items-center gap-2 md:gap-3 p-2 md:p-4 bg-white/[0.03] rounded-2xl border border-purple-500/20 group/feat hover:bg-white/[0.06] transition-colors"
                       >
                         <div className="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-wider text-white/80 whitespace-nowrap">{feat}</span>
+                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-wide md:tracking-wider text-white/80 whitespace-nowrap">{feat}</span>
                       </div>
                     ))}
                   </div>
@@ -753,19 +754,19 @@ const App: React.FC = () => {
               </div>
 
               {/* Decorative Label - Top Centered */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-2 bg-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20 border border-purple-400/30">
-                <p className="text-[10px] font-black italic text-white uppercase tracking-[0.2em] whitespace-nowrap">Tecnologia Serverless</p>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 md:px-8 bg-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20 border border-purple-400/30 w-max max-w-[90%]">
+                <p className="text-[9px] md:text-[10px] font-black italic text-white uppercase tracking-[0.15em] md:tracking-[0.2em] whitespace-nowrap text-center">Tecnologia Serverless</p>
               </div>
             </motion.div>
 
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION: AUTOMATED BUSINESS & METRICS */}
-      <section className="py-24 px-6 relative z-10">
+      < section className="py-12 md:py-24 px-6 relative z-10" >
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
 
             {/* Left Column: Text & Metrics */}
             <motion.div
@@ -783,7 +784,7 @@ const App: React.FC = () => {
                 <span className="text-purple-500">A tecnologia cuida do resto.</span>
               </h2>
 
-              <div className="space-y-6 mt-12">
+              <div className="space-y-6 mt-6 md:mt-12">
                 {[
                   "Tempo de carga médio < 0.8s",
                   "Uptime garantido 99.9%",
@@ -843,7 +844,7 @@ const App: React.FC = () => {
 
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION: ÃREA DE MEMBROS PROFISSIONAL */}
       < section className="py-12 md:py-24 px-6 relative z-10" >
@@ -856,7 +857,7 @@ const App: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
               <h2 className="text-[12vw] md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Ãrea de Membros <br /> <span className="text-purple-500">Profissional.</span>
+                Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
               </h2>
               <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
                 Uma experiência digna de streaming para seus clientes
@@ -1044,7 +1045,7 @@ const App: React.FC = () => {
       </section >
 
       {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
-      <section id="features" className="relative z-10 mt-12 md:mt-48">
+      < section id="features" className="relative z-10 mt-12 md:mt-48" >
         <div className="py-32 lg:h-screen lg:sticky lg:top-0 flex items-center justify-center px-6">
           <div className="max-w-7xl mx-auto w-full">
             <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
@@ -1202,7 +1203,7 @@ const App: React.FC = () => {
       </section >
 
       {/* SECTION 4: PRODUTOS DIGITAIS */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -1860,90 +1861,7 @@ const App: React.FC = () => {
 
 
       {/* SECTION: FAQ */}
-      <section className="py-32 px-6 relative z-10 bg-black/50">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <h2 className="text-5xl md:text-6xl font-black italic uppercase tracking-tighter mb-6">
-              Dúvidas <span className="text-purple-600">Frequentes.</span>
-            </h2>
-            <p className="text-gray-500 text-lg">Tudo o que você precisa saber para começar agora.</p>
-          </motion.div>
-
-          <div className="space-y-6">
-            {[
-              {
-                q: 'Preciso saber programar?',
-                a: 'Não.\nO Super Checkout foi desenvolvido para ser usado por qualquer pessoa. A interface é intuitiva e o processo de instalação é explicado passo a passo em aulas dentro da área de membros.'
-              },
-              {
-                q: 'Vou precisar criar contas técnicas?',
-                a: 'Sim, mas sem complicação.\nVocê cria suas próprias contas nos serviços necessários (ex: gateway de pagamento), mantendo total controle sobre dados, dinheiro e operação.\nTodo o processo é explicado de forma simples durante a instalação.\n\n💡 Isso garante independência total e evita qualquer tipo de dependência da nossa infraestrutura.'
-              },
-              {
-                q: 'O pagamento é mensal?',
-                a: 'Não.\nO Super Checkout é vendido em pagamento único, sem mensalidades obrigatórias e sem taxas recorrentes.'
-              },
-              {
-                q: 'O sistema cobra taxas por venda?',
-                a: 'Não.\nVocê fatura 100% do valor das suas vendas.\nO Super Checkout não cobra comissão, taxa por transação ou percentual oculto.'
-              },
-              {
-                q: 'Como recebo o dinheiro das vendas?',
-                a: 'O valor das vendas cai diretamente na sua conta no gateway de pagamento escolhido (Mercado Pago, Stripe, entre outros).\nO sistema não intermedia, não retém e não movimenta seu dinheiro.'
-              },
-              {
-                q: 'A instalação é feita por vocês?',
-                a: 'Não.\nA instalação é feita por você, seguindo aulas completas e organizadas na área de membros.\n\nSe preferir, você pode contratar o serviço de instalação separadamente como um serviço opcional, fora do plano.'
-              },
-              {
-                q: 'O sistema é completo desde qual plano?',
-                a: 'Desde o Plano Profissional, você tem acesso ao sistema 100% completo, sem bloqueios de funcionalidades.\nO que muda entre os planos é o direito de uso, número de instalações e modelo de licenciamento.'
-              },
-              {
-                q: 'O que significa “licença” e “instalações”?',
-                a: 'Licença: é o seu direito de uso do sistema\n\nInstalações: quantas vezes você pode instalar o sistema em ambientes diferentes\n\nExemplo:\nUm plano pode ter 1 licença com múltiplas instalações para uso próprio ou para clientes, conforme o plano contratado.'
-              },
-              {
-                q: 'Posso usar meu próprio domínio?',
-                a: 'Sim.\nVocê pode usar domínios personalizados para seus checkouts e áreas de membros, reforçando sua marca e autoridade profissional.'
-              },
-              {
-                q: 'O sistema é white-label?',
-                a: 'Sim, para seus produtos e operação.\nO checkout, a área de membros e a experiência do cliente não exibem marcas de terceiros.\n\nO sistema em si não é revendido como software com outra marca, e sim usado como base para o seu negócio.'
-              },
-              {
-                q: 'Por quanto tempo recebo atualizações?',
-                a: 'Você recebe 12 meses de atualizações incluídas no plano.\nApós esse período, a renovação é opcional.'
-              },
-              {
-                q: 'Existe contrato de fidelidade?',
-                a: 'Não.\nO pagamento é único, sem contratos, sem mensalidades e sem obrigações futuras.'
-              }
-            ].map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="group border border-white/10 rounded-3xl p-8 bg-white/5 hover:bg-white/[0.08] transition-all cursor-pointer"
-              >
-                <h3 className="text-xl font-bold italic uppercase tracking-wide text-white mb-4 group-hover:text-purple-400 transition-colors">
-                  {faq.q}
-                </h3>
-                <div className="text-gray-400 leading-relaxed font-medium whitespace-pre-line">
-                  {faq.a}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      < FAQ />
 
       {/* CTA FINAL */}
       < section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >

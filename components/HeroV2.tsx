@@ -5,6 +5,42 @@ import { motion } from 'framer-motion';
 import Aurora from './Aurora';
 import GradientText from './GradientText';
 
+const CTAComponent = () => (
+    <div className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
+        <motion.button
+            whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(168,85,247,0.4)" }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
+            className="relative px-8 py-3.5 text-white rounded-2xl font-black text-base uppercase italic tracking-tighter shadow-[0_20px_50px_rgba(168,85,247,0.3)] transition-all flex items-center justify-center gap-2 group overflow-hidden w-full md:w-auto"
+        >
+            {/* Animated Gradient Background */}
+            <motion.div
+                animate={{
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-r from-[#a855f7] via-[#86efac] to-[#a855f7] bg-[length:200%_100%]"
+            />
+            <span className="relative z-10 flex items-center gap-2" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.5)' }}>
+                <svg className="w-8 h-8 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
+                </svg>
+                CRIAR INFRAESTRUTURA AGORA
+                <motion.span
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="text-2xl md:text-base"
+                >
+                    →
+                </motion.span>
+            </span>
+        </motion.button>
+        <p className="text-gray-500 text-[10px] md:text-[11px] font-medium leading-relaxed max-w-sm text-center md:text-left">
+            A escolha de quem está cansado de pagar taxas abusivas e quer construir verdadeiramente um negócio próprio.
+        </p>
+    </div>
+);
+
 const HeroV2: React.FC = () => {
     return (
         <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
@@ -25,7 +61,7 @@ const HeroV2: React.FC = () => {
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-start gap-8"
+                    className="flex flex-col items-start gap-8 text-center md:text-left items-center md:items-start"
                 >
                     {/* Badge */}
                     <GradientText
@@ -38,7 +74,8 @@ const HeroV2: React.FC = () => {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
                             </svg>
-                            <span className="text-[10px] md:text-[11px]">ZERO TAXAS POR VENDA • Pague Uma Vez, Use Para Sempre</span>
+                            <span className="text-[10px] md:text-[11px] hidden md:inline">ZERO TAXAS POR VENDA • Ative e Use Para Sempre</span>
+                            <span className="text-[10px] md:text-[11px] md:hidden whitespace-nowrap">Ative e Use Para Sempre</span>
                         </div>
                     </GradientText>
 
@@ -54,9 +91,9 @@ const HeroV2: React.FC = () => {
                     </div>
 
                     {/* Sub-headline / Description */}
-                    <div className="max-w-2xl space-y-8">
+                    <div className="max-w-2xl space-y-8 flex flex-col items-center md:items-start">
                         {/* Positive Points Row */}
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-white text-[10px] md:text-xs font-medium">
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-white text-[10px] md:text-xs font-medium">
                             <div className="flex items-center gap-2">
                                 <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
                                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,44 +108,16 @@ const HeroV2: React.FC = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.5" d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span className="text-white">Você no comando</span>
+                                <span className="text-white">Você 100% no comando</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* CTA & Proof */}
-                    <div className="flex flex-col gap-4 w-full md:w-auto">
-                        <motion.button
-                            whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(168,85,247,0.4)" }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="relative px-8 py-3.5 text-white rounded-2xl font-black text-base uppercase italic tracking-tighter shadow-[0_20px_50px_rgba(168,85,247,0.3)] transition-all flex items-center justify-center gap-2 group overflow-hidden"
-                        >
-                            {/* Animated Gradient Background */}
-                            <motion.div
-                                animate={{
-                                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                                }}
-                                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                                className="absolute inset-0 bg-gradient-to-r from-[#a855f7] via-[#86efac] to-[#a855f7] bg-[length:200%_100%]"
-                            />
-                            <span className="relative z-10 flex items-center gap-2" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.5)' }}>
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
-                                </svg>
-                                CRIAR INFRAESTRUTURA AGORA
-                                <motion.span
-                                    animate={{ x: [0, 5, 0] }}
-                                    transition={{ duration: 1.5, repeat: Infinity }}
-                                >
-                                    →
-                                </motion.span>
-                            </span>
-                        </motion.button>
-                        <p className="text-gray-500 text-[10px] md:text-[11px] font-medium leading-relaxed max-w-sm text-center md:text-left">
-                            A escolha de quem está cansado de pagar taxas abusivas e quer construir verdadeiramente um negócio próprio.
-                        </p>
+                    {/* CTA & Proof - DESKTOP ONLY */}
+                    <div className="hidden lg:block w-full">
+                        <CTAComponent />
                     </div>
+
                 </motion.div>
 
                 {/* Right Column: Visual Excellence */}
@@ -220,6 +229,11 @@ const HeroV2: React.FC = () => {
                     {/* Background Glow */}
                     <div className="absolute -inset-20 bg-purple-600/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
                 </motion.div>
+
+                {/* CTA & Proof - MOBILE ONLY */}
+                <div className="lg:hidden w-full flex justify-center">
+                    <CTAComponent />
+                </div>
 
             </div>
         </section>

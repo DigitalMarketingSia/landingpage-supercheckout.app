@@ -1006,6 +1006,252 @@
             color: rgba(255,255,255,0.5);
             line-height: 1.25;
         }
+
+        /* ==========================================================================
+           SCENE 3: PAGAMENTOS SEM FRICÇÃO
+           ========================================================================== */
+        #scene-payments {
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .payments-dashboard-card {
+            width: 82%;
+            background: rgba(10, 10, 15, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            transform: translateY(35px) scale(0.95);
+        }
+
+        .pm-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 8px;
+        }
+
+        .pm-green-dot-pulse {
+            width: 7px;
+            height: 7px;
+            background: #10b981;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        .pm-green-dot-pulse::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            border: 1.5px solid #10b981;
+            animation: pm-pulse 1.8s infinite ease-in-out;
+        }
+
+        @keyframes pm-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.8); opacity: 0; }
+        }
+
+        .pm-header-title {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .pm-latency-badge {
+            font-size: 0.52rem;
+            font-weight: 800;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.12);
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .pm-chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .pm-chart-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pm-chart-lbl {
+            font-size: 0.52rem;
+            font-weight: 700;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .pm-chart-val {
+            font-size: 0.55rem;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        .pm-chart-bar-bg {
+            height: 5px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 3px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .pm-chart-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            width: 0%;
+            border-radius: 3px;
+        }
+
+        .gateways-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .gateway-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .gateway-item.active {
+            background: rgba(16, 185, 129, 0.04);
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.08);
+        }
+
+        .gateway-item.active:hover {
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+
+        .gw-logo-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gw-logo-symbol {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #009ee3, #00aae4);
+            color: #fff;
+            font-size: 0.45rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gw-logo-symbol.stripe {
+            background: linear-gradient(135deg, #635bff, #8f6bff);
+        }
+
+        .gw-logo-symbol.pagseguro {
+            background: linear-gradient(135deg, #2e9f40, #5cc14c);
+        }
+
+        .gw-logo-symbol.asaas {
+            background: linear-gradient(135deg, #003087, #0079c1);
+        }
+
+        .gw-status-pill {
+            font-size: 0.42rem;
+            font-weight: 800;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 1px 4px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .gw-status-pill.soon {
+            color: #9ca3af;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .gw-name {
+            font-size: 0.52rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .gateway-item.soon {
+            opacity: 0.55;
+        }
+
+        /* Grade de bullets de pagamentos */
+        .pm-bullets-row {
+            width: 82%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 5px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .pm-bullet-badge {
+            font-size: 0.52rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .pm-bullet-badge.active {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #34d399;
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.05);
+        }
+
+        .pm-bullet-badge.soon {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.4);
+        }
     </style>
 </head>
 <body>
@@ -1020,10 +1266,11 @@
             <div style="color: rgba(255,255,255,0.45); margin-top: 6px; font-size: 0.62rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">CINEMATIC VIDEO SHOWCASE</div>
         </div>
 
-        <!-- Barra de Progresso Superior Estilo Reels (2 Capítulos) -->
+        <!-- Barra de Progresso Superior Estilo Reels (3 Capítulos) -->
         <div id="chapters-bar">
             <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-1"></div></div>
-            <div class="chapter-tick"><div class="chapter-progress" id="reels-progress-bar-2"></div></div>
+            <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-2"></div></div>
+            <div class="chapter-tick"><div class="chapter-progress" id="reels-progress-bar-3"></div></div>
         </div>
 
         <!-- Luzes Degradê nos Cantos -->
@@ -1247,6 +1494,97 @@
                 </div>
             </div>
         </div>
+
+        <!-- ==========================================
+             SCENE 3: PAGAMENTOS SEM FRICÇÃO
+             ========================================== -->
+        <div class="reels-scene" id="scene-payments">
+            <!-- Headline da Cena 3 -->
+            <h1 class="checkout-headline" id="payments-title">
+                Pagamentos sem <br>
+                <span class="purple-text">Fricção.</span>
+            </h1>
+
+            <p class="checkout-subtitle" id="payments-sub">
+                Conexão nativa com os principais processadores do mundo para garantir que cada venda passe sem obstáculos.
+            </p>
+
+            <!-- Painel de Conexões de Gateways -->
+            <div class="payments-dashboard-card" id="payments-main-card">
+                <!-- Header do Painel -->
+                <div class="pm-card-header">
+                    <div class="pm-green-dot-pulse"></div>
+                    <span class="pm-header-title">Conexões Ativas</span>
+                    <span class="pm-latency-badge" id="pm-latency-text">Latência: 45ms</span>
+                </div>
+
+                <!-- Gráfico de Aprovação Instantânea -->
+                <div class="pm-chart-container">
+                    <div class="pm-chart-label-row">
+                        <span class="pm-chart-lbl"><i data-lucide="zap" style="width: 10px; height: 10px; color: #10b981;"></i> Aprovação Instantânea</span>
+                        <span class="pm-chart-val">99.8%</span>
+                    </div>
+                    <div class="pm-chart-bar-bg">
+                        <div class="pm-chart-bar-fill" id="pm-chart-fill-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Lista de Gateways Modernos -->
+                <div class="gateways-grid">
+                    <!-- Mercado Pago (Ativo e Brilhante) -->
+                    <div class="gateway-item active" id="gw-mercadopago">
+                        <div class="gw-logo-row">
+                            <span class="gw-logo-symbol">MP</span>
+                            <span class="gw-status-pill">Ativado</span>
+                        </div>
+                        <span class="gw-name">Mercado Pago</span>
+                    </div>
+
+                    <!-- Stripe (Em breve) -->
+                    <div class="gateway-item soon">
+                        <div class="gw-logo-row">
+                            <span class="gw-logo-symbol stripe">S</span>
+                            <span class="gw-status-pill soon">Em breve</span>
+                        </div>
+                        <span class="gw-name">Stripe</span>
+                    </div>
+
+                    <!-- PagSeguro (Em breve) -->
+                    <div class="gateway-item soon">
+                        <div class="gw-logo-row">
+                            <span class="gw-logo-symbol pagseguro">P</span>
+                            <span class="gw-status-pill soon">Em breve</span>
+                        </div>
+                        <span class="gw-name">PagSeguro</span>
+                    </div>
+
+                    <!-- Asaas (Em breve) -->
+                    <div class="gateway-item soon">
+                        <div class="gw-logo-row">
+                            <span class="gw-logo-symbol asaas">A</span>
+                            <span class="gw-status-pill soon">Em breve</span>
+                        </div>
+                        <span class="gw-name">Asaas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grade de Formas de Pagamento Multi-Pagamentos -->
+            <div class="pm-bullets-row" id="pm-bullets-wrapper">
+                <div class="pm-bullet-badge active">
+                    <i data-lucide="qr-code" style="width: 10px; height: 10px;"></i> PIX
+                </div>
+                <div class="pm-bullet-badge active">
+                    <i data-lucide="credit-card" style="width: 10px; height: 10px;"></i> CARTÃO
+                </div>
+                <div class="pm-bullet-badge active">
+                    <i data-lucide="file-text" style="width: 10px; height: 10px;"></i> BOLETO
+                </div>
+                <div class="pm-bullet-badge soon">
+                    <i data-lucide="coins" style="width: 10px; height: 10px;"></i> CRIPTO (breve)
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1459,6 +1797,7 @@
             // Zerar barras de progresso
             mainTimeline.set("#reels-progress-bar-1", { width: "0%" });
             mainTimeline.set("#reels-progress-bar-2", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-3", { width: "0%" });
 
             // Mostrar Scene 1, esconder Scene 2
             mainTimeline.set("#scene-hero", { display: "flex", className: "reels-scene active" });
@@ -1618,12 +1957,63 @@
             }, "chapter-2-start+=14.2");
 
             // Esperar com a tela final de Sucesso e a última bullet visível
-            mainTimeline.to({}, { duration: 6.0 });
+            mainTimeline.to({}, { duration: 4.0 });
 
-            // Resetar estados do checkout antes de recomeçar
+            // Transição para Scene 3 (fadeout da Scene 2)
             mainTimeline.to("#scene-checkout", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
+
+            // ==========================================
+            // CAPÍTULO 3: SCENE 3 (PAGAMENTOS SEM FRICÇÃO)
+            // ==========================================
+            mainTimeline.add("chapter-3-start");
+
+            // Mostrar Scene 3, esconder Scene 2
+            mainTimeline.set("#scene-checkout", { display: "none" }, "chapter-3-start");
+            mainTimeline.set("#scene-payments", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-3-start");
+            mainTimeline.to("#scene-payments", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-3-start");
+
+            // Animação da barra 3 progredindo no cap 3
+            mainTimeline.to("#reels-progress-bar-3", {
+                width: "100%",
+                duration: 9.0, // Tempo total do cap 3
+                ease: "linear"
+            }, "chapter-3-start");
+
+            // Entrada dos textos de Pagamento
+            mainTimeline.to("#payments-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-3-start+=0.4");
+            mainTimeline.to("#payments-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-3-start+=0.6");
+            mainTimeline.to("#payments-main-card", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)", onStart: () => SoundFX.playSuccess() }, "chapter-3-start+=0.8");
+
+            // Animar o gráfico de aprovação instantânea crescendo
+            mainTimeline.to("#pm-chart-fill-bar", { duration: 1.2, width: "99.8%", ease: "power3.out" }, "chapter-3-start+=1.5");
+
+            // Entrada dos badges de multi-pagamento
+            mainTimeline.to("#pm-bullets-wrapper", { duration: 0.6, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-3-start+=2.0");
+
+            // Cursor se move e interage com o Mercado Pago
+            mainTimeline.to("#virtual-mouse", { duration: 0.8, opacity: 1, top: "45%", left: "35%", ease: "power3.out" }, "chapter-3-start+=2.8");
+            mainTimeline.to("#gw-mercadopago", { 
+                duration: 0.15, 
+                scale: 0.94,
+                onStart: () => {
+                    SoundFX.playClick();
+                    // Efeito de flash verde de conexão ativa
+                    gsap.fromTo("#gw-mercadopago", 
+                        { boxShadow: "0 0 0px rgba(16,185,129,0)" },
+                        { boxShadow: "0 0 30px rgba(16,185,129,0.9)", borderColor: "#10b981", duration: 0.3, yoyo: true, repeat: 1 }
+                    );
+                }
+            }, "chapter-3-start+=3.6");
+            mainTimeline.to("#gw-mercadopago", { duration: 0.15, scale: 1 }, "chapter-3-start+=3.75");
+            mainTimeline.to("#virtual-mouse", { duration: 0.3, opacity: 0 }, "chapter-3-start+=4.0");
+
+            // Espera final
+            mainTimeline.to({}, { duration: 4.0 });
+
+            // Transição para reiniciar (fadeout da Scene 3)
+            mainTimeline.to("#scene-payments", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
             mainTimeline.call(() => {
-                // Resetar inputs
+                // Resetar inputs Scene 2
                 document.getElementById("val-name-text").textContent = "";
                 document.getElementById("val-email-text").textContent = "";
                 document.getElementById("price-value-text").textContent = "R$ 97,00";
@@ -1637,6 +2027,14 @@
                 document.getElementById("success-popup").className = "success-overlay-badge";
                 currentBulletIndex = -1;
                 gsap.set("#feature-bullet-card", { x: 0, opacity: 0 });
+
+                // Resetar inputs Scene 3
+                document.getElementById("pm-chart-fill-bar").style.width = "0%";
+                gsap.set("#payments-title", { opacity: 0, y: 20 });
+                gsap.set("#payments-sub", { opacity: 0, y: 15 });
+                gsap.set("#payments-main-card", { opacity: 0, y: 35, scale: 0.95 });
+                gsap.set("#pm-bullets-wrapper", { opacity: 0, y: 20 });
+                mainTimeline.set("#reels-progress-bar-3", { width: "0%" });
             });
         }
     </script>

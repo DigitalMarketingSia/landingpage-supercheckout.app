@@ -1347,53 +1347,88 @@
             });
         }
 
+        let currentBulletIndex = -1;
+
         // AUXILIAR PARA TROCAR BULLET CARD DINAMICAMENTE
         function changeBullet(index) {
             const data = bulletFeatures[index];
             if (!data) return;
             
+            const card = document.getElementById("feature-bullet-card");
+            
+            // Se o card já está visível e for uma troca, animamos a saída para a direita
+            if (currentBulletIndex !== -1 && currentBulletIndex !== index) {
+                gsap.to("#feature-bullet-card", {
+                    x: 150, // Desliza para a direita
+                    opacity: 0,
+                    scale: 0.95,
+                    boxShadow: "0 0 0px rgba(16, 185, 129, 0)",
+                    borderColor: "rgba(255, 255, 255, 0.08)",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    duration: 0.25,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        updateBulletContent(data);
+                        animateBulletIn();
+                    }
+                });
+            } else {
+                // Primeira entrada ou reset
+                updateBulletContent(data);
+                animateBulletIn();
+            }
+            
+            currentBulletIndex = index;
+        }
+
+        function updateBulletContent(data) {
             SoundFX.playSuccess();
             const iconBox = document.getElementById("bullet-icon-box");
+            iconBox.style.background = "rgba(16, 185, 129, 0.15)";
+            iconBox.style.borderColor = "rgba(16, 185, 129, 0.25)";
+            iconBox.style.color = "var(--primary)";
             iconBox.innerHTML = `<i data-lucide="${data.icon}" style="width: 12px; height: 12px;"></i>`;
+            
             document.getElementById("bullet-title").textContent = data.title;
             document.getElementById("bullet-desc").textContent = data.desc;
             lucide.createIcons();
-            
-            // Timeline do efeito de luz e flash cinemático
+        }
+
+        function animateBulletIn() {
             const tl = gsap.timeline();
             
             tl.fromTo("#feature-bullet-card", 
                 { 
+                    x: -150, // Inicia fora na esquerda
                     opacity: 0, 
-                    y: 15, 
                     scale: 0.95,
-                    boxShadow: "0 0 0px rgba(168, 85, 247, 0)",
+                    boxShadow: "0 0 0px rgba(16, 185, 129, 0)",
                     borderColor: "rgba(255, 255, 255, 0.08)",
                     backgroundColor: "rgba(255, 255, 255, 0.02)"
                 },
                 { 
+                    x: 0, // Centraliza
                     opacity: 1, 
-                    y: 0, 
                     scale: 1, 
-                    duration: 0.35, 
+                    duration: 0.4, 
                     ease: "back.out(1.4)" 
                 }
             )
-            // Flash rápido de luz neon (acende forte e suaviza)
+            // Flash rápido de luz verde neon (acende brilhante e suaviza)
             .to("#feature-bullet-card", {
-                boxShadow: "0 0 35px rgba(168, 85, 247, 0.95), inset 0 0 15px rgba(168, 85, 247, 0.4)",
-                borderColor: "rgba(168, 85, 247, 1)",
-                backgroundColor: "rgba(168, 85, 247, 0.16)",
+                boxShadow: "0 0 35px rgba(16, 185, 129, 0.95), inset 0 0 15px rgba(16, 185, 129, 0.4)",
+                borderColor: "rgba(16, 185, 129, 1)",
+                backgroundColor: "rgba(16, 185, 129, 0.16)",
                 duration: 0.12,
                 repeat: 1,
                 yoyo: true,
                 ease: "power2.out"
             })
-            // Estabiliza em um brilho sofisticado
+            // Estabiliza em um brilho sofisticado verde esmeralda
             .to("#feature-bullet-card", {
-                boxShadow: "0 8px 25px rgba(168, 85, 247, 0.25), inset 0 0 5px rgba(168, 85, 247, 0.15)",
-                borderColor: "rgba(168, 85, 247, 0.4)",
-                backgroundColor: "rgba(168, 85, 247, 0.05)",
+                boxShadow: "0 8px 25px rgba(16, 185, 129, 0.25), inset 0 0 5px rgba(16, 185, 129, 0.15)",
+                borderColor: "rgba(16, 185, 129, 0.4)",
+                backgroundColor: "rgba(16, 185, 129, 0.05)",
                 duration: 0.3
             });
         }
@@ -1600,6 +1635,8 @@
                 document.getElementById("pay-btn-label").textContent = "PAGAR COM PIX";
                 document.getElementById("pay-action-button").className = "checkout-pay-btn";
                 document.getElementById("success-popup").className = "success-overlay-badge";
+                currentBulletIndex = -1;
+                gsap.set("#feature-bullet-card", { x: 0, opacity: 0 });
             });
         }
     </script>

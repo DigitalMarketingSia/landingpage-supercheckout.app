@@ -1252,6 +1252,43 @@
             border: 1px solid rgba(255,255,255,0.06);
             color: rgba(255,255,255,0.4);
         }
+
+        /* Controles de Navegação dos Stories */
+        .nav-control-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.4;
+        }
+
+        .nav-control-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            opacity: 1;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-control-btn.left {
+            left: 10px;
+        }
+
+        .nav-control-btn.right {
+            right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1279,6 +1316,14 @@
 
         <!-- Cursor de Clique Virtual Simulado -->
         <div class="sim-cursor" id="virtual-mouse"></div>
+
+        <!-- Controles de Navegação Estilo Stories/Reels (Voltar e Avançar) -->
+        <button class="nav-control-btn left" id="nav-btn-prev" onclick="navigateChapter(-1)" aria-label="Voltar Cena">
+            <i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i>
+        </button>
+        <button class="nav-control-btn right" id="nav-btn-next" onclick="navigateChapter(1)" aria-label="Avançar Cena">
+            <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
+        </button>
 
         <!-- HEADER NAV (PERSISTENTE) -->
         <div class="reels-header">
@@ -1665,13 +1710,22 @@
             { title: "Carregamento Instantâneo", desc: "Menos de 0.8s para garantir que nenhum cliente desista", icon: "zap" }
         ];
 
+        let cancelTyping = false;
+        let mainTimeline;
+        let currentChapter = 1;
+        let isNavigating = false;
+
         // AUXILIAR DE DIGITAÇÃO ANIMADA (TEXT TYPING EFFECT)
         function typeText(targetSelector, text, speedMultiplier = 1) {
             return new Promise((resolve) => {
                 const el = document.querySelector(targetSelector);
+                if (!el) return resolve();
                 el.textContent = "";
                 let i = 0;
                 function type() {
+                    if (cancelTyping) {
+                        return resolve();
+                    }
                     if (i < text.length) {
                         el.textContent += text.charAt(i);
                         i++;
@@ -1777,7 +1831,7 @@
             document.getElementById("tap-overlay").classList.add("fade-out");
             SoundFX.init();
             
-            const mainTimeline = gsap.timeline({
+            mainTimeline = gsap.timeline({
                 repeat: -1, // Loops infinitely
             });
 
@@ -1793,6 +1847,7 @@
             // CAPÍTULO 1: SCENE 1 (HERO)
             // ==========================================
             mainTimeline.add("chapter-1-start");
+            mainTimeline.call(() => { currentChapter = 1; }, null, "chapter-1-start");
             
             // Zerar barras de progresso
             mainTimeline.set("#reels-progress-bar-1", { width: "0%" });
@@ -1845,6 +1900,7 @@
             // CAPÍTULO 2: SCENE 2 (CHECKOUT QUE VENDE)
             // ==========================================
             mainTimeline.add("chapter-2-start");
+            mainTimeline.call(() => { currentChapter = 2; }, null, "chapter-2-start");
 
             // Mostrar Scene 2
             mainTimeline.set("#scene-hero", { display: "none" }, "chapter-2-start");
@@ -1966,6 +2022,7 @@
             // CAPÍTULO 3: SCENE 3 (PAGAMENTOS SEM FRICÇÃO)
             // ==========================================
             mainTimeline.add("chapter-3-start");
+            mainTimeline.call(() => { currentChapter = 3; }, null, "chapter-3-start");
 
             // Mostrar Scene 3, esconder Scene 2
             mainTimeline.set("#scene-checkout", { display: "none" }, "chapter-3-start");
@@ -2036,6 +2093,107 @@
                 gsap.set("#pm-bullets-wrapper", { opacity: 0, y: 20 });
                 mainTimeline.set("#reels-progress-bar-3", { width: "0%" });
             });
+        }
+
+        // FUNÇÃO DE NAVEGAÇÃO ENTRE CAPÍTULOS (STORIES/REELS CONTROLS)
+        function navigateChapter(direction) {
+            if (!mainTimeline || isNavigating) return;
+            isNavigating = true;
+
+            // Calcular próximo capítulo
+            let targetChapter = currentChapter + direction;
+            if (targetChapter < 1) targetChapter = 3;
+            if (targetChapter > 3) targetChapter = 1;
+
+            // Resetar todos os estados visuais antes do salto
+            resetAllScenesVisuals();
+
+            // Atualizar barras de progresso visualmente para o ponto de destino
+            updateProgressBarsForChapter(targetChapter);
+
+            // Ir para o ponto de início do capítulo correspondente
+            const markerName = `chapter-${targetChapter}-start`;
+            
+            // Tocar o som de tick/troca de slide
+            SoundFX.playTick();
+
+            // Pular timeline para o marcador e rodar
+            mainTimeline.play(markerName);
+
+            // Evitar cliques repetidos ultrarápidos
+            setTimeout(() => {
+                isNavigating = false;
+            }, 300);
+        }
+
+        function resetAllScenesVisuals() {
+            // Cancelar digitações assíncronas ativas
+            cancelTyping = true;
+            setTimeout(() => { cancelTyping = false; }, 50);
+
+            // Resetar todas as cenas para display none
+            document.getElementById("scene-hero").style.display = "none";
+            document.getElementById("scene-checkout").style.display = "none";
+            document.getElementById("scene-payments").style.display = "none";
+
+            // Remover classes active
+            document.getElementById("scene-hero").classList.remove("active");
+            document.getElementById("scene-checkout").classList.remove("active");
+            document.getElementById("scene-payments").classList.remove("active");
+
+            // Resetar Scene 1 (Hero)
+            gsap.set("#badge-top", { opacity: 0, y: 15 });
+            gsap.set("#main-headline", { opacity: 0, y: 20 });
+            gsap.set("#main-subtitle", { opacity: 0, y: 15 });
+            gsap.set("#main-checklist", { opacity: 0, y: 15 });
+            gsap.set("#dashboard-wrapper", { opacity: 0, y: 35, scale: 0.95 });
+            gsap.set("#widget-conversion", { opacity: 0, scale: 0.7 });
+            gsap.set("#widget-zero-tax", { opacity: 0, scale: 0.7 });
+            gsap.set("#btn-showcase-action", { opacity: 0, y: 15 });
+            gsap.set("#footer-desc-text", { opacity: 0, y: 15 });
+
+            // Resetar Scene 2 (Checkout)
+            gsap.set("#checkout-title", { opacity: 0, y: 20 });
+            gsap.set("#checkout-sub", { opacity: 0, y: 15 });
+            gsap.set("#checkout-card-wrapper", { opacity: 0, y: 35, scale: 0.95 });
+            document.getElementById("val-name-text").textContent = "";
+            document.getElementById("val-email-text").textContent = "";
+            document.getElementById("price-value-text").textContent = "R$ 97,00";
+            document.getElementById("price-value-text").style.color = "#10b981";
+            document.querySelector(".ob-check-mark").style.display = "none";
+            document.getElementById("order-bump-card").className = "checkout-order-bump";
+            document.getElementById("tab-pix-btn").className = "checkout-tab active";
+            document.getElementById("tab-card-btn").className = "checkout-tab";
+            document.getElementById("pay-btn-label").textContent = "PAGAR COM PIX";
+            document.getElementById("pay-action-button").className = "checkout-pay-btn";
+            document.getElementById("success-popup").className = "success-overlay-badge";
+            currentBulletIndex = -1;
+            gsap.set("#feature-bullet-card", { x: 0, opacity: 0 });
+
+            // Resetar Scene 3 (Payments)
+            document.getElementById("pm-chart-fill-bar").style.width = "0%";
+            gsap.set("#payments-title", { opacity: 0, y: 20 });
+            gsap.set("#payments-sub", { opacity: 0, y: 15 });
+            gsap.set("#payments-main-card", { opacity: 0, y: 35, scale: 0.95 });
+            gsap.set("#pm-bullets-wrapper", { opacity: 0, y: 20 });
+
+            // Resetar cursor virtual
+            gsap.set("#virtual-mouse", { opacity: 0, scale: 1 });
+        }
+
+        function updateProgressBarsForChapter(chapter) {
+            // Limpar larguras
+            gsap.set("#reels-progress-bar-1", { width: "0%" });
+            gsap.set("#reels-progress-bar-2", { width: "0%" });
+            gsap.set("#reels-progress-bar-3", { width: "0%" });
+
+            // Setar concluídas
+            if (chapter > 1) {
+                gsap.set("#reels-progress-bar-1", { width: "100%" });
+            }
+            if (chapter > 2) {
+                gsap.set("#reels-progress-bar-2", { width: "100%" });
+            }
         }
     </script>
 </body>

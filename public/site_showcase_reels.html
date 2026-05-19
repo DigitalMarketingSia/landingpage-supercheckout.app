@@ -1289,6 +1289,268 @@
         .nav-control-btn.right {
             right: 10px;
         }
+
+        /* Ajustes de Responsividade Focados no Mobile (celulares físicos) */
+        @media (max-width: 500px) {
+            body {
+                padding: 14px 10px; /* Margem física elegante nas bordas do telefone real! */
+                background: #000;
+                box-sizing: border-box;
+                height: 100vh;
+                width: 100vw;
+            }
+
+            #reels-viewport {
+                width: 100%;
+                height: 100%;
+                max-width: 100%;
+                max-height: calc(100vh - 28px);
+                border-radius: 36px;
+                border: 4px solid #1a1a24; /* Moldura de telefone simulada */
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
+                padding: 16px 12px; /* Margem perfeita nas laterais e acima */
+            }
+
+            /* Barras de progresso no topo ajustadas */
+            #chapters-bar {
+                top: 10px;
+                left: 16px;
+                right: 16px;
+            }
+
+            /* Header e Logo */
+            .reels-header {
+                margin-top: 2px;
+                margin-bottom: 8px;
+                padding: 0 4px;
+            }
+
+            .brand-name {
+                font-size: 0.75rem;
+            }
+
+            /* Redução das Headlines para evitar quebras feias */
+            .hero-headline, .checkout-headline {
+                font-size: 1.45rem !important;
+                line-height: 1.1;
+                margin-bottom: 6px;
+            }
+
+            /* Subtítulos */
+            .hero-subtitle, .checkout-subtitle {
+                font-size: 0.78rem !important;
+                max-width: 95% !important;
+                margin-bottom: 10px;
+            }
+
+            /* Badge Superior */
+            .hero-badge-gradient {
+                font-size: 0.55rem;
+                padding: 6px 12px;
+                margin-bottom: 10px;
+            }
+
+            /* Checklist da Scene 1 */
+            .hero-checklist {
+                margin-bottom: 10px;
+                gap: 10px;
+            }
+
+            .check-item {
+                font-size: 0.65rem;
+            }
+
+            /* Dashboard Central Simulado */
+            .dashboard-container-sim {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                width: 88%;
+            }
+
+            /* Widgets flutuantes menores no mobile */
+            .floating-widget {
+                padding: 6px 10px;
+                border-radius: 10px;
+            }
+
+            #widget-conversion {
+                right: -5px;
+                top: -10px;
+            }
+
+            #widget-zero-tax {
+                left: -5px;
+                bottom: -10px;
+            }
+
+            .widget-value {
+                font-size: 1.05rem;
+            }
+
+            .widget-column .w-mid {
+                font-size: 0.72rem;
+            }
+
+            /* Botão de Ação Inferior */
+            .hero-action-container {
+                gap: 8px;
+                margin-bottom: 4px;
+            }
+
+            .reels-btn-gradient {
+                height: 42px;
+                border-radius: 12px;
+                font-size: 0.78rem;
+                width: 85%;
+            }
+
+            .hero-footer-desc {
+                font-size: 0.62rem;
+                max-width: 92%;
+            }
+
+            /* Scene 2 Checkout Mockup */
+            .checkout-mockup-wrapper {
+                width: 78%;
+                margin-bottom: 8px;
+            }
+
+            .checkout-card-real {
+                padding: 12px;
+                border-radius: 18px;
+            }
+
+            .checkout-product-header {
+                padding-bottom: 8px;
+                margin-bottom: 8px;
+            }
+
+            .checkout-product-title {
+                font-size: 0.6rem;
+            }
+
+            .checkout-product-price {
+                font-size: 0.75rem;
+            }
+
+            .checkout-form-group {
+                gap: 6px;
+                margin-bottom: 8px;
+            }
+
+            .checkout-input-mock {
+                padding: 6px 10px;
+                border-radius: 10px;
+            }
+
+            .checkout-payment-tabs {
+                gap: 6px;
+                margin-bottom: 8px;
+            }
+
+            .checkout-tab {
+                height: 28px;
+                font-size: 0.52rem;
+                border-radius: 8px;
+            }
+
+            .checkout-order-bump {
+                padding: 8px 10px;
+                margin-bottom: 10px;
+                border-radius: 10px;
+            }
+
+            .checkout-pay-btn {
+                height: 36px;
+                font-size: 0.65rem;
+                border-radius: 10px;
+            }
+
+            .highlight-bullet-banner {
+                width: 82%;
+                margin-top: 10px;
+                padding: 6px 10px;
+            }
+
+            .bullet-title-text {
+                font-size: 0.55rem;
+            }
+
+            .bullet-desc-text {
+                font-size: 0.48rem;
+            }
+
+            /* Scene 3 Payments Mockup */
+            .payments-dashboard-card {
+                width: 82%;
+                padding: 10px 12px;
+                border-radius: 16px;
+                gap: 10px;
+            }
+
+            .pm-card-header {
+                padding-bottom: 6px;
+            }
+
+            .pm-header-title {
+                font-size: 0.55rem;
+            }
+
+            .pm-latency-badge {
+                font-size: 0.48rem;
+                padding: 1px 4px;
+            }
+
+            .pm-chart-container {
+                padding: 6px;
+            }
+
+            .pm-chart-lbl {
+                font-size: 0.48rem;
+            }
+
+            .pm-chart-val {
+                font-size: 0.48rem;
+            }
+
+            .gateways-grid {
+                gap: 6px;
+            }
+
+            .gateway-item {
+                padding: 6px 8px;
+                border-radius: 10px;
+            }
+
+            .gw-name {
+                font-size: 0.48rem;
+            }
+
+            .pm-bullets-row {
+                width: 82%;
+                margin-top: 2px;
+            }
+
+            .pm-bullet-badge {
+                font-size: 0.48rem;
+                padding: 3px 8px;
+            }
+
+            /* Botões de navegação lateral menores no mobile */
+            .nav-control-btn {
+                width: 26px;
+                height: 26px;
+                opacity: 0.3;
+            }
+            
+            .nav-control-btn.left {
+                left: 6px;
+            }
+
+            .nav-control-btn.right {
+                right: 6px;
+            }
+        }
     </style>
 </head>
 <body>

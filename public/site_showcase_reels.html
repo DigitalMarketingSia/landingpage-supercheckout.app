@@ -239,6 +239,11 @@
             visibility: visible;
         }
 
+        #scene-checkout {
+            justify-content: center;
+            gap: 10px;
+        }
+
         /* ==========================================================================
            SCENE 1: HERO
            ========================================================================== */
@@ -641,7 +646,7 @@
             line-height: 1.05;
             letter-spacing: -1px;
             color: #fff;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             opacity: 0;
             transform: translateY(20px);
         }
@@ -652,7 +657,7 @@
             color: #9ca3af;
             max-width: 90%;
             line-height: 1.3;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             opacity: 0;
             transform: translateY(15px);
         }
@@ -662,7 +667,7 @@
             width: 78%;
             position: relative;
             perspective: 1000px;
-            margin-bottom: 25px;
+            margin-bottom: 12px;
             opacity: 0;
             transform: translateY(35px) scale(0.95);
         }
@@ -808,8 +813,8 @@
 
         /* Order Bump checkbox style exact */
         .checkout-order-bump {
-            background: rgba(16, 185, 129, 0.03);
-            border: 1px solid rgba(16, 185, 129, 0.1);
+            background: rgba(250, 204, 21, 0.02);
+            border: 1.5px dashed rgba(250, 204, 21, 0.35);
             border-radius: 12px;
             padding: 10px 12px;
             display: flex;
@@ -820,29 +825,29 @@
         }
 
         .checkout-order-bump.active {
-            background: rgba(16, 185, 129, 0.08);
-            border-color: var(--emerald-border);
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+            background: rgba(250, 204, 21, 0.08);
+            border: 1.5px dashed #facc15;
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
         }
 
         .ob-checkbox {
             width: 14px;
             height: 14px;
             border-radius: 4px;
-            border: 1.5px solid rgba(255,255,255,0.25);
-            background: rgba(255,255,255,0.02);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.02);
             margin-top: 2px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: #000;
             transition: all 0.25s ease;
         }
 
         .checkout-order-bump.active .ob-checkbox {
-            background: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 0 8px var(--primary-glow);
+            background: #facc15;
+            border-color: #facc15;
+            box-shadow: 0 0 8px rgba(250, 204, 21, 0.55);
         }
 
         .ob-info {
@@ -854,7 +859,7 @@
         .ob-title {
             font-size: 0.55rem;
             font-weight: 900;
-            color: var(--primary);
+            color: #facc15;
             letter-spacing: 0.5px;
         }
 
@@ -951,7 +956,7 @@
         /* Banners flutuantes de Destaques (Features Bullets) */
         .highlight-bullet-banner {
             width: 82%;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--glass-border);
             border-radius: 14px;
             padding: 8px 12px;
@@ -959,14 +964,14 @@
             align-items: center;
             gap: 10px;
             text-align: left;
-            position: absolute;
-            bottom: 20px;
-            left: 9%;
+            position: relative;
+            margin-top: 15px;
             z-index: 50;
             opacity: 0;
             transform: translateY(20px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             backdrop-filter: blur(8px);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
         }
 
         .bullet-icon-wrapper {
@@ -1354,10 +1359,43 @@
             document.getElementById("bullet-desc").textContent = data.desc;
             lucide.createIcons();
             
-            gsap.fromTo("#feature-bullet-card", 
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.3)" }
-            );
+            // Timeline do efeito de luz e flash cinemático
+            const tl = gsap.timeline();
+            
+            tl.fromTo("#feature-bullet-card", 
+                { 
+                    opacity: 0, 
+                    y: 15, 
+                    scale: 0.95,
+                    boxShadow: "0 0 0px rgba(168, 85, 247, 0)",
+                    borderColor: "rgba(255, 255, 255, 0.08)",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)"
+                },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1, 
+                    duration: 0.35, 
+                    ease: "back.out(1.4)" 
+                }
+            )
+            // Flash rápido de luz neon (acende forte e suaviza)
+            .to("#feature-bullet-card", {
+                boxShadow: "0 0 35px rgba(168, 85, 247, 0.95), inset 0 0 15px rgba(168, 85, 247, 0.4)",
+                borderColor: "rgba(168, 85, 247, 1)",
+                backgroundColor: "rgba(168, 85, 247, 0.16)",
+                duration: 0.12,
+                repeat: 1,
+                yoyo: true,
+                ease: "power2.out"
+            })
+            // Estabiliza em um brilho sofisticado
+            .to("#feature-bullet-card", {
+                boxShadow: "0 8px 25px rgba(168, 85, 247, 0.25), inset 0 0 5px rgba(168, 85, 247, 0.15)",
+                borderColor: "rgba(168, 85, 247, 0.4)",
+                backgroundColor: "rgba(168, 85, 247, 0.05)",
+                duration: 0.3
+            });
         }
 
         // TIMELINE GERAL GSAP DE REELS

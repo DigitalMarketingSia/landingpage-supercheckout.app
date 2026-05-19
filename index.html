@@ -5,17 +5,84 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Super Checkout .app | Performance Imbatível</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            heading: ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <style>
     :root {
-      --bg: #030303;
+      --bg: #020205;
       --accent: #a855f7;
       --secondary: #22c55e;
+    }
+
+    .bg-grid-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: #020205;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .bg-glow-orb {
+      position: absolute;
+      width: 80vw;
+      height: 80vw;
+      max-width: 800px;
+      max-height: 800px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      opacity: 0.15;
+      mix-blend-mode: screen;
+    }
+    .bg-glow-orb-1 {
+      top: -20%;
+      left: -10%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.6) 0%, transparent 70%);
+      animation: pulse-glow-1 12s infinite alternate ease-in-out;
+    }
+    .bg-glow-orb-2 {
+      bottom: -20%;
+      right: -10%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, transparent 70%);
+      animation: pulse-glow-2 15s infinite alternate ease-in-out;
+    }
+    .bg-glow-orb-3 {
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
+      animation: pulse-glow-3 20s infinite alternate ease-in-out;
+    }
+    @keyframes pulse-glow-1 {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.12; }
+      100% { transform: scale(1.2) translate(8%, 5%); opacity: 0.22; }
+    }
+    @keyframes pulse-glow-2 {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.1; }
+      100% { transform: scale(1.15) translate(-5%, -8%); opacity: 0.2; }
+    }
+    @keyframes pulse-glow-3 {
+      0% { transform: scale(0.9) translate(-50%, -50%); opacity: 0.05; }
+      100% { transform: scale(1.1) translate(-40%, -45%); opacity: 0.15; }
     }
 
     html {
@@ -30,7 +97,7 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Outfit', sans-serif;
       background-color: var(--bg);
       color: #ffffff;
       margin: 0;
@@ -49,8 +116,11 @@
 
     h1,
     h2,
-    h3 {
-      font-family: 'Space Grotesk', sans-serif;
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Montserrat', sans-serif;
     }
 
     .glass-card {

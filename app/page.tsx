@@ -3,7 +3,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import BlurText from './components/BlurText';
-import Aurora from './components/Aurora';
 import GradientText from './components/GradientText';
 import HeroV2 from './components/HeroV2';
 
@@ -151,29 +150,20 @@ const App: React.FC = () => {
   }, [showcaseFeatures.length]);
 
   return (
-    <div ref={containerRef} className="relative w-full bg-[#030303] text-white selection:bg-purple-600/30 overflow-x-hidden font-['Plus_Jakarta_Sans'] px-6 md:px-12 lg:px-20">
+    <div ref={containerRef} className="relative w-full bg-[#020205] text-white selection:bg-purple-600/30 overflow-x-hidden font-['Outfit'] px-6 md:px-12 lg:px-20">
 
-      {/* Full Page Aurora Background - Fixed */}
-      <div className="fixed inset-0 z-0 opacity-10 pointer-events-none">
-        <Aurora
-          colorStops={['#9232ea', '#a855f7', '#9232ea']}
-          amplitude={1.5}
-          blend={0.7}
-          speed={0.3}
-        />
-      </div>
-
-      {/* Background Orbs */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[-10%] w-[60vw] h-[60vw] bg-purple-900/10 blur-[180px] rounded-full" />
-        <div className="absolute bottom-[10%] right-[-10%] w-[50vw] h-[50vw] bg-indigo-900/10 blur-[180px] rounded-full" />
+      {/* High-Performance GPU Shifting Gradient & Grid Background */}
+      <div className="bg-grid-glow">
+        <div className="bg-glow-orb bg-glow-orb-1" />
+        <div className="bg-glow-orb bg-glow-orb-2" />
+        <div className="bg-glow-orb bg-glow-orb-3" />
       </div>
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 w-full z-50 py-6 backdrop-blur-2xl border-b border-white/5 bg-black/20">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center font-black italic shadow-[0_0_30px_rgba(168,85,247,0.5)] text-sm md:text-base">S</div>
+            <img src="/logo.png" alt="Super Checkout Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-xl md:rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)]" />
             <span className="text-lg md:text-xl font-bold tracking-tighter uppercase italic">Super Checkout <span className="text-purple-500">.app</span></span>
           </div>
           <div className="hidden md:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">
@@ -200,8 +190,8 @@ const App: React.FC = () => {
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Checkout que <br /> <span className="text-purple-500">Vende.</span>
               </h2>
-              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
-                Otimizado para conversão máxima em qualquer dispositivo
+              <p className="text-gray-400 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto mt-6 font-sans">
+                Otimizado para conversão máxima em qualquer dispositivo.
               </p>
             </motion.div>
           </div>
@@ -373,7 +363,7 @@ const App: React.FC = () => {
                     <h3 className="text-lg font-black uppercase tracking-tight mb-1 group-hover:text-purple-400 transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400 transition-colors">
+                    <p className="text-sm text-gray-400 leading-relaxed font-light tracking-wide font-sans group-hover:text-gray-300 transition-colors">
                       {feature.desc}
                     </p>
                   </div>
@@ -421,7 +411,7 @@ const App: React.FC = () => {
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
                   </div>
                   <h3 className="text-3xl font-black italic uppercase tracking-tight mb-4">Gateways <br /> Integrados</h3>
-                  <p className="text-gray-500 text-sm font-medium leading-relaxed max-w-xs">Conexão nativa com os principais processadores do mundo para garantir que cada venda passe sem obstáculos.</p>
+                  <p className="text-gray-400 text-sm font-light leading-relaxed max-w-xs font-sans tracking-wide">Conexão nativa com os principais processadores do mundo para garantir que cada venda passe sem obstáculos.</p>
                 </div>
 
                 {/* Visual Accent */}
@@ -542,16 +532,8 @@ const App: React.FC = () => {
           >
             {/* Inner Content */}
             <div className="w-full h-full relative">
-              {/* Aurora Background Animation */}
-              <div className="absolute inset-0 z-0 opacity-30">
-                <Aurora
-                  color1="#9232ea"
-                  colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                  amplitude={1.2}
-                  blend={0.6}
-                  speed={0.8}
-                />
-              </div>
+              {/* Custom Shifting Gradient Glow Background */}
+              <div className="absolute inset-0 z-0 opacity-35 bg-gradient-to-br from-purple-600/25 via-transparent to-emerald-500/15 pointer-events-none" />
 
               {/* Efeito de Vidro (Reflexos) */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
@@ -945,18 +927,8 @@ const App: React.FC = () => {
                 transition={{ type: "spring", stiffness: 100, damping: 30 }}
                 className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
               >
-                {/* Inner Content Container */}
-                <div className="w-full h-full relative">
-                  {/* Aurora Background Animation */}
-                  <div className="absolute inset-0 z-0 opacity-30">
-                    <Aurora
-                      color1="#9232ea"
-                      colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                      amplitude={1.2}
-                      blend={0.6}
-                      speed={0.8}
-                    />
-                  </div>
+                  {/* Custom Shifting Gradient Glow Background */}
+                  <div className="absolute inset-0 z-0 opacity-35 bg-gradient-to-br from-purple-600/25 via-transparent to-emerald-500/15 pointer-events-none" />
 
                   {/* Glass Effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
@@ -1073,18 +1045,8 @@ const App: React.FC = () => {
                 <div className="absolute -inset-10 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                 <div className="relative w-full aspect-video bg-[#050508] rounded-[24px] border border-white/10 shadow-2xl overflow-hidden">
-                  {/* Inner Content */}
-                  <div className="w-full h-full relative">
-                    {/* Aurora Background Animation */}
-                    <div className="absolute inset-0 z-0 opacity-30">
-                      <Aurora
-                        color1="#9232ea"
-                        colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                        amplitude={1.0}
-                        blend={0.5}
-                        speed={0.5}
-                      />
-                    </div>
+                  {/* Custom Shifting Gradient Glow Background */}
+                  <div className="absolute inset-0 z-0 opacity-35 bg-gradient-to-br from-purple-600/25 via-transparent to-emerald-500/15 pointer-events-none" />
 
                     {/* Glass Effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
@@ -1763,8 +1725,8 @@ const App: React.FC = () => {
       {/* PLANOS - HIGH CONTRAST */}
       < section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
-          <div className="text-center mb-40">
-            <h2 className="text-8xl md:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10 text-black">Comece <br /> <span className="text-purple-600">Agora.</span></h2>
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="text-5xl md:text-7xl lg:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10 text-black">Comece <br /> <span className="text-purple-600">Agora.</span></h2>
 
             {/* Header Objection Killer */}
             <div className="mt-12">
@@ -1790,116 +1752,71 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* PROFISSIONAL (formerly STARTER) */}
-            <div className="p-12 border-4 border-black rounded-[60px] group flex flex-col justify-between min-h-[850px] relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Icons.Checkout />
+          <div className="max-w-4xl mx-auto">
+            <div className="p-6 md:p-16 bg-[#050508] text-white rounded-[32px] md:rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(168,85,247,0.25)] border-2 border-purple-600 flex flex-col justify-between">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-purple-600 px-6 py-3 rounded-b-2xl text-[10px] font-black uppercase tracking-[0.3em] shadow-[0_10px_20px_rgba(168,85,247,0.3)]">
+                Acesso Exclusivo
               </div>
-              <div className="relative z-10">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Sistema completo para uso próprio</span>
-                <h3 className="text-3xl lg:text-5xl font-black mb-6 italic">PROFISSIONAL</h3>
-                <div className="mb-8">
-                  <div className="text-6xl font-black tracking-tighter">R$ 167</div>
-                  <div className="border-y border-black/5 py-4 my-8">
-                    <p className="text-sm font-bold opacity-40 leading-relaxed italic">
-                      Ideal para quem quer vender seus próprios produtos com tecnologia de nível profissional, sem taxas e sem limitações.
-                    </p>
-                  </div>
-                </div>
-                <ul className="space-y-4 mb-16">
-                  {[
-                    '✓ 1 licença de uso',
-                    '✓ Sistema 100% completo',
-                    '✓ Produtos ilimitados',
-                    '✓ Clientes ilimitados',
-                    '✓ Instalação passo a passo (aulas completas)',
-                    '✓ Branding próprio',
-                    '✓ ZERO taxas por venda',
-                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
-                    '✓ Segurança nível enterprise',
-                    '✓ Atualizações gratuitas por 12 meses'
-                  ].map(item => (
-                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('ZERO taxas') ? 'bg-purple-600/10 text-purple-600 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <button className="w-full py-8 border-2 border-black text-black hover:bg-black hover:text-white rounded-full font-black text-xs uppercase tracking-[0.3em] transition-all">COMEÇAR AGORA</button>
-            </div>
-
-            {/* AGÊNCIA (formerly AGENCY) */}
-            <div className="p-12 bg-blue-950 text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(59,130,246,0.2)] border-2 border-blue-600 flex flex-col justify-between min-h-[850px]">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-blue-600 px-6 py-3 rounded-b-2xl text-[9px] font-black uppercase tracking-[0.3em] animate-pulse shadow-[0_10px_20px_rgba(37,99,235,0.3)]">Recomendado</div>
-              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_30%,_rgba(59,130,246,0.1)_0%,_transparent_70%)]" />
-              <div className="relative z-10 pt-8">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Para quem quer vender o sistema para clientes</span>
-                <h3 className="text-5xl font-black mb-6 italic text-blue-500">AGÊNCIA</h3>
-                <div className="mb-8">
-                  <div className="text-6xl font-black tracking-tighter">R$ 697</div>
-                  <div className="border-y border-white/10 py-4 my-8">
-                    <p className="text-sm font-bold opacity-60 leading-relaxed italic">
-                      <span className="text-blue-500 font-black not-italic uppercase tracking-[0.2em] text-[10px] block mb-2">Tudo do plano Profissional +</span>
-                      Crie uma nova fonte de renda vendendo o sistema para seus próprios clientes.
-                    </p>
-                  </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-transparent pointer-events-none" />
+              
+              <div className="relative z-10 text-center md:text-left pt-14 md:pt-0">
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] md:tracking-[0.4em] text-purple-400 mb-4 md:mb-6 block leading-normal">Infraestrutura Completa & Independente</span>
+                <h3 className="text-3xl md:text-6xl font-black mb-6 md:mb-8 italic uppercase tracking-tighter leading-none">SISTEMA ÚNICO</h3>
+                
+                <div className="border-y border-white/10 py-6 mb-10">
+                  <p className="text-sm md:text-lg font-light tracking-wide text-gray-300 font-sans leading-relaxed">
+                    Sua própria plataforma de vendas sem taxas ocultas, sem mensalidades abusivas e com controle total dos seus dados e dos seus clientes.
+                  </p>
                 </div>
 
-                <ul className="space-y-4 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mb-12">
                   {[
-                    '✓ 1 licença comercial',
-                    '✓ Até 10 ativações independentes',
-                    '✓ Direito de revenda para clientes',
-                    '✓ Cada cliente com ambiente próprio',
-                    '✓ Cobrança livre por instalação ou projeto',
-                    '✓ Licenciamento individual por cliente',
-                    '✓ Controle total das ativações',
-                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
-                    '✓ Segurança nível enterprise',
-                    '✓ Atualizações gratuitas por 12 meses'
-                  ].map(item => (
-                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('Direito de revenda') ? 'bg-blue-500/20 text-blue-400 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
+                    'Controle total',
+                    'Estrutura própria',
+                    'Recebimento direto',
+                    'Menos taxas',
+                    'Sem mensalidade',
+                    'Checkout otimizado',
+                    'Área premium',
+                    'Integrações abertas',
+                    'Webhooks livres',
+                    'Produtos ilimitados',
+                    'Domínios ilimitados',
+                    'Checkouts ilimitados',
+                    'Escalabilidade real',
+                    'Sem travas',
+                    'Independência operacional',
+                    'Customização total',
+                    'Operação profissional',
+                    'Dados privados',
+                    'Implantação assistida',
+                    'Atualizações futuras'
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.3)] flex-shrink-0 mt-0.5">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className="text-xs md:text-sm font-light tracking-wide text-gray-200 font-sans leading-tight">{item}</span>
+                    </div>
                   ))}
-                </ul>
-              </div>
-              <button className="relative z-10 w-full py-8 bg-blue-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-blue-500 shadow-[0_0_40px_rgba(59,130,246,0.3)] transition-all">COMEÇAR A VENDER</button>
-            </div>
-
-            {/* EMPRESA (formerly MASTER) */}
-            <div className="p-12 bg-[#050505] text-white rounded-[60px] relative overflow-hidden shadow-[0_40px_100px_rgba(168,85,247,0.3)] border-2 border-purple-600 flex flex-col justify-between min-h-[850px]">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-purple-600 px-6 py-3 rounded-b-2xl text-[9px] font-black uppercase tracking-[0.3em] shadow-[0_10px_20px_rgba(168,85,247,0.3)]">Escala Total</div>
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-transparent" />
-              <div className="relative z-10 pt-8">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-8 block">Para escalar a revenda como negócio profissional e lucrativo</span>
-                <h3 className="text-5xl font-black mb-6 italic text-purple-500">MASTER</h3>
-                <div className="mb-8">
-                  <div className="text-6xl font-black tracking-tighter">R$ 1.497</div>
-                  <div className="border-y border-white/10 py-4 my-8">
-                    <p className="text-sm font-bold opacity-60 leading-relaxed italic">
-                      <span className="text-purple-500 font-black not-italic uppercase tracking-[0.2em] text-[10px] block mb-2">Tudo do plano Agência +</span>
-                      Máxima escala e margem para transformar o Super Checkout em um negócio de revenda profissional.
-                    </p>
-                  </div>
                 </div>
-
-                <ul className="space-y-4 mb-16">
-                  {[
-                    '✓ 1 licença comercial avançada',
-                    '✓ Até 50 ativações independentes',
-                    '✓ Revenda em escala profissional',
-                    '✓ Custo reduzido por ativação',
-                    '✓ Margem máxima de lucro',
-                    '✓ Licenciamento avançado',
-                    '✓ Prioridade em suporte',
-                    '✓ Controle total da operação',
-                    '✓ Infraestrutura própria (sem VPS, sem servidor)',
-                    '✓ Segurança nível enterprise',
-                    '✓ Atualizações gratuitas por 12 meses'
-                  ].map(item => (
-                    <li key={item} className={`text-[10px] font-black uppercase tracking-widest leading-tight ${item.includes('Revenda em escala') ? 'bg-purple-500/20 text-purple-400 px-2 py-1 rounded-md -ml-2 w-fit' : ''}`}>{item}</li>
-                  ))}
-                </ul>
               </div>
-              <button className="relative z-10 w-full py-8 bg-purple-600 rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all">ESCALAR NEGÓCIO</button>
+
+              {/* Botão WhatsApp */}
+              <a 
+                href="https://wa.me/5551999999999?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20sobre%20o%20Super%20Checkout%20e%20ativar%20minha%20estrutura." 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="relative z-10 w-full py-5 md:py-7 px-4 md:px-8 bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 rounded-full font-black text-[11px] sm:text-xs md:text-base uppercase tracking-[0.05em] md:tracking-[0.2em] text-white hover:from-emerald-400 hover:via-green-400 hover:to-emerald-500 shadow-[0_15px_35px_rgba(16,185,129,0.35)] hover:shadow-[0_20px_45px_rgba(16,185,129,0.5)] transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 md:gap-3"
+              >
+                {/* Ícone de Chat Moderno Premium */}
+                <svg className="w-4 h-4 md:w-5 md:h-5 shrink-0 fill-current" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                </svg>
+                <span>Quero Minha Estrutura Própria</span>
+              </a>
             </div>
           </div>
         </div>
@@ -1950,14 +1867,15 @@ const App: React.FC = () => {
       {/* CTA FINAL */}
       < section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-5xl mx-auto px-6 relative z-10">
-          <h2 className="text-[12vw] md:text-[9vw] font-black leading-none tracking-tighter mb-20 uppercase italic">
+          <h2 className="text-[12vw] md:text-[9vw] font-black leading-none tracking-tighter mb-20 uppercase italic text-white">
             Ative seu <br /> <span className="text-purple-500">Poder.</span>
           </h2>
           <motion.button
-            whileHover={{ scale: 1.1, rotate: -3 }}
-            className="px-32 py-14 bg-white text-black rounded-full font-black text-5xl uppercase italic tracking-tighter shadow-2xl transition-all hover:bg-purple-600 hover:text-white"
+            whileHover={{ scale: 1.05, rotate: -1 }}
+            whileTap={{ scale: 0.98 }}
+            className="px-12 py-6 md:px-32 md:py-14 bg-white text-black rounded-full font-black text-2xl md:text-5xl uppercase italic tracking-tighter shadow-2xl transition-all hover:bg-purple-600 hover:text-white w-full md:w-auto"
           >
-            Cadastrar Grátis
+            Instalar
           </motion.button>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />

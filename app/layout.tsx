@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+import { Outfit, Montserrat } from "next/font/google";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
-  weight: ["200", "400", "600", "800"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["300", "500", "700"],
+  weight: ["300", "400", "700", "900"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
   title: "Super Checkout .app | Performance Imbatível",
   description: "Plataforma de checkout de alta performance com gestão completa de vendas digitais",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="scroll-smooth">
-      <body className={`${plusJakarta.variable} ${spaceGrotesk.variable} font-sans`} style={{ fontFamily: 'var(--font-plus-jakarta)' }}>
+      <body className={`${outfit.variable} ${montserrat.variable} font-sans`} style={{ fontFamily: 'var(--font-outfit)' }}>
         <div className="bg-gradient-noise" />
         {children}
       </body>

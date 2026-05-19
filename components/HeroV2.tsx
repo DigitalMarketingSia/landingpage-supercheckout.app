@@ -1,16 +1,16 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Aurora from './Aurora';
 import GradientText from './GradientText';
 
-const CTAComponent = () => (
+const CTAComponent = ({ onOpenVideo }: { onOpenVideo: () => void }) => (
     <div className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
         <motion.button
             whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(168,85,247,0.4)" }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={onOpenVideo}
             className="relative px-8 py-3.5 text-white rounded-2xl font-black text-base uppercase italic tracking-tighter shadow-[0_20px_50px_rgba(168,85,247,0.3)] transition-all flex items-center justify-center gap-2 group overflow-hidden w-full md:w-auto"
         >
             {/* Animated Gradient Background */}
@@ -25,7 +25,7 @@ const CTAComponent = () => (
                 <svg className="w-8 h-8 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
                 </svg>
-                CRIAR INFRAESTRUTURA AGORA
+                VER SISTEMA
                 <motion.span
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
@@ -35,24 +35,19 @@ const CTAComponent = () => (
                 </motion.span>
             </span>
         </motion.button>
-        <p className="text-gray-500 text-[10px] md:text-[11px] font-medium leading-relaxed max-w-sm text-center md:text-left">
+        <p className="text-gray-400 text-[10px] md:text-[11px] font-light tracking-wide leading-relaxed max-w-sm text-center md:text-left font-sans">
             A escolha de quem está cansado de pagar taxas abusivas e quer construir verdadeiramente um negócio próprio.
         </p>
     </div>
 );
 
 const HeroV2: React.FC = () => {
+    const [isVideoOpen, setIsVideoOpen] = useState(false);
+
     return (
         <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
-            {/* Background Effects */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-                <Aurora
-                    colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                    amplitude={1.2}
-                    blend={0.6}
-                    speed={0.4}
-                />
-            </div>
+            {/* Ambient Background Gradient Glows */}
+            <div className="absolute inset-0 z-0 opacity-25 pointer-events-none bg-gradient-to-tr from-emerald-500/20 via-transparent to-purple-500/20" />
 
             <div className="w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 px-8 md:px-16 lg:px-24">
 
@@ -61,7 +56,7 @@ const HeroV2: React.FC = () => {
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-start gap-8 text-center md:text-left items-center md:items-start"
+                    className="flex flex-col gap-8 text-center md:text-left items-center md:items-start"
                 >
                     {/* Badge */}
                     <GradientText
@@ -85,7 +80,7 @@ const HeroV2: React.FC = () => {
                             SEU PRÓPRIO <br />
                             <span className="text-purple-500">SISTEMA</span> DE VENDAS
                         </h1>
-                        <p className="text-xl md:text-2xl font-medium text-gray-400 leading-tight">
+                        <p className="text-xl md:text-2xl font-light text-gray-300 leading-tight tracking-wide font-sans">
                             A Infraestrutura Completa que Plataformas Não Oferecem.
                         </p>
                     </div>
@@ -93,7 +88,7 @@ const HeroV2: React.FC = () => {
                     {/* Sub-headline / Description */}
                     <div className="max-w-2xl space-y-8 flex flex-col items-center md:items-start">
                         {/* Positive Points Row */}
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-white text-[10px] md:text-xs font-medium">
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-white text-[10px] md:text-xs font-light tracking-wide font-sans">
                             <div className="flex items-center gap-2">
                                 <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
                                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,7 +110,7 @@ const HeroV2: React.FC = () => {
 
                     {/* CTA & Proof - DESKTOP ONLY */}
                     <div className="hidden lg:block w-full">
-                        <CTAComponent />
+                        <CTAComponent onOpenVideo={() => setIsVideoOpen(true)} />
                     </div>
 
                 </motion.div>
@@ -232,10 +227,54 @@ const HeroV2: React.FC = () => {
 
                 {/* CTA & Proof - MOBILE ONLY */}
                 <div className="lg:hidden w-full flex justify-center">
-                    <CTAComponent />
+                    <CTAComponent onOpenVideo={() => setIsVideoOpen(true)} />
                 </div>
 
             </div>
+
+            {/* Modal de Vídeo */}
+            <AnimatePresence>
+                {isVideoOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 md:p-10 bg-black/85 backdrop-blur-xl"
+                    >
+                        {/* Backdrop click to close */}
+                        <div className="absolute inset-0 cursor-pointer" onClick={() => setIsVideoOpen(false)} />
+
+                        <motion.div
+                            initial={{ scale: 0.95, y: 20, opacity: 0 }}
+                            animate={{ scale: 1, y: 0, opacity: 1 }}
+                            exit={{ scale: 0.95, y: 20, opacity: 0 }}
+                            transition={{ type: "spring", duration: 0.5 }}
+                            className="relative w-full max-w-4xl aspect-video bg-[#050508] border-2 border-white/10 rounded-[32px] overflow-hidden shadow-[0_0_100px_rgba(168,85,247,0.3)] z-10"
+                        >
+                            {/* Close Button on Top of Video */}
+                            <button
+                                onClick={() => setIsVideoOpen(false)}
+                                className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/60 hover:bg-black/80 hover:scale-110 p-2.5 rounded-full border border-white/10 transition-all flex items-center justify-center z-50 shadow-lg"
+                                aria-label="Fechar"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+
+                            {/* YouTube iframe (Substitua o ID dQw4w9WgXcQ pelo ID do seu vídeo real) */}
+                            <iframe
+                                className="w-full h-full"
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                                title="Super Checkout Demo"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };

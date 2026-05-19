@@ -11,7 +11,7 @@ const FAQ: React.FC = () => {
     const faqs = [
         {
             q: 'Preciso saber programar?',
-            a: 'Não. O Super Checkout foi desenvolvido para ser usado por qualquer pessoa. A interface é intuitiva e o processo de instalação é explicado passo a passo em aulas dentro da área de membros.'
+            a: 'Não. O Super Checkout foi desenvolvido para ser usado por qualquer pessoa. A interface é intuitiva e o processo de instalação nessa fase Founder é guiada. Zero dificuldades.'
         },
         {
             q: 'Vou precisar criar contas técnicas?',
@@ -35,11 +35,7 @@ const FAQ: React.FC = () => {
         },
         {
             q: 'O sistema é completo desde qual plano?',
-            a: 'Desde o Plano Profissional, você tem acesso ao sistema 100% completo, sem bloqueios de funcionalidades. O que muda entre os planos é o direito de uso, número de instalações e modelo de licenciamento.'
-        },
-        {
-            q: 'O que significa “licença” e “instalações”?',
-            a: 'Licença: é o seu direito de uso do sistema. Instalações: quantas vezes você pode instalar o sistema em ambientes diferentes. Exemplo: Um plano pode ter 1 licença com múltiplas instalações para uso próprio ou para clientes, conforme o plano contratado.'
+            a: 'Disponibilizamos o sistema 100% completo nessa fase Founder. Aproveite.'
         },
         {
             q: 'Posso usar meu próprio domínio?',
@@ -56,6 +52,10 @@ const FAQ: React.FC = () => {
         {
             q: 'Existe contrato de fidelidade?',
             a: 'Não. O pagamento é único, sem contratos, sem mensalidades e sem obrigações futuras.'
+        },
+        {
+            q: 'Existe limite de produtos ou clientes?',
+            a: 'O Super Checkout não impõe limites artificiais.\nA capacidade de usuários e dados depende da infraestrutura escolhida pelo próprio cliente, que pode ser ajustada conforme o crescimento do negócio.'
         }
     ];
 
@@ -87,8 +87,8 @@ const FAQ: React.FC = () => {
                             <button
                                 onClick={() => toggleIndex(i)}
                                 className={`w-full text-left p-8 rounded-[32px] border transition-all duration-500 ${activeIndex === i
-                                        ? 'bg-[#0a0a0f] border-purple-500/40 shadow-[0_0_30px_rgba(168,85,247,0.15)]'
-                                        : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-white/10'
+                                    ? 'bg-[#0a0a0f] border-purple-500/40 shadow-[0_0_30px_rgba(168,85,247,0.15)]'
+                                    : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-white/10'
                                     }`}
                             >
                                 <div className="flex justify-between items-center gap-6">
@@ -97,8 +97,8 @@ const FAQ: React.FC = () => {
                                         {faq.q}
                                     </h3>
                                     <div className={`flex-shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-500 ${activeIndex === i
-                                            ? 'bg-purple-600 border-purple-500 rotate-180'
-                                            : 'border-white/20 group-hover:border-white/40'
+                                        ? 'bg-purple-600 border-purple-500 rotate-180'
+                                        : 'border-white/20 group-hover:border-white/40'
                                         }`}>
                                         <svg
                                             className={`w-4 h-4 transition-colors ${activeIndex === i ? 'text-white' : 'text-gray-500 group-hover:text-white'}`}

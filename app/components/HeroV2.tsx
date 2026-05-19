@@ -2,21 +2,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Aurora from './Aurora';
 import GradientText from './GradientText';
 
 const HeroV2: React.FC = () => {
     return (
         <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
-            {/* Background Effects */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-                <Aurora
-                    colorStops={['#9232ea', '#a855f7', '#9232ea']}
-                    amplitude={1.2}
-                    blend={0.6}
-                    speed={0.4}
-                />
-            </div>
+            {/* Ambient Background Gradient Glows */}
+            <div className="absolute inset-0 z-0 opacity-25 pointer-events-none bg-gradient-to-tr from-emerald-500/20 via-transparent to-purple-500/20" />
 
             <div className="w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 px-8 md:px-16 lg:px-24">
 

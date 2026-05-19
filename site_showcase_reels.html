@@ -47,6 +47,8 @@
         #reels-viewport {
             width: 450px;
             height: 800px;
+            max-width: 95vw;
+            max-height: 95vh;
             background: var(--bg);
             position: relative;
             overflow: hidden;
@@ -1293,7 +1295,7 @@
         /* Ajustes de Responsividade Focados no Mobile (celulares físicos) */
         @media (max-width: 500px) {
             body {
-                padding: 14px 10px; /* Margem física elegante nas bordas do telefone real! */
+                padding: 32px 14px; /* Aumenta a folga vertical simulando o telefone */
                 background: #000;
                 box-sizing: border-box;
                 height: 100vh;
@@ -1304,7 +1306,7 @@
                 width: 100%;
                 height: 100%;
                 max-width: 100%;
-                max-height: calc(100vh - 28px);
+                max-height: calc(100vh - 64px); /* Diminui levemente a altura vertical para caber confortavelmente */
                 border-radius: 36px;
                 border: 4px solid #1a1a24; /* Moldura de telefone simulada */
                 box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);

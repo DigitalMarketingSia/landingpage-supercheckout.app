@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Checkout - Reels Presentation</title>
+    <!-- Fontes Premium do Site -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Bibliotecas GSAP & Lucide -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --primary: #10b981; /* Emerald Green */
+            --primary-glow: rgba(16, 185, 129, 0.45);
+            --purple: #a855f7; /* Purple */
+            --purple-glow: rgba(168, 85, 247, 0.45);
+            --bg: #020205;
+            --glass: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --purple-border: rgba(168, 85, 247, 0.25);
+            --green-border: rgba(16, 185, 129, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Container Reels 9:16 */
+        #reels-viewport {
+            width: 450px;
+            height: 800px;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            border-radius: 40px;
+            border: 4px solid #111;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 2px 2px rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 24px 20px;
+        }
+
+        /* Degradê de luzes nos cantos - Idêntico ao site */
+        .neon-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        #glow-top-left {
+            top: -150px;
+            left: -150px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 80%);
+            animation: shiftOrb1 15s infinite alternate ease-in-out;
+        }
+
+        #glow-bottom-right {
+            bottom: -150px;
+            right: -150px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 80%);
+            animation: shiftOrb2 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes shiftOrb1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 40px) scale(1.1); }
+        }
+
+        @keyframes shiftOrb2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-60px, -40px) scale(1.1); }
+        }
+
+        /* Barra de Progresso Superior Estilo Reels */
+        #chapters-bar {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            gap: 6px;
+            z-index: 100;
+        }
+
+        .chapter-tick {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chapter-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--purple), var(--primary));
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        /* TELA DE INICIALIZAÇÃO */
+        #tap-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 2, 5, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s ease-out;
+            border-radius: 36px;
+        }
+
+        #tap-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.05);
+        }
+
+        .tap-pulse-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            box-shadow: 0 0 30px var(--primary-glow);
+            margin-bottom: 20px;
+            animation: tapPulse 1.8s infinite;
+        }
+
+        @keyframes tapPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+            70% { transform: scale(1.06); box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* HEADER NAV (PERSISTENTE) */
+        .reels-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 90;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .brand-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-logo-img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+        }
+
+        .brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 900;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .brand-dot {
+            color: var(--purple);
+        }
+
+        .nav-right-badge {
+            font-size: 0.55rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.45);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            padding: 4px 10px;
+            border-radius: 99px;
+        }
+
+        /* CONTEINER DE CENA INDIVIDUAL */
+        .reels-scene {
+            position: absolute;
+            top: 65px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            z-index: 10;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .reels-scene.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ==========================================================================
+           SCENE 1: HERO
+           ========================================================================== */
+        /* Badge do topo do Hero */
+        .hero-badge-gradient {
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.62rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--purple), var(--primary));
+            color: #000;
+            box-shadow: 0 5px 25px rgba(168, 85, 247, 0.25);
+            font-family: 'Outfit', sans-serif;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .hero-badge-gradient span {
+            font-weight: 900;
+            mix-blend-mode: multiply;
+        }
+
+        /* Headline Principal */
+        .hero-headline {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 950;
+            text-transform: uppercase;
+            font-size: 1.85rem;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            color: #fff;
+            margin-bottom: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .purple-text {
+            color: var(--purple);
+            text-shadow: 0 0 25px var(--purple-glow);
+        }
+
+        /* Subtítulo */
+        .hero-subtitle {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: #d1d5db;
+            max-width: 92%;
+            line-height: 1.35;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Pontos Positivos checklist */
+        .hero-checklist {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .check-circle-green {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--emerald-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        /* MOCKUP CENTRAL DO DASHBOARD (EXATAMENTE COMO O SITE) */
+        .dashboard-container-sim {
+            width: 90%;
+            position: relative;
+            perspective: 1000px;
+            margin-top: 35px;
+            margin-bottom: 35px;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+        }
+
+        .dashboard-mockup-card {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: #050508;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .dashboard-mockup-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Imagem real do Dashboard do site */
+        .dashboard-img-real {
+            width: 100%;
+            height: calc(100% - 28px);
+            object-fit: contain;
+            padding: 12px 12px 0 12px;
+            z-index: 5;
+            filter: brightness(0.95) contrast(1.05);
+        }
+
+        /* Letreiro Infinito Inferior do Ticker Overlay */
+        .ticker-bar-sim {
+            width: 100%;
+            height: 28px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            z-index: 10;
+            position: relative;
+        }
+
+        .ticker-track-sim {
+            display: flex;
+            gap: 20px;
+            white-space: nowrap;
+            width: 200%;
+        }
+
+        .ticker-text-sim {
+            font-size: 0.52rem;
+            font-weight: 850;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.35);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ticker-text-sim i {
+            color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Efeito de linha de scanner laser */
+        .laser-scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15%;
+            background: linear-gradient(to bottom, transparent, rgba(168, 85, 247, 0.08), transparent);
+            z-index: 6;
+            pointer-events: none;
+            filter: blur(2px);
+        }
+
+        /* WIDGETS FLUTUANTES */
+        .floating-widget {
+            position: absolute;
+            z-index: 30;
+            border-radius: 14px;
+            padding: 10px 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.55);
+            text-align: left;
+            will-change: transform;
+            opacity: 0;
+        }
+
+        /* Widget 1: Taxa de conversão 94% */
+        #widget-conversion {
+            top: -15px;
+            right: -10px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid var(--purple-border);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.15);
+            transform: scale(0.95);
+        }
+
+        .widget-title {
+            font-size: 0.52rem;
+            font-weight: 900;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .widget-value-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .widget-value {
+            font-size: 1.25rem;
+            font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .widget-badge-green {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--green-border);
+            color: var(--primary);
+            font-size: 0.45rem;
+            font-weight: 900;
+            padding: 1px 4px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 1px;
+            margin-bottom: 1px;
+        }
+
+        /* Widget 2: Zero Taxas por venda */
+        #widget-zero-tax {
+            bottom: -5px;
+            left: -10px;
+            background: rgba(5, 10, 8, 0.95);
+            border: 1px solid var(--green-border);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
+            transform: scale(0.95);
+        }
+
+        .widget-flex {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .widget-icon-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--green-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 0.75rem;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .widget-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .widget-column .w-top {
+            font-size: 0.42rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .widget-column .w-mid {
+            font-size: 0.85rem;
+            font-weight: 950;
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            color: #fff;
+            line-height: 1;
+        }
+
+        /* ÁREA DO BOTÃO E DESCRITIVO INFERIOR */
+        .hero-action-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+            margin-bottom: 10px;
+            z-index: 10;
+        }
+
+        /* Botão principal com gradiente animado exato */
+        .reels-btn-gradient {
+            width: 80%;
+            height: 48px;
+            border-radius: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 950;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 35px rgba(168, 85, 247, 0.35);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .reels-btn-gradient-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #a855f7, #86efac, #a855f7);
+            background-size: 200% 100%;
+            z-index: 1;
+            will-change: background-position;
+        }
+
+        .reels-btn-text {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+        }
+
+        .reels-btn-arrow {
+            display: inline-block;
+            font-size: 1.05rem;
+        }
+
+        /* Texto descritivo final */
+        .hero-footer-desc {
+            font-size: 0.72rem;
+            color: #9ca3af;
+            line-height: 1.45;
+            max-width: 90%;
+            text-align: center;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        /* Cursor virtual para simulação */
+        .sim-cursor {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0) 70%);
+            border: 2px solid #fff;
+            border-radius: 50%;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 12px #fff;
+        }
+
+        /* ==========================================================================
+           SCENE 2: CHECKOUT QUE VENDE
+           ========================================================================== */
+        .checkout-scene-reels {
+            /* Extends reels-scene styles, handled dynamically */
+        }
+
+        /* Headline Secundária */
+        .checkout-headline {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 950;
+            text-transform: uppercase;
+            font-size: 1.85rem;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            color: #fff;
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .checkout-subtitle {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #9ca3af;
+            max-width: 90%;
+            line-height: 1.3;
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        /* Mockup do Smart Checkout Mobile */
+        .checkout-mockup-wrapper {
+            width: 78%;
+            position: relative;
+            perspective: 1000px;
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(35px) scale(0.95);
+        }
+
+        .checkout-card-real {
+            width: 100%;
+            background: rgba(10, 10, 15, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkout-card-real::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 10% 10%, rgba(168, 85, 247, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Product Info Header */
+        .checkout-product-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 12px;
+        }
+
+        .checkout-product-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid var(--purple-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
+        }
+
+        .checkout-product-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checkout-product-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checkout-product-price {
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+        }
+
+        /* Input Fields */
+        .checkout-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .checkout-input-mock {
+            width: 100%;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-input-mock.focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+            background: rgba(168, 85, 247, 0.02);
+        }
+
+        .checkout-input-mock span {
+            font-size: 0.48rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .checkout-input-val {
+            font-size: 0.68rem;
+            font-weight: 500;
+            color: #fff;
+            height: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Payment switcher tabs */
+        .checkout-payment-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .checkout-tab {
+            flex: 1;
+            height: 32px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.01);
+            color: rgba(255,255,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-tab.active {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--purple-border);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Order Bump checkbox style exact */
+        .checkout-order-bump {
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-order-bump.active {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: var(--emerald-border);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .ob-checkbox {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            border: 1.5px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.02);
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: all 0.25s ease;
+        }
+
+        .checkout-order-bump.active .ob-checkbox {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .ob-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .ob-title {
+            font-size: 0.55rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        .ob-desc {
+            font-size: 0.48rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.2;
+        }
+
+        /* Checkout pay button */
+        .checkout-pay-btn {
+            width: 100%;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #a855f7, #6366f1);
+            color: #fff;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 950;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.25);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-pay-btn.success {
+            background: var(--primary);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+        }
+
+        /* Success Overlay Badge */
+        .success-overlay-badge {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 2, 5, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-radius: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .success-overlay-badge.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        .success-circle-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.15);
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            box-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        .success-overlay-text {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 950;
+            font-size: 0.95rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .success-overlay-sub {
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.45);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Banners flutuantes de Destaques (Features Bullets) */
+        .highlight-bullet-banner {
+            width: 82%;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+            position: absolute;
+            bottom: 20px;
+            left: 9%;
+            z-index: 50;
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        .bullet-icon-wrapper {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid var(--purple-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
+            flex-shrink: 0;
+        }
+
+        .bullet-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bullet-title-text {
+            font-size: 0.62rem;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bullet-desc-text {
+            font-size: 0.52rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.25;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="reels-viewport">
+        <!-- TELA DE TAP TO PLAY (Desbloqueio de Áudio do Navegador) -->
+        <div id="tap-overlay" onclick="startShowcase()">
+            <div class="tap-pulse-btn">
+                <i data-lucide="play" style="width: 32px; height: 32px; fill: var(--primary); margin-left: 4px;"></i>
+            </div>
+            <div style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 950; letter-spacing: 1px; font-size: 1.15rem; color: #fff;">APRESENTAR SISTEMA</div>
+            <div style="color: rgba(255,255,255,0.45); margin-top: 6px; font-size: 0.62rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">CINEMATIC VIDEO SHOWCASE</div>
+        </div>
+
+        <!-- Barra de Progresso Superior Estilo Reels (2 Capítulos) -->
+        <div id="chapters-bar">
+            <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-1"></div></div>
+            <div class="chapter-tick"><div class="chapter-progress" id="reels-progress-bar-2"></div></div>
+        </div>
+
+        <!-- Luzes Degradê nos Cantos -->
+        <div class="neon-glow" id="glow-top-left"></div>
+        <div class="neon-glow" id="glow-bottom-right"></div>
+
+        <!-- Cursor de Clique Virtual Simulado -->
+        <div class="sim-cursor" id="virtual-mouse"></div>
+
+        <!-- HEADER NAV (PERSISTENTE) -->
+        <div class="reels-header">
+            <div class="brand-logo-container">
+                <img src="./logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='public/logo.png'">
+                <span class="brand-name">SUPER CHECKOUT<span class="brand-dot">.APP</span></span>
+            </div>
+            <div class="nav-right-badge">LIVE DEMO</div>
+        </div>
+
+        <!-- ==========================================
+             SCENE 1: HERO
+             ========================================== -->
+        <div class="reels-scene active" id="scene-hero">
+            <!-- Badge Principal do Topo -->
+            <div class="hero-badge-gradient" id="badge-top">
+                <span>ZERO TAXAS POR VENDA • Ative e Use Para Sempre</span>
+            </div>
+
+            <!-- Título Principal H1 -->
+            <h1 class="hero-headline" id="main-headline">
+                SEU PRÓPRIO <br>
+                <span class="purple-text">SISTEMA</span> DE VENDAS
+            </h1>
+
+            <!-- Subtítulo H2 -->
+            <p class="hero-subtitle" id="main-subtitle">
+                A Infraestrutura Completa que Plataformas Não Oferecem.
+            </p>
+
+            <!-- Lista de Diferenciais -->
+            <div class="hero-checklist" id="main-checklist">
+                <div class="check-item">
+                    <div class="check-circle-green"><i data-lucide="check" style="width: 10px; height: 10px; stroke-width: 3.5;"></i></div>
+                    <span>Sistema Robusto</span>
+                </div>
+                <div class="check-item">
+                    <div class="check-circle-green"><i data-lucide="check" style="width: 10px; height: 10px; stroke-width: 3.5;"></i></div>
+                    <span>Você 100% no comando</span>
+                </div>
+            </div>
+
+            <!-- Mockup do Dashboard Operacional -->
+            <div class="dashboard-container-sim" id="dashboard-wrapper">
+                <div class="dashboard-mockup-card">
+                    <!-- Scanner Laser -->
+                    <div class="laser-scanner" id="scanner-line"></div>
+
+                    <!-- Imagem real do dashboard -->
+                    <img src="./assets/dashboard.png" alt="Infrastructure Dashboard" class="dashboard-img-real" onerror="this.src='public/assets/dashboard.png'">
+
+                    <!-- Ticker de Avisos -->
+                    <div class="ticker-bar-sim">
+                        <div class="ticker-track-sim" id="ticker-slide">
+                            <div class="ticker-text-sim">
+                                <i data-lucide="x-circle" style="width: 9px; height: 9px; stroke-width: 3;"></i>
+                                Não é plugin instável
+                            </div>
+                            <div class="ticker-text-sim">
+                                <i data-lucide="x-circle" style="width: 9px; height: 9px; stroke-width: 3;"></i>
+                                Não é script improvisado
+                            </div>
+                            <div class="ticker-text-sim">
+                                <i data-lucide="x-circle" style="width: 9px; height: 9px; stroke-width: 3;"></i>
+                                Não é "sisteminha" PHP
+                            </div>
+                            <!-- Repetição do loop -->
+                            <div class="ticker-text-sim">
+                                <i data-lucide="x-circle" style="width: 9px; height: 9px; stroke-width: 3;"></i>
+                                Não é plugin instável
+                            </div>
+                            <div class="ticker-text-sim">
+                                <i data-lucide="x-circle" style="width: 9px; height: 9px; stroke-width: 3;"></i>
+                                Não é script improvisado
+                            </div>
+                            <div class="ticker-text-sim">
+                                <i data-lucide="x-circle" style="width: 9px; height: 9px; stroke-width: 3;"></i>
+                                Não é "sisteminha" PHP
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget Flutuante 1: Taxa de Conversão -->
+                <div class="floating-widget" id="widget-conversion">
+                    <div class="widget-title">Taxa de Conversão</div>
+                    <div class="widget-value-row">
+                        <span class="widget-value">94%</span>
+                        <div class="widget-badge-green">
+                            <i data-lucide="trending-up" style="width: 7px; height: 7px; stroke-width: 3;"></i>
+                            +12.4%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget Flutuante 2: Zero Taxas -->
+                <div class="floating-widget" id="widget-zero-tax">
+                    <div class="widget-flex">
+                        <div class="widget-icon-circle">$</div>
+                        <div class="widget-column">
+                            <span class="w-top">Compromisso</span>
+                            <span class="w-mid">ZERO TAXAS</span>
+                            <span class="w-top">POR VENDA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de Ação e Descritivo -->
+            <div class="hero-action-container">
+                <button class="reels-btn-gradient" id="btn-showcase-action">
+                    <div class="reels-btn-gradient-bg" id="btn-gradient-shift"></div>
+                    <span class="reels-btn-text">
+                        <i data-lucide="zap" style="width: 14px; height: 14px; fill: currentColor;"></i>
+                        VER SISTEMA
+                        <span class="reels-btn-arrow">→</span>
+                    </span>
+                </button>
+
+                <p class="hero-footer-desc" id="footer-desc-text">
+                    A escolha de quem está cansado de pagar taxas abusivas e quer construir verdadeiramente um negócio próprio.
+                </p>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             SCENE 2: CHECKOUT QUE VENDE
+             ========================================== -->
+        <div class="reels-scene" id="scene-checkout">
+            <!-- Headline Principal -->
+            <h1 class="checkout-headline" id="checkout-title">
+                Checkout que <br>
+                <span class="purple-text">Vende.</span>
+            </h1>
+
+            <!-- Subtítulo -->
+            <p class="checkout-subtitle" id="checkout-sub">
+                Otimizado para conversão máxima em qualquer dispositivo.
+            </p>
+
+            <!-- Mockup Interativo de Checkout Mobile -->
+            <div class="checkout-mockup-wrapper" id="checkout-card-wrapper">
+                <div class="checkout-card-real" id="checkout-main-card">
+                    <!-- Overlay de Compra Aprovada -->
+                    <div class="success-overlay-badge" id="success-popup">
+                        <div class="success-circle-icon">
+                            <i data-lucide="check" style="width: 24px; height: 24px; stroke-width: 3.5;"></i>
+                        </div>
+                        <span class="success-overlay-text">COMPRA APROVADA</span>
+                        <span class="success-overlay-sub">Conectado em 120ms</span>
+                    </div>
+
+                    <!-- Header do Produto -->
+                    <div class="checkout-product-header">
+                        <div class="checkout-product-img">
+                            <i data-lucide="shopping-bag" style="width: 18px; height: 18px;"></i>
+                        </div>
+                        <div class="checkout-product-info">
+                            <span class="checkout-product-title">Super Checkout - Founder</span>
+                            <span class="checkout-product-price" id="price-value-text">R$ 97,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Campos do Formulário -->
+                    <div class="checkout-form-group">
+                        <div class="checkout-input-mock" id="input-name-container">
+                            <span>Nome Completo</span>
+                            <div class="checkout-input-val" id="val-name-text"></div>
+                        </div>
+                        <div class="checkout-input-mock" id="input-email-container">
+                            <span>E-mail</span>
+                            <div class="checkout-input-val" id="val-email-text"></div>
+                        </div>
+                    </div>
+
+                    <!-- Abas de Pagamento -->
+                    <div class="checkout-payment-tabs">
+                        <div class="checkout-tab active" id="tab-pix-btn">
+                            <i data-lucide="qr-code" style="width: 12px; height: 12px;"></i> Pix
+                        </div>
+                        <div class="checkout-tab" id="tab-card-btn">
+                            <i data-lucide="credit-card" style="width: 12px; height: 12px;"></i> Cartão
+                        </div>
+                    </div>
+
+                    <!-- Order Bump -->
+                    <div class="checkout-order-bump" id="order-bump-card">
+                        <div class="ob-checkbox" id="ob-checkbox-box">
+                            <i class="ob-check-mark" data-lucide="check" style="width: 10px; height: 10px; stroke-width: 4; display: none;"></i>
+                        </div>
+                        <div class="ob-info">
+                            <span class="ob-title">🎁 LEVAR ÁREA DE MEMBROS PRO</span>
+                            <span class="ob-desc">Hospede seus cursos com layout premium estilo Netflix (+R$47)</span>
+                        </div>
+                    </div>
+
+                    <!-- Botão de Ação do Checkout -->
+                    <button class="checkout-pay-btn" id="pay-action-button">
+                        <i data-lucide="lock" style="width: 13px; height: 13px;"></i>
+                        <span id="pay-btn-label">PAGAR COM PIX</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Banners Flutuantes de Destaque -->
+            <div class="highlight-bullet-banner" id="feature-bullet-card">
+                <div class="bullet-icon-wrapper" id="bullet-icon-box">
+                    <i data-lucide="trending-up" style="width: 12px; height: 12px;"></i>
+                </div>
+                <div class="bullet-content">
+                    <span class="bullet-title-text" id="bullet-title">Alta Conversão</span>
+                    <span class="bullet-desc-text" id="bullet-desc">Design otimizado para maximizar vendas com UX testada</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar ícones
+        lucide.createIcons();
+
+        // MOTOR DE SÍNTESE DE ÁUDIO WEB AUDIO API (Totalmente Livre de Direitos)
+        const SoundFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            },
+            playTick() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, now);
+                gain.gain.setValueAtTime(0.015, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(now + 0.04);
+            },
+            playClick() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(580, now);
+                gain.gain.setValueAtTime(0.06, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(now + 0.08);
+            },
+            playSuccess() {
+                this.init();
+                const now = this.ctx.currentTime;
+                // Arpejo tecnológico subindo
+                const notes = [261.63, 329.63, 392.00, 523.25]; 
+                
+                notes.forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i * 0.06);
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(0.04, now + i * 0.06 + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.25);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + i * 0.06);
+                    osc.stop(now + i * 0.06 + 0.25);
+                });
+            }
+        };
+
+        // CONSTANTES E DADOS DOS BULLETS
+        const bulletFeatures = [
+            { title: "Alta Conversão", desc: "Design otimizado para maximizar vendas com UX testada", icon: "trending-up" },
+            { title: "Mobile First", desc: "Experiência perfeita em smartphones e tablets", icon: "smartphone" },
+            { title: "Order Bump & Upsell", desc: "Aumente o ticket médio automaticamente com ofertas inteligentes", icon: "dollar-sign" },
+            { title: "Recuperação de Carrinho", desc: "Não perca nenhuma venda com automação inteligente", icon: "shopping-cart" },
+            { title: "Checkout Seguro", desc: "SSL e criptografia de ponta a ponta para proteção total", icon: "shield" },
+            { title: "Carregamento Instantâneo", desc: "Menos de 0.8s para garantir que nenhum cliente desista", icon: "zap" }
+        ];
+
+        // AUXILIAR DE DIGITAÇÃO ANIMADA (TEXT TYPING EFFECT)
+        function typeText(targetSelector, text, speedMultiplier = 1) {
+            return new Promise((resolve) => {
+                const el = document.querySelector(targetSelector);
+                el.textContent = "";
+                let i = 0;
+                function type() {
+                    if (i < text.length) {
+                        el.textContent += text.charAt(i);
+                        i++;
+                        SoundFX.playTick();
+                        setTimeout(type, 65 * speedMultiplier);
+                    } else {
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
+        // AUXILIAR PARA TROCAR BULLET CARD DINAMICAMENTE
+        function changeBullet(index) {
+            const data = bulletFeatures[index];
+            if (!data) return;
+            
+            SoundFX.playSuccess();
+            const iconBox = document.getElementById("bullet-icon-box");
+            iconBox.innerHTML = `<i data-lucide="${data.icon}" style="width: 12px; height: 12px;"></i>`;
+            document.getElementById("bullet-title").textContent = data.title;
+            document.getElementById("bullet-desc").textContent = data.desc;
+            lucide.createIcons();
+            
+            gsap.fromTo("#feature-bullet-card", 
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.3)" }
+            );
+        }
+
+        // TIMELINE GERAL GSAP DE REELS
+        function startShowcase() {
+            // Esconder tela de tap overlay
+            document.getElementById("tap-overlay").classList.add("fade-out");
+            SoundFX.init();
+            
+            const mainTimeline = gsap.timeline({
+                repeat: -1, // Loops infinitely
+            });
+
+            // Animações contínuas paralelas no Scene 1 (para o scanner e ticker)
+            gsap.to("#ticker-slide", { x: "-50%", duration: 12, repeat: -1, ease: "linear" });
+            gsap.to("#scanner-line", { y: "350%", duration: 4, repeat: -1, ease: "linear" });
+            
+            // Fazer os widgets flutuarem
+            gsap.to("#widget-conversion", { y: "-=8", duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
+            gsap.to("#widget-zero-tax", { y: "+=8", duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.3 });
+
+            // ==========================================
+            // CAPÍTULO 1: SCENE 1 (HERO)
+            // ==========================================
+            mainTimeline.add("chapter-1-start");
+            
+            // Zerar barras de progresso
+            mainTimeline.set("#reels-progress-bar-1", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-2", { width: "0%" });
+
+            // Mostrar Scene 1, esconder Scene 2
+            mainTimeline.set("#scene-hero", { display: "flex", className: "reels-scene active" });
+            mainTimeline.set("#scene-checkout", { display: "none", className: "reels-scene" });
+
+            // Animação da barra 1 progredindo no cap 1
+            mainTimeline.to("#reels-progress-bar-1", {
+                width: "100%",
+                duration: 9.0, // Tempo de tela da primeira seção
+                ease: "linear"
+            }, "chapter-1-start");
+
+            // Entrada dos elementos do Hero
+            mainTimeline.to("#badge-top", { duration: 0.6, opacity: 1, y: 0, ease: "back.out(1.5)", onStart: () => SoundFX.playTick() }, "chapter-1-start+=0.2");
+            mainTimeline.to("#main-headline", { duration: 0.7, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-1-start+=0.4");
+            mainTimeline.to("#main-subtitle", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-1-start+=0.6");
+            mainTimeline.to("#main-checklist", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out", onStart: () => SoundFX.playTick() }, "chapter-1-start+=0.8");
+            mainTimeline.to("#dashboard-wrapper", { duration: 0.8, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)" }, "chapter-1-start+=1.0");
+            
+            // Entrada dos widgets
+            mainTimeline.to("#widget-conversion", { duration: 0.5, opacity: 1, scale: 1, ease: "back.out(1.4)", onStart: () => SoundFX.playSuccess() }, "chapter-1-start+=1.4");
+            mainTimeline.to("#widget-zero-tax", { duration: 0.5, opacity: 1, scale: 1, ease: "back.out(1.4)", onStart: () => SoundFX.playSuccess() }, "chapter-1-start+=1.6");
+
+            // Entrada do botão e rodapé descritivo
+            mainTimeline.to("#btn-showcase-action", { duration: 0.6, opacity: 1, y: 0, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-1-start+=1.8");
+            mainTimeline.to("#footer-desc-text", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-1-start+=2.0");
+
+            // Cursor virtual surge e clica no botão "VER SISTEMA"
+            mainTimeline.to("#virtual-mouse", { duration: 1.0, opacity: 1, top: "84%", left: "50%", ease: "power3.out" }, "chapter-1-start+=4.0");
+            mainTimeline.to("#btn-showcase-action", { 
+                duration: 0.1, 
+                scale: 0.94,
+                onStart: () => {
+                    SoundFX.playClick();
+                    gsap.to("#reels-viewport", { x: "+=2", y: "+=2", duration: 0.05, repeat: 1, yoyo: true });
+                }
+            }, "chapter-1-start+=5.0");
+            mainTimeline.to("#btn-showcase-action", { duration: 0.15, scale: 1 }, "chapter-1-start+=5.15");
+            mainTimeline.to("#virtual-mouse", { duration: 0.25, opacity: 0 }, "chapter-1-start+=5.3");
+
+            // Transição para Scene 2 (fadeout da Scene 1)
+            mainTimeline.to("#scene-hero", { duration: 0.6, opacity: 0, y: -40, ease: "power2.in" }, "chapter-1-start+=8.0");
+            
+            // ==========================================
+            // CAPÍTULO 2: SCENE 2 (CHECKOUT QUE VENDE)
+            // ==========================================
+            mainTimeline.add("chapter-2-start");
+
+            // Mostrar Scene 2
+            mainTimeline.set("#scene-hero", { display: "none" }, "chapter-2-start");
+            mainTimeline.set("#scene-checkout", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-2-start");
+            mainTimeline.to("#scene-checkout", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-2-start");
+
+            // Animação da barra 2 progredindo no cap 2
+            mainTimeline.to("#reels-progress-bar-2", {
+                width: "100%",
+                duration: 21.0, // Tempo de tela para preenchimento interativo e bullets
+                ease: "linear"
+            }, "chapter-2-start");
+
+            // Entrada dos textos de Checkout
+            mainTimeline.to("#checkout-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-2-start+=0.4");
+            mainTimeline.to("#checkout-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-2-start+=0.6");
+            mainTimeline.to("#checkout-card-wrapper", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)" }, "chapter-2-start+=0.8");
+
+            // [BULLET 1]: Alta Conversão
+            mainTimeline.call(() => changeBullet(0), null, "chapter-2-start+=1.5");
+
+            // Simular preenchimento: Nome Completo ("João Silva")
+            mainTimeline.to("#input-name-container", { duration: 0.2, className: "checkout-input-mock focus" }, "chapter-2-start+=2.2");
+            mainTimeline.to("#virtual-mouse", { duration: 0.8, opacity: 1, top: "27.5%", left: "30%", ease: "power3.out" }, "chapter-2-start+=2.2");
+            mainTimeline.call(async () => {
+                SoundFX.playClick();
+                await typeText("#val-name-text", "João Silva");
+            }, null, "chapter-2-start+=3.0");
+            mainTimeline.to("#input-name-container", { duration: 0.2, className: "checkout-input-mock" }, "chapter-2-start+=4.0");
+
+            // [BULLET 2]: Mobile First
+            mainTimeline.call(() => changeBullet(1), null, "chapter-2-start+=4.2");
+
+            // Simular preenchimento: E-mail ("joao@sucesso.com")
+            mainTimeline.to("#input-email-container", { duration: 0.2, className: "checkout-input-mock focus" }, "chapter-2-start+=4.5");
+            mainTimeline.to("#virtual-mouse", { duration: 0.6, top: "33.5%", left: "30%", ease: "power3.out" }, "chapter-2-start+=4.5");
+            mainTimeline.call(async () => {
+                SoundFX.playClick();
+                await typeText("#val-email-text", "joao@sucesso.com", 0.7);
+            }, null, "chapter-2-start+=5.1");
+            mainTimeline.to("#input-email-container", { duration: 0.2, className: "checkout-input-mock" }, "chapter-2-start+=6.5");
+
+            // [BULLET 3]: Order Bump & Upsell
+            mainTimeline.call(() => changeBullet(2), null, "chapter-2-start+=7.0");
+
+            // Mudar aba para Cartão de Crédito e voltar para Pix para mostrar interatividade
+            mainTimeline.to("#virtual-mouse", { duration: 0.6, top: "39.5%", left: "62%", ease: "power3.out" }, "chapter-2-start+=7.2");
+            mainTimeline.to("#tab-card-btn", { 
+                duration: 0.1, 
+                className: "checkout-tab active",
+                onStart: () => SoundFX.playClick() 
+            }, "chapter-2-start+=7.85");
+            mainTimeline.to("#tab-pix-btn", { duration: 0.1, className: "checkout-tab" }, "chapter-2-start+=7.85");
+            mainTimeline.to("#pay-btn-label", { textContent: "PAGAR COM CARTÃO" }, "chapter-2-start+=7.85");
+            
+            // Voltar para Pix (Gateway Reativo de Alta Conversão)
+            mainTimeline.to("#virtual-mouse", { duration: 0.5, top: "39.5%", left: "38%", ease: "power3.out" }, "chapter-2-start+=8.4");
+            mainTimeline.to("#tab-pix-btn", { 
+                duration: 0.1, 
+                className: "checkout-tab active",
+                onStart: () => SoundFX.playClick() 
+            }, "chapter-2-start+=8.95");
+            mainTimeline.to("#tab-card-btn", { duration: 0.1, className: "checkout-tab" }, "chapter-2-start+=8.95");
+            mainTimeline.to("#pay-btn-label", { textContent: "PAGAR COM PIX" }, "chapter-2-start+=8.95");
+
+            // [BULLET 4]: Recuperação de Carrinho
+            mainTimeline.call(() => changeBullet(3), null, "chapter-2-start+=9.5");
+
+            // Cursor move e ativa o Order Bump (Levar Área de Membros Pro)
+            mainTimeline.to("#virtual-mouse", { duration: 0.7, top: "47.5%", left: "26%", ease: "power3.out" }, "chapter-2-start+=10.2");
+            mainTimeline.to("#order-bump-card", { 
+                duration: 0.1, 
+                className: "checkout-order-bump active",
+                onStart: () => {
+                    SoundFX.playClick();
+                    document.querySelector(".ob-check-mark").style.display = "block";
+                    // Atualiza preço para R$ 144,00
+                    document.getElementById("price-value-text").textContent = "R$ 144,00";
+                    gsap.fromTo("#price-value-text", { scale: 1.3, color: "#10b981" }, { scale: 1, color: "#10b981", duration: 0.4 });
+                }
+            }, "chapter-2-start+=10.9");
+
+            // [BULLET 5]: Checkout Seguro
+            mainTimeline.call(() => changeBullet(4), null, "chapter-2-start+=12.0");
+
+            // Mover cursor até o botão de Pagar
+            mainTimeline.to("#virtual-mouse", { duration: 0.7, top: "55.5%", left: "50%", ease: "power3.out" }, "chapter-2-start+=12.5");
+            
+            // Clicar no botão pagar
+            mainTimeline.to("#pay-action-button", { 
+                duration: 0.1, 
+                scale: 0.94,
+                className: "checkout-pay-btn success",
+                onStart: () => {
+                    SoundFX.playClick();
+                    gsap.to("#reels-viewport", { x: "+=2", y: "+=2", duration: 0.05, repeat: 1, yoyo: true });
+                }
+            }, "chapter-2-start+=13.5");
+            mainTimeline.to("#pay-action-button", { duration: 0.1, scale: 1 }, "chapter-2-start+=13.6");
+            mainTimeline.to("#virtual-mouse", { duration: 0.25, opacity: 0 }, "chapter-2-start+=13.8");
+
+            // [BULLET 6]: Carregamento Instantâneo
+            mainTimeline.call(() => changeBullet(5), null, "chapter-2-start+=14.0");
+
+            // Mostra o Popup de Compra Aprovada instantaneamente com som de Sucesso
+            mainTimeline.to("#success-popup", {
+                duration: 0.4,
+                className: "success-overlay-badge show",
+                onStart: () => SoundFX.playSuccess()
+            }, "chapter-2-start+=14.2");
+
+            // Esperar com a tela final de Sucesso e a última bullet visível
+            mainTimeline.to({}, { duration: 6.0 });
+
+            // Resetar estados do checkout antes de recomeçar
+            mainTimeline.to("#scene-checkout", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
+            mainTimeline.call(() => {
+                // Resetar inputs
+                document.getElementById("val-name-text").textContent = "";
+                document.getElementById("val-email-text").textContent = "";
+                document.getElementById("price-value-text").textContent = "R$ 97,00";
+                document.getElementById("price-value-text").style.color = "#10b981";
+                document.querySelector(".ob-check-mark").style.display = "none";
+                document.getElementById("order-bump-card").className = "checkout-order-bump";
+                document.getElementById("tab-pix-btn").className = "checkout-tab active";
+                document.getElementById("tab-card-btn").className = "checkout-tab";
+                document.getElementById("pay-btn-label").textContent = "PAGAR COM PIX";
+                document.getElementById("pay-action-button").className = "checkout-pay-btn";
+                document.getElementById("success-popup").className = "success-overlay-badge";
+            });
+        }
+    </script>
+</body>
+</html>

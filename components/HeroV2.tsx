@@ -232,7 +232,7 @@ const HeroV2: React.FC = () => {
 
             </div>
 
-            {/* Modal de Vídeo */}
+            {/* Modal de Vídeo/Reels (Smartphone Mockup) */}
             <AnimatePresence>
                 {isVideoOpen && (
                     <motion.div
@@ -244,17 +244,11 @@ const HeroV2: React.FC = () => {
                         {/* Backdrop click to close */}
                         <div className="absolute inset-0 cursor-pointer" onClick={() => setIsVideoOpen(false)} />
 
-                        <motion.div
-                            initial={{ scale: 0.95, y: 20, opacity: 0 }}
-                            animate={{ scale: 1, y: 0, opacity: 1 }}
-                            exit={{ scale: 0.95, y: 20, opacity: 0 }}
-                            transition={{ type: "spring", duration: 0.5 }}
-                            className="relative w-full max-w-4xl aspect-video bg-[#050508] border-2 border-white/10 rounded-[32px] overflow-hidden shadow-[0_0_100px_rgba(168,85,247,0.3)] z-10"
-                        >
-                            {/* Close Button on Top of Video */}
+                        <div className="relative flex flex-col items-center">
+                            {/* Close Button above Smartphone */}
                             <button
                                 onClick={() => setIsVideoOpen(false)}
-                                className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/60 hover:bg-black/80 hover:scale-110 p-2.5 rounded-full border border-white/10 transition-all flex items-center justify-center z-50 shadow-lg"
+                                className="absolute -top-14 right-2 text-white/70 hover:text-white bg-black/60 hover:bg-black/80 hover:scale-110 p-2.5 rounded-full border border-white/10 transition-all flex items-center justify-center z-50 shadow-lg"
                                 aria-label="Fechar"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,16 +256,28 @@ const HeroV2: React.FC = () => {
                                 </svg>
                             </button>
 
-                            {/* YouTube iframe (Substitua o ID dQw4w9WgXcQ pelo ID do seu vídeo real) */}
-                            <iframe
-                                className="w-full h-full"
-                                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                                title="Super Checkout Demo"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                            />
-                        </motion.div>
+                            {/* Smartphone frame container */}
+                            <motion.div
+                                initial={{ scale: 0.9, y: 30, opacity: 0 }}
+                                animate={{ scale: 1, y: 0, opacity: 1 }}
+                                exit={{ scale: 0.9, y: 30, opacity: 0 }}
+                                transition={{ type: "spring", stiffness: 260, damping: 25 }}
+                                className="relative w-[340px] h-[600px] md:w-[380px] md:h-[680px] bg-[#020205] border-[8px] border-zinc-900 rounded-[48px] overflow-hidden shadow-[0_0_80px_rgba(168,85,247,0.35)] z-10"
+                            >
+                                {/* Dynamic Island Notch */}
+                                <div className="absolute top-3 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-50 flex items-center justify-center border border-white/5">
+                                    <div className="w-2 h-2 bg-zinc-900 rounded-full absolute left-4 border border-white/5" />
+                                    <div className="w-1.5 h-1.5 bg-zinc-900 rounded-full absolute right-6 border border-white/5" />
+                                </div>
+
+                                <iframe
+                                    className="w-full h-full border-none"
+                                    src="/site_showcase_reels.html"
+                                    title="Super Checkout Cinematic Demo"
+                                    allow="autoplay"
+                                />
+                            </motion.div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

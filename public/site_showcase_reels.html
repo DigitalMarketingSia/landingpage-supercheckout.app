@@ -1256,7 +1256,256 @@
         }
 
         /* ==========================================================================
-           SCENE 4: PERFORMANCE BRUTAL
+           SCENE 4: FLUXO DE PAGAMENTO DIRETO (NOVO STORY)
+           ========================================================================== */
+        #scene-direct-flow {
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .flow-comparison-card {
+            width: 86%;
+            background: rgba(10, 10, 15, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            transform: translateY(35px) scale(0.95);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 10px 12px 18px 12px;
+            position: relative;
+        }
+
+        .flow-row.traditional {
+            border-color: rgba(239, 68, 68, 0.08);
+        }
+
+        .flow-row.direct {
+            border-color: rgba(16, 185, 129, 0.08);
+        }
+
+        .flow-badge {
+            font-size: 0.38rem;
+            font-weight: 900;
+            padding: 1.5px 6px;
+            border-radius: 4px;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .flow-badge.red {
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+            border: 0.5px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .flow-badge.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 0.5px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .flow-visual {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .flow-node {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .flow-node span {
+            font-size: 0.44rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .node-icon {
+            width: 16px;
+            height: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .flow-node.red {
+            border-color: rgba(239, 68, 68, 0.25);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.05);
+        }
+
+        .flow-node.red span {
+            color: #ef4444;
+        }
+
+        .flow-node.red .node-icon {
+            color: #ef4444;
+        }
+
+        .flow-node.red-delay {
+            border-color: rgba(239, 68, 68, 0.15);
+        }
+
+        .flow-node.red-delay span {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .flow-node.red-delay .node-icon {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .flow-node.green {
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.05);
+        }
+
+        .flow-node.green span {
+            color: var(--primary);
+        }
+
+        .flow-node.green .node-icon {
+            color: var(--primary);
+        }
+
+        .node-badge {
+            position: absolute;
+            bottom: -15px;
+            font-size: 0.38rem;
+            font-weight: 900;
+            padding: 1px 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+        }
+
+        .flow-node.red .node-badge {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+
+        .node-badge.delay {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .node-badge.instant {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+        }
+
+        .flow-line {
+            flex-grow: 1;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+            margin: 0 -4px;
+            z-index: 5;
+        }
+
+        .flow-line.red {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .flow-line.green {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .flow-particle {
+            position: absolute;
+            top: -2.5px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .flow-particle.red-particle {
+            background: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+        }
+
+        .flow-particle.green-particle {
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .lock-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            color: #ef4444;
+            background: #020205;
+            padding: 1px;
+            z-index: 8;
+        }
+
+        .flow-footer-banner {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            margin-top: 4px;
+        }
+
+        .flow-footer-banner span {
+            font-size: 0.5rem;
+            font-weight: 850;
+            color: #34d399;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .flow-footer-banner p {
+            font-size: 0.44rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.25;
+        }
+
+        /* ==========================================================================
+           SCENE 5: PERFORMANCE BRUTAL
            ========================================================================== */
         #scene-performance {
             justify-content: center;
@@ -1514,7 +1763,6 @@
         #scene-isolation {
             justify-content: center;
             gap: 10px;
-            position: relative;
         }
 
         .isolation-instances-stack {
@@ -1793,7 +2041,6 @@
         #scene-automated {
             justify-content: center;
             gap: 12px;
-            position: relative;
         }
 
         .automated-widgets-grid {
@@ -1949,7 +2196,6 @@
         #scene-members {
             justify-content: flex-start;
             gap: 8px;
-            position: relative;
         }
 
         .members-bullets-grid {
@@ -2368,7 +2614,6 @@
         #scene-products {
             justify-content: flex-start;
             gap: 8px;
-            position: relative;
         }
 
         .products-bullets-grid {
@@ -2584,8 +2829,8 @@
             pointer-events: none;
             opacity: 0;
             z-index: 10;
-            left: calc(50% + 20px);
-            top: calc(50% + 40px);
+            left: 50%;
+            top: 52%;
             transform: translate(-50%, -50%) scale(0);
         }
 
@@ -3261,7 +3506,7 @@
             <div style="color: rgba(255,255,255,0.45); margin-top: 6px; font-size: 0.62rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">CINEMATIC VIDEO SHOWCASE</div>
         </div>
 
-        <!-- Barra de Progresso Superior Estilo Reels (8 Capítulos) -->
+        <!-- Barra de Progresso Superior Estilo Reels (9 Capítulos) -->
         <div id="chapters-bar">
             <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-1"></div></div>
             <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-2"></div></div>
@@ -3270,7 +3515,8 @@
             <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-5"></div></div>
             <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-6"></div></div>
             <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-7"></div></div>
-            <div class="chapter-tick"><div class="chapter-progress" id="reels-progress-bar-8"></div></div>
+            <div class="chapter-tick" style="margin-right: 4px;"><div class="chapter-progress" id="reels-progress-bar-8"></div></div>
+            <div class="chapter-tick"><div class="chapter-progress" id="reels-progress-bar-9"></div></div>
         </div>
 
         <!-- Luzes Degradê nos Cantos -->
@@ -3595,7 +3841,135 @@
         </div>
 
         <!-- ==========================================
-             SCENE 4: PERFORMANCE BRUTAL
+             SCENE 4: FLUXO DE PAGAMENTO DIRETO (NOVO STORY)
+             ========================================== -->
+        <div class="reels-scene" id="scene-direct-flow">
+            <!-- Headline Principal -->
+            <h1 class="checkout-headline" id="direct-flow-title" style="opacity: 0; transform: translateY(20px);">
+                Refém de plataformas. <br>
+                <span style="color: #ef4444; text-shadow: 0 0 15px rgba(239, 68, 68, 0.25);">Dinheiro Confiscado.</span>
+            </h1>
+
+            <!-- Subtítulo -->
+            <p class="checkout-subtitle" id="direct-flow-sub" style="opacity: 0; transform: translateY(15px);">
+                Taxas abusivas e até 30 dias de espera para poder sacar o que já é seu por direito.
+            </p>
+
+            <!-- Badge de Indicação da Simulação (Fora do Card, Acima) -->
+            <div class="simulation-badge-wrapper" id="sim-badge-container" style="opacity: 0; transform: translateY(10px); margin-bottom: 12px; z-index: 15; display: flex; justify-content: center;">
+                <div id="sim-phase-badge" class="flow-badge red" style="font-size: 0.62rem; padding: 4.5px 14px; border-radius: 99px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; transition: all 0.4s ease;">
+                    🔴 MERCADO TRADICIONAL
+                </div>
+            </div>
+
+            <!-- Aparato Visual Glassmorphism -->
+            <div class="flow-comparison-card" id="direct-flow-card">
+                <!-- Overlay de Impacto 3D (X Vermelho e Check Verde Gigantes) -->
+                <div id="flow-impact-overlay" style="position: absolute; inset: 0; z-index: 100; pointer-events: none; display: flex; align-items: center; justify-content: center; opacity: 0; background: rgba(2, 2, 5, 0.05); backdrop-filter: blur(0px); transition: backdrop-filter 0.3s ease;">
+                    <!-- X Vermelho Grande -->
+                    <div id="impact-x" style="display: none; transform: scale(0); filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.85));">
+                        <svg width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </div>
+                    <!-- Check Verde Grande -->
+                    <div id="impact-check" style="display: none; transform: scale(0); filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.85));">
+                        <svg width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Modelo Tradicional (Vermelho) -->
+                <div class="flow-row traditional" id="flow-row-trad">
+                    <div class="flow-visual">
+                        <!-- Cliente -->
+                        <div class="flow-node red" id="node-trad-client">
+                            <i class="node-icon" data-lucide="user"></i>
+                        </div>
+                        
+                        <!-- Linha 1 -->
+                        <div class="flow-line red">
+                            <div class="flow-particle red-particle" id="part-trad-1"></div>
+                        </div>
+
+                        <!-- Plataforma Intermediária -->
+                        <div class="flow-node red-delay" id="node-trad-platform">
+                            <i class="node-icon" data-lucide="server"></i>
+                            <i class="lock-icon" data-lucide="lock" id="lock-trad" style="opacity: 0; transform: translate(-50%, -50%) scale(0.5);"></i>
+                        </div>
+
+                        <!-- Linha 2 -->
+                        <div class="flow-line red">
+                            <div class="flow-particle red-particle" id="part-trad-2"></div>
+                        </div>
+
+                        <!-- Seu Banco -->
+                        <div class="flow-node red-delay" id="node-trad-bank">
+                            <i class="node-icon" data-lucide="landmark"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nosso Modelo (Verde) - Inicialmente Oculto -->
+                <div class="flow-row direct" id="flow-row-direct" style="display: none; opacity: 0;">
+                    <div class="flow-visual">
+                        <!-- Cliente -->
+                        <div class="flow-node green" id="node-dir-client">
+                            <i class="node-icon" data-lucide="user"></i>
+                        </div>
+                        
+                        <!-- Linha Direta -->
+                        <div class="flow-line green">
+                            <div class="flow-particle green-particle" id="part-dir-1"></div>
+                        </div>
+
+                        <!-- Seu Banco Recebedor -->
+                        <div class="flow-node green" id="node-dir-bank">
+                            <i class="node-icon" data-lucide="landmark"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banners Informativos (Colocados FORA e ABAIXO do card, garantindo 100% de alinhamento visual) -->
+            
+            <!-- Banner Informativo Tradicional (Taxas e Prazos) - Inicialmente Oculto -->
+            <div class="flow-footer-banner traditional" id="trad-info-banner" style="display: none; opacity: 0; transform: translateY(15px); flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 14px 16px; background: rgba(239, 68, 68, 0.04); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 16px; width: 86%; margin-top: 15px;">
+                <div style="display: flex; align-items: center; gap: 6px; background: rgba(239, 68, 68, 0.12); padding: 4px 12px; border-radius: 99px; border: 0.5px solid rgba(239, 68, 68, 0.3);">
+                    <i data-lucide="alert-triangle" style="width: 10px; height: 10px; color: #ef4444; fill: #ef4444;"></i>
+                    <span style="font-size: 0.55rem; font-weight: 900; color: #f87171; letter-spacing: 1px; text-transform: uppercase;">Taxas & Intermediação</span>
+                </div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: 2.0rem; font-weight: 950; color: #fff; text-shadow: 0 0 25px rgba(239, 68, 68, 0.65); display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 2px 0;">
+                    <span style="color: #ef4444; font-weight: 950; letter-spacing: -0.5px;">-9.9% + R$ 2,49</span>
+                    <span style="font-size: 0.8rem; color: #f87171; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 4px;">
+                        <i data-lucide="clock" style="width: 12px; height: 12px;"></i> Recebimento em 30 Dias
+                    </span>
+                </div>
+                <p style="font-size: 0.46rem; font-weight: 500; color: rgba(255, 255, 255, 0.55); text-align: center; margin: 0; line-height: 1.3;">
+                    O intermediário retém o seu saldo, desconta tarifas pesadas e controla o fluxo de caixa do seu negócio.
+                </p>
+            </div>
+
+            <!-- Banner Informativo com Saldo Acumulado (Design Sequencial Premium de Grande Impacto) - Inicialmente Oculto -->
+            <div class="flow-footer-banner" id="direct-balance-banner" style="display: none; opacity: 0; transform: translateY(15px); flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 14px 16px; background: rgba(16, 185, 129, 0.04); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 16px; width: 86%; margin-top: 15px;">
+                <div style="display: flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.12); padding: 4px 12px; border-radius: 99px; border: 0.5px solid rgba(16, 185, 129, 0.3);">
+                    <i data-lucide="zap" style="width: 10px; height: 10px; color: #10b981; fill: #10b981;"></i>
+                    <span style="font-size: 0.55rem; font-weight: 900; color: #34d399; letter-spacing: 1px; text-transform: uppercase;">Recebido na Hora</span>
+                </div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: 2.8rem; font-weight: 950; color: #fff; text-shadow: 0 0 25px rgba(16, 185, 129, 0.65); display: flex; align-items: baseline; gap: 4px; margin: 2px 0;">
+                    <span style="font-size: 2.8rem; color: #10b981; font-weight: 950;">R$</span>
+                    <span id="direct-balance-value" style="font-size: 2.8rem; font-weight: 950; letter-spacing: -1px;">0,00</span>
+                </div>
+                <p style="font-size: 0.46rem; font-weight: 500; color: rgba(255, 255, 255, 0.55); text-align: center; margin: 0; line-height: 1.3;">
+                    O dinheiro vai direto do cliente para a sua conta, 100% livre e sob seu total controle.
+                </p>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             SCENE 5: PERFORMANCE BRUTAL
              ========================================== -->
         <div class="reels-scene" id="scene-performance">
             <!-- Headline Principal da Cena 4 -->
@@ -3997,7 +4371,6 @@
                 <div class="members-mobile-frame">
                     <div class="members-mobile-screen">
                         <img src="/members-area-showcase.png" class="members-showcase-img" alt="Vitrine de Produtos">
-                        <div class="virtual-touch-indicator"></div>
                     </div>
                 </div>
 
@@ -4127,7 +4500,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="virtual-touch-indicator-scene8"></div>
                     </div>
                 </div>
 
@@ -4314,6 +4686,19 @@
         let currentChapter = 1;
         let isNavigating = false;
 
+        // FUNÇÃO AUXILIAR PARA OBTER O CENTRO DE QUALQUER ELEMENTO EM RELAÇÃO AO VIEWPORT
+        function getElementCenter(selector) {
+            const el = document.querySelector(selector);
+            const viewport = document.getElementById("reels-viewport");
+            if (!el || !viewport) return { top: 0, left: 0 };
+            const elRect = el.getBoundingClientRect();
+            const vpRect = viewport.getBoundingClientRect();
+            return {
+                top: elRect.top - vpRect.top + elRect.height / 2,
+                left: elRect.left - vpRect.left + elRect.width / 2
+            };
+        }
+
         // AUXILIAR DE DIGITAÇÃO ANIMADA (TEXT TYPING EFFECT)
         function typeText(targetSelector, text, speedMultiplier = 1) {
             return new Promise((resolve) => {
@@ -4456,6 +4841,8 @@
             mainTimeline.set("#reels-progress-bar-5", { width: "0%" });
             mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
             mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
 
             // Mostrar Scene 1, esconder Scene 2
             mainTimeline.set("#scene-hero", { display: "flex", className: "reels-scene active" });
@@ -4484,7 +4871,7 @@
             mainTimeline.to("#footer-desc-text", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-1-start+=2.0");
 
             // Cursor virtual surge e clica no botão "VER SISTEMA"
-            mainTimeline.to("#virtual-mouse", { duration: 1.0, opacity: 1, top: "84%", left: "50%", ease: "power3.out" }, "chapter-1-start+=4.0");
+            mainTimeline.to("#virtual-mouse", { duration: 1.0, opacity: 1, top: () => getElementCenter("#btn-showcase-action").top, left: () => getElementCenter("#btn-showcase-action").left, ease: "power3.out" }, "chapter-1-start+=4.0");
             mainTimeline.to("#btn-showcase-action", { 
                 duration: 0.1, 
                 scale: 0.94,
@@ -4500,80 +4887,335 @@
             mainTimeline.to("#scene-hero", { duration: 0.6, opacity: 0, y: -40, ease: "power2.in" }, "chapter-1-start+=8.0");
             
             // ==========================================
-            // CAPÍTULO 2: SCENE 2 (CHECKOUT QUE VENDE)
+            // ==========================================
+            // CAPÍTULO 2: SCENE 4 (FLUXO DE PAGAMENTO DIRETO - NOVO STORY)
             // ==========================================
             mainTimeline.add("chapter-2-start");
             mainTimeline.call(() => { currentChapter = 2; }, null, "chapter-2-start");
 
-            // Mostrar Scene 2
+            // Zerar/Setar barras no início do cap 2
+            mainTimeline.set("#reels-progress-bar-1", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-2", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-3", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-4", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-5", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
+
+            // Mostrar Scene 4, esconder Scene 1
             mainTimeline.set("#scene-hero", { display: "none" }, "chapter-2-start");
-            mainTimeline.set("#scene-checkout", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-2-start");
-            mainTimeline.to("#scene-checkout", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-2-start");
+            mainTimeline.set("#scene-direct-flow", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-2-start");
+            mainTimeline.to("#scene-direct-flow", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-2-start");
 
             // Animação da barra 2 progredindo no cap 2
             mainTimeline.to("#reels-progress-bar-2", {
                 width: "100%",
-                duration: 21.0, // Tempo de tela para preenchimento interativo e bullets
+                duration: 16.0,
                 ease: "linear"
             }, "chapter-2-start");
 
+            // Entrada dos textos de Fluxo Direto e Badge de Simulação (Eases super suaves e premium)
+            mainTimeline.to("#direct-flow-title", { duration: 0.8, opacity: 1, y: 0, ease: "power3.out", onStart: () => SoundFX.playTick() }, "chapter-2-start+=0.4");
+            mainTimeline.to("#direct-flow-sub", { duration: 0.8, opacity: 1, y: 0, ease: "power3.out" }, "chapter-2-start+=0.6");
+            mainTimeline.to("#sim-badge-container", { duration: 0.8, opacity: 1, y: 0, ease: "power3.out" }, "chapter-2-start+=0.8");
+            mainTimeline.to("#direct-flow-card", { duration: 0.9, opacity: 1, y: 0, scale: 1, ease: "power3.out" }, "chapter-2-start+=0.8");
+ 
+            // --- FASE 1: MODELO TRADICIONAL ---
+            // Partícula 1 viaja lenta até a plataforma
+            mainTimeline.to("#part-trad-1", {
+                duration: 1.5,
+                left: "100%",
+                opacity: 1,
+                ease: "power1.inOut",
+                onStart: () => {
+                    gsap.set("#part-trad-1", { opacity: 1, left: "0%" });
+                }
+            }, "chapter-2-start+=1.5");
+
+            // Trava com cadeado e som de clique
+            mainTimeline.to("#lock-trad", {
+                duration: 0.4,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.5)",
+                onStart: () => SoundFX.playClick()
+            }, "chapter-2-start+=3.0");
+
+            // Partícula 2 viaja extremamente lenta e sem energia
+            mainTimeline.to("#part-trad-2", {
+                duration: 1.6,
+                left: "100%",
+                opacity: 0.3,
+                ease: "slow",
+                onStart: () => {
+                    gsap.set("#part-trad-2", { opacity: 1, left: "0%" });
+                }
+            }, "chapter-2-start+=3.4");
+
+            // ENTRA O CARD DE INFORMAÇÕES DO INTERMEDIÁRIO EM BAIXO JUNTO COM A ANIMAÇÃO DOS ÍCONES (+=1.5s)
+            // Efeito de notificação deslizando da ESQUERDA PARA A DIREITA (x: -150 para x: 0)
+            mainTimeline.call(() => {
+                const tradBanner = document.getElementById("trad-info-banner");
+                tradBanner.style.display = "flex";
+                gsap.fromTo("#trad-info-banner", 
+                    { opacity: 0, x: -150, scale: 0.95 },
+                    { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "power3.out" }
+                );
+            }, null, "chapter-2-start+=1.5");
+
+            // --- EFEITO 3D: X GIGANTE VERMELHO ---
+            // Surge um X vermelho gigante no centro com som de impacto após o card de informações
+            mainTimeline.call(() => {
+                const overlay = document.getElementById("flow-impact-overlay");
+                const xMark = document.getElementById("impact-x");
+                overlay.style.opacity = 1;
+                overlay.style.backdropFilter = "blur(3px)";
+                xMark.style.display = "block";
+                SoundFX.playTick(); // Som de clique/impacto
+                gsap.fromTo(xMark, { scale: 0, rotation: -45 }, { scale: 1, rotation: 0, duration: 0.8, ease: "power3.out" });
+            }, null, "chapter-2-start+=5.5");
+
+            // Pulso sutil no X vermelho
+            mainTimeline.to("#impact-x", { scale: 1.12, duration: 0.25, repeat: 1, yoyo: true }, "chapter-2-start+=6.2");
+
+            // --- FASE 2: TRANSIÇÃO SUAVE PARA O NOSSO MODELO DIRETO ---
+            // Esconde suavemente o X vermelho, modelo tradicional e seu card de informações
+            mainTimeline.to("#impact-x", { duration: 0.6, scale: 0, opacity: 0, ease: "power3.inOut" }, "chapter-2-start+=6.8");
+            mainTimeline.to("#flow-impact-overlay", { duration: 0.6, opacity: 0, backdropFilter: "blur(0px)" }, "chapter-2-start+=6.8");
+            mainTimeline.to("#flow-row-trad", { 
+                duration: 0.8, // Saída extremamente suave e lenta
+                opacity: 0, 
+                scale: 0.92, 
+                ease: "power3.inOut",
+                onComplete: () => {
+                    document.getElementById("flow-row-trad").style.display = "none";
+                    document.getElementById("impact-x").style.display = "none";
+                    gsap.set("#impact-x", { scale: 0, opacity: 1, rotation: 0 });
+                }
+            }, "chapter-2-start+=6.8");
+            mainTimeline.to("#trad-info-banner", { 
+                duration: 0.8, 
+                opacity: 0, 
+                x: 150, // Desliza sutilmente para a direita ao sair
+                scale: 0.92, 
+                ease: "power3.inOut",
+                onComplete: () => {
+                    document.getElementById("trad-info-banner").style.display = "none";
+                }
+            }, "chapter-2-start+=6.8");
+
+            // Transição dos textos (Headline & Subtitle) para a Fase 2 (Verde)
+            mainTimeline.to("#direct-flow-title", { duration: 0.4, opacity: 0, y: -10, ease: "power2.in" }, "chapter-2-start+=6.8");
+            mainTimeline.to("#direct-flow-sub", { duration: 0.4, opacity: 0, y: -10, ease: "power2.in" }, "chapter-2-start+=6.8");
+
+            mainTimeline.call(() => {
+                const title = document.getElementById("direct-flow-title");
+                const sub = document.getElementById("direct-flow-sub");
+                title.innerHTML = `Esqueça intermediários. <br> <span style="color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.25);">Fluxo Direto.</span>`;
+                sub.textContent = `O pagamento vai direto para o seu próprio banco, sem saldo preso e sob seu controle.`;
+            }, null, "chapter-2-start+=7.2");
+
+            mainTimeline.fromTo("#direct-flow-title", { opacity: 0, y: 15 }, { duration: 0.5, opacity: 1, y: 0, ease: "power3.out" }, "chapter-2-start+=7.6");
+            mainTimeline.fromTo("#direct-flow-sub", { opacity: 0, y: 15 }, { duration: 0.5, opacity: 1, y: 0, ease: "power3.out" }, "chapter-2-start+=7.8");
+
+            // Atualiza a badge de indicação acima do card para o verde-neon
+            mainTimeline.call(() => {
+                const badge = document.getElementById("sim-phase-badge");
+                badge.className = "flow-badge green";
+                badge.style.backgroundColor = "rgba(16, 185, 129, 0.12)";
+                badge.style.color = "#34d399";
+                badge.style.borderColor = "rgba(16, 185, 129, 0.2)";
+                badge.textContent = "🟢 NOSSO SISTEMA (SUPER CHECKOUT)";
+            }, null, "chapter-2-start+=7.6");
+
+            // Exibe e revela o Nosso Modelo com suavidade premium (apenas os ícones/card inicialmente)
+            mainTimeline.call(() => {
+                const directRow = document.getElementById("flow-row-direct");
+                directRow.style.display = "flex";
+                gsap.fromTo("#flow-row-direct", 
+                    { opacity: 0, scale: 0.95 },
+                    { opacity: 1, scale: 1, duration: 0.9, ease: "power3.out" }
+                );
+            }, null, "chapter-2-start+=7.8");
+
+            // Partícula verde de alta velocidade direto para a conta
+            mainTimeline.to("#part-dir-1", {
+                duration: 0.8,
+                left: "100%",
+                opacity: 1,
+                ease: "power2.out",
+                onStart: () => {
+                    gsap.set("#part-dir-1", { opacity: 1, left: "0%" });
+                }
+            }, "chapter-2-start+=8.5");
+
+            // Banco de recebimento brilha e pulsa verde com som de sucesso ao receber
+            mainTimeline.to("#node-dir-bank", {
+                duration: 0.3,
+                scale: 1.15,
+                boxShadow: "0 0 25px rgba(16, 185, 129, 0.6)",
+                borderColor: "#10b981",
+                repeat: 1,
+                yoyo: true,
+                onStart: () => SoundFX.playSuccess()
+            }, "chapter-2-start+=9.3");
+
+            // ASSIM QUE CHEGA NO FIM DA ANIMAÇÃO (+=9.5s), ENTRA O CARD DE RECEBIMENTO NA HORA EM BAIXO SIMULANDO NOTIFICAÇÃO
+            // Efeito deslizando da ESQUERDA PARA A DIREITA (x: -150 para x: 0)
+            mainTimeline.call(() => {
+                const banner = document.getElementById("direct-balance-banner");
+                banner.style.display = "flex";
+                gsap.fromTo("#direct-balance-banner", 
+                    { opacity: 0, x: -150, scale: 0.95 },
+                    { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "power3.out" }
+                );
+            }, null, "chapter-2-start+=9.5");
+
+            // Incrementa o saldo gigante de R$ 0,00 a R$ 97,00 após o card aparecer
+            mainTimeline.call(() => {
+                animateNumber("#direct-balance-value", 97);
+            }, null, "chapter-2-start+=10.3");
+
+            // --- EFEITO 3D: CHECK GIGANTE VERDE LUMINOSO ---
+            // Surge um Check verde gigante e luminoso no centro coroando o recebimento instantâneo
+            mainTimeline.call(() => {
+                const overlay = document.getElementById("flow-impact-overlay");
+                const checkMark = document.getElementById("impact-check");
+                overlay.style.opacity = 1;
+                overlay.style.backdropFilter = "blur(3px)";
+                checkMark.style.display = "block";
+                SoundFX.playSuccess();
+                gsap.fromTo(checkMark, { scale: 0, rotation: -15 }, { scale: 1, rotation: 0, duration: 0.8, ease: "power3.out" });
+            }, null, "chapter-2-start+=10.8");
+
+            // Pulso no Check verde luminoso
+            mainTimeline.to("#impact-check", { scale: 1.12, duration: 0.25, repeat: 1, yoyo: true }, "chapter-2-start+=11.4");
+
+            // Esconde suavemente o Check verde
+            mainTimeline.to("#impact-check", { duration: 0.5, scale: 0, opacity: 0, ease: "power2.in" }, "chapter-2-start+=14.5");
+            mainTimeline.to("#flow-impact-overlay", { duration: 0.5, opacity: 0, backdropFilter: "blur(0px)" }, "chapter-2-start+=14.5");
+
+            // Espera final
+            mainTimeline.to({}, { duration: 1.0 });
+
+            // Transição para a próxima cena (fadeout da Scene 4)
+            mainTimeline.to("#scene-direct-flow", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
+
+
+            // ==========================================
+            // CAPÍTULO 3: SCENE 2 (CHECKOUT QUE VENDE)
+            // ==========================================
+            mainTimeline.add("chapter-3-start");
+            mainTimeline.call(() => { currentChapter = 3; }, null, "chapter-3-start");
+
+            // Zerar/Setar barras no início do cap 3
+            mainTimeline.set("#reels-progress-bar-1", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-2", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-3", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-4", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-5", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
+
+            // Mostrar Scene 2, esconder Scene 4
+            mainTimeline.set("#scene-direct-flow", { display: "none" }, "chapter-3-start");
+            mainTimeline.set("#scene-checkout", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-3-start");
+            mainTimeline.to("#scene-checkout", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-3-start");
+
+            // Animação da barra 3 progredindo no cap 3
+            mainTimeline.to("#reels-progress-bar-3", {
+                width: "100%",
+                duration: 21.0, // Tempo de tela para preenchimento interativo e bullets
+                ease: "linear"
+            }, "chapter-3-start");
+
             // Entrada dos textos de Checkout
-            mainTimeline.to("#checkout-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-2-start+=0.4");
-            mainTimeline.to("#checkout-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-2-start+=0.6");
-            mainTimeline.to("#checkout-card-wrapper", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)" }, "chapter-2-start+=0.8");
+            mainTimeline.to("#checkout-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-3-start+=0.4");
+            mainTimeline.to("#checkout-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-3-start+=0.6");
+            mainTimeline.to("#checkout-card-wrapper", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)" }, "chapter-3-start+=0.8");
 
             // [BULLET 1]: Alta Conversão
-            mainTimeline.call(() => changeBullet(0), null, "chapter-2-start+=1.5");
+            mainTimeline.call(() => changeBullet(0), null, "chapter-3-start+=1.5");
 
             // Simular preenchimento: Nome Completo ("João Silva")
-            mainTimeline.to("#input-name-container", { duration: 0.2, className: "checkout-input-mock focus" }, "chapter-2-start+=2.2");
-            mainTimeline.to("#virtual-mouse", { duration: 0.8, opacity: 1, top: "27.5%", left: "30%", ease: "power3.out" }, "chapter-2-start+=2.2");
+            mainTimeline.to("#input-name-container", { duration: 0.2, className: "checkout-input-mock focus" }, "chapter-3-start+=2.2");
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.8, 
+                opacity: 1, 
+                top: () => getElementCenter("#input-name-container").top, 
+                left: () => getElementCenter("#input-name-container").left, 
+                ease: "power3.out" 
+            }, "chapter-3-start+=2.2");
             mainTimeline.call(async () => {
                 SoundFX.playClick();
                 await typeText("#val-name-text", "João Silva");
-            }, null, "chapter-2-start+=3.0");
-            mainTimeline.to("#input-name-container", { duration: 0.2, className: "checkout-input-mock" }, "chapter-2-start+=4.0");
+            }, null, "chapter-3-start+=3.0");
+            mainTimeline.to("#input-name-container", { duration: 0.2, className: "checkout-input-mock" }, "chapter-3-start+=4.0");
 
             // [BULLET 2]: Mobile First
-            mainTimeline.call(() => changeBullet(1), null, "chapter-2-start+=4.2");
+            mainTimeline.call(() => changeBullet(1), null, "chapter-3-start+=4.2");
 
             // Simular preenchimento: E-mail ("joao@sucesso.com")
-            mainTimeline.to("#input-email-container", { duration: 0.2, className: "checkout-input-mock focus" }, "chapter-2-start+=4.5");
-            mainTimeline.to("#virtual-mouse", { duration: 0.6, top: "33.5%", left: "30%", ease: "power3.out" }, "chapter-2-start+=4.5");
+            mainTimeline.to("#input-email-container", { duration: 0.2, className: "checkout-input-mock focus" }, "chapter-3-start+=4.5");
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.6, 
+                top: () => getElementCenter("#input-email-container").top, 
+                left: () => getElementCenter("#input-email-container").left, 
+                ease: "power3.out" 
+            }, "chapter-3-start+=4.5");
             mainTimeline.call(async () => {
                 SoundFX.playClick();
                 await typeText("#val-email-text", "joao@sucesso.com", 0.7);
-            }, null, "chapter-2-start+=5.1");
-            mainTimeline.to("#input-email-container", { duration: 0.2, className: "checkout-input-mock" }, "chapter-2-start+=6.5");
+            }, null, "chapter-3-start+=5.1");
+            mainTimeline.to("#input-email-container", { duration: 0.2, className: "checkout-input-mock" }, "chapter-3-start+=6.5");
 
             // [BULLET 3]: Order Bump & Upsell
-            mainTimeline.call(() => changeBullet(2), null, "chapter-2-start+=7.0");
+            mainTimeline.call(() => changeBullet(2), null, "chapter-3-start+=7.0");
 
             // Mudar aba para Cartão de Crédito e voltar para Pix para mostrar interatividade
-            mainTimeline.to("#virtual-mouse", { duration: 0.6, top: "39.5%", left: "62%", ease: "power3.out" }, "chapter-2-start+=7.2");
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.6, 
+                top: () => getElementCenter("#tab-card-btn").top, 
+                left: () => getElementCenter("#tab-card-btn").left, 
+                ease: "power3.out" 
+            }, "chapter-3-start+=7.2");
             mainTimeline.to("#tab-card-btn", { 
                 duration: 0.1, 
                 className: "checkout-tab active",
                 onStart: () => SoundFX.playClick() 
-            }, "chapter-2-start+=7.85");
-            mainTimeline.to("#tab-pix-btn", { duration: 0.1, className: "checkout-tab" }, "chapter-2-start+=7.85");
-            mainTimeline.to("#pay-btn-label", { textContent: "PAGAR COM CARTÃO" }, "chapter-2-start+=7.85");
+            }, "chapter-3-start+=7.85");
+            mainTimeline.to("#tab-pix-btn", { duration: 0.1, className: "checkout-tab" }, "chapter-3-start+=7.85");
+            mainTimeline.to("#pay-btn-label", { textContent: "PAGAR COM CARTÃO" }, "chapter-3-start+=7.85");
             
             // Voltar para Pix (Gateway Reativo de Alta Conversão)
-            mainTimeline.to("#virtual-mouse", { duration: 0.5, top: "39.5%", left: "38%", ease: "power3.out" }, "chapter-2-start+=8.4");
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.5, 
+                top: () => getElementCenter("#tab-pix-btn").top, 
+                left: () => getElementCenter("#tab-pix-btn").left, 
+                ease: "power3.out" 
+            }, "chapter-3-start+=8.4");
             mainTimeline.to("#tab-pix-btn", { 
                 duration: 0.1, 
                 className: "checkout-tab active",
                 onStart: () => SoundFX.playClick() 
-            }, "chapter-2-start+=8.95");
-            mainTimeline.to("#tab-card-btn", { duration: 0.1, className: "checkout-tab" }, "chapter-2-start+=8.95");
-            mainTimeline.to("#pay-btn-label", { textContent: "PAGAR COM PIX" }, "chapter-2-start+=8.95");
+            }, "chapter-3-start+=8.95");
+            mainTimeline.to("#tab-card-btn", { duration: 0.1, className: "checkout-tab" }, "chapter-3-start+=8.95");
+            mainTimeline.to("#pay-btn-label", { textContent: "PAGAR COM PIX" }, "chapter-3-start+=8.95");
 
             // [BULLET 4]: Recuperação de Carrinho
-            mainTimeline.call(() => changeBullet(3), null, "chapter-2-start+=9.5");
+            mainTimeline.call(() => changeBullet(3), null, "chapter-3-start+=9.5");
 
             // Cursor move e ativa o Order Bump (Levar Área de Membros Pro)
-            mainTimeline.to("#virtual-mouse", { duration: 0.7, top: "47.5%", left: "26%", ease: "power3.out" }, "chapter-2-start+=10.2");
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.7, 
+                top: () => getElementCenter("#ob-checkbox-box").top, 
+                left: () => getElementCenter("#ob-checkbox-box").left, 
+                ease: "power3.out" 
+            }, "chapter-3-start+=10.2");
             mainTimeline.to("#order-bump-card", { 
                 duration: 0.1, 
                 className: "checkout-order-bump active",
@@ -4584,13 +5226,18 @@
                     document.getElementById("price-value-text").textContent = "R$ 144,00";
                     gsap.fromTo("#price-value-text", { scale: 1.3, color: "#10b981" }, { scale: 1, color: "#10b981", duration: 0.4 });
                 }
-            }, "chapter-2-start+=10.9");
+            }, "chapter-3-start+=10.9");
 
             // [BULLET 5]: Checkout Seguro
-            mainTimeline.call(() => changeBullet(4), null, "chapter-2-start+=12.0");
+            mainTimeline.call(() => changeBullet(4), null, "chapter-3-start+=12.0");
 
             // Mover cursor até o botão de Pagar
-            mainTimeline.to("#virtual-mouse", { duration: 0.7, top: "55.5%", left: "50%", ease: "power3.out" }, "chapter-2-start+=12.5");
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.7, 
+                top: () => getElementCenter("#pay-action-button").top, 
+                left: () => getElementCenter("#pay-action-button").left, 
+                ease: "power3.out" 
+            }, "chapter-3-start+=12.5");
             
             // Clicar no botão pagar
             mainTimeline.to("#pay-action-button", { 
@@ -4601,57 +5248,75 @@
                     SoundFX.playClick();
                     gsap.to("#reels-viewport", { x: "+=2", y: "+=2", duration: 0.05, repeat: 1, yoyo: true });
                 }
-            }, "chapter-2-start+=13.5");
-            mainTimeline.to("#pay-action-button", { duration: 0.1, scale: 1 }, "chapter-2-start+=13.6");
-            mainTimeline.to("#virtual-mouse", { duration: 0.25, opacity: 0 }, "chapter-2-start+=13.8");
+            }, "chapter-3-start+=13.5");
+            mainTimeline.to("#pay-action-button", { duration: 0.1, scale: 1 }, "chapter-3-start+=13.6");
+            mainTimeline.to("#virtual-mouse", { duration: 0.25, opacity: 0 }, "chapter-3-start+=13.8");
 
             // [BULLET 6]: Carregamento Instantâneo
-            mainTimeline.call(() => changeBullet(5), null, "chapter-2-start+=14.0");
+            mainTimeline.call(() => changeBullet(5), null, "chapter-3-start+=14.0");
 
             // Mostra o Popup de Compra Aprovada instantaneamente com som de Sucesso
             mainTimeline.to("#success-popup", {
                 duration: 0.4,
                 className: "success-overlay-badge show",
                 onStart: () => SoundFX.playSuccess()
-            }, "chapter-2-start+=14.2");
+            }, "chapter-3-start+=14.2");
 
             // Esperar com a tela final de Sucesso e a última bullet visível
             mainTimeline.to({}, { duration: 4.0 });
 
-            // Transição para Scene 3 (fadeout da Scene 2)
+            // Transição para a próxima cena (fadeout da Scene 2)
             mainTimeline.to("#scene-checkout", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
 
+
             // ==========================================
-            // CAPÍTULO 3: SCENE 3 (PAGAMENTOS SEM FRICÇÃO)
+            // CAPÍTULO 4: SCENE 3 (PAGAMENTOS SEM FRICÇÃO)
             // ==========================================
-            mainTimeline.add("chapter-3-start");
-            mainTimeline.call(() => { currentChapter = 3; }, null, "chapter-3-start");
+            mainTimeline.add("chapter-4-start");
+            mainTimeline.call(() => { currentChapter = 4; }, null, "chapter-4-start");
+
+            // Zerar/Setar barras no início do cap 4
+            mainTimeline.set("#reels-progress-bar-1", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-2", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-3", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-4", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-5", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
 
             // Mostrar Scene 3, esconder Scene 2
-            mainTimeline.set("#scene-checkout", { display: "none" }, "chapter-3-start");
-            mainTimeline.set("#scene-payments", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-3-start");
-            mainTimeline.to("#scene-payments", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-3-start");
+            mainTimeline.set("#scene-checkout", { display: "none" }, "chapter-4-start");
+            mainTimeline.set("#scene-payments", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-4-start");
+            mainTimeline.to("#scene-payments", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-4-start");
 
-            // Animação da barra 3 progredindo no cap 3
-            mainTimeline.to("#reels-progress-bar-3", {
+            // Animação da barra 4 progredindo no cap 4
+            mainTimeline.to("#reels-progress-bar-4", {
                 width: "100%",
                 duration: 9.0, // Tempo total do cap 3
                 ease: "linear"
-            }, "chapter-3-start");
+            }, "chapter-4-start");
 
             // Entrada dos textos de Pagamento
-            mainTimeline.to("#payments-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-3-start+=0.4");
-            mainTimeline.to("#payments-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-3-start+=0.6");
-            mainTimeline.to("#payments-main-card", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)", onStart: () => SoundFX.playSuccess() }, "chapter-3-start+=0.8");
+            mainTimeline.to("#payments-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-4-start+=0.4");
+            mainTimeline.to("#payments-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-4-start+=0.6");
+            mainTimeline.to("#payments-main-card", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)", onStart: () => SoundFX.playSuccess() }, "chapter-4-start+=0.8");
 
             // Animar o gráfico de aprovação instantânea crescendo
-            mainTimeline.to("#pm-chart-fill-bar", { duration: 1.2, width: "99.8%", ease: "power3.out" }, "chapter-3-start+=1.5");
+            mainTimeline.to("#pm-chart-fill-bar", { duration: 1.2, width: "99.8%", ease: "power3.out" }, "chapter-4-start+=1.5");
 
             // Entrada dos badges de multi-pagamento
-            mainTimeline.to("#pm-bullets-wrapper", { duration: 0.6, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-3-start+=2.0");
+            mainTimeline.to("#pm-bullets-wrapper", { duration: 0.6, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-4-start+=2.0");
 
             // Cursor se move e interage com o Mercado Pago
-            mainTimeline.to("#virtual-mouse", { duration: 0.8, opacity: 1, top: "45%", left: "35%", ease: "power3.out" }, "chapter-3-start+=2.8");
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.8, 
+                opacity: 1, 
+                top: () => getElementCenter("#gw-mercadopago").top, 
+                left: () => getElementCenter("#gw-mercadopago").left, 
+                ease: "power3.out" 
+            }, "chapter-4-start+=2.8");
             mainTimeline.to("#gw-mercadopago", { 
                 duration: 0.15, 
                 scale: 0.94,
@@ -4663,78 +5328,19 @@
                         { boxShadow: "0 0 30px rgba(16,185,129,0.9)", borderColor: "#10b981", duration: 0.3, yoyo: true, repeat: 1 }
                     );
                 }
-            }, "chapter-3-start+=3.6");
-            mainTimeline.to("#gw-mercadopago", { duration: 0.15, scale: 1 }, "chapter-3-start+=3.75");
-            mainTimeline.to("#virtual-mouse", { duration: 0.3, opacity: 0 }, "chapter-3-start+=4.0");
+            }, "chapter-4-start+=3.6");
+            mainTimeline.to("#gw-mercadopago", { duration: 0.15, scale: 1 }, "chapter-4-start+=3.75");
+            mainTimeline.to("#virtual-mouse", { duration: 0.3, opacity: 0 }, "chapter-4-start+=4.0");
 
             // Espera final
             mainTimeline.to({}, { duration: 4.0 });
 
-            // Transição para Scene 4 (fadeout da Scene 3)
+            // Transição para a próxima cena (fadeout da Scene 3)
             mainTimeline.to("#scene-payments", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
 
-            // ==========================================
-            // CAPÍTULO 4: SCENE 4 (PERFORMANCE BRUTAL)
-            // ==========================================
-            mainTimeline.add("chapter-4-start");
-            mainTimeline.call(() => { currentChapter = 4; }, null, "chapter-4-start");
-
-            // Zerar barras no início do cap 4
-            mainTimeline.set("#reels-progress-bar-1", { width: "100%" });
-            mainTimeline.set("#reels-progress-bar-2", { width: "100%" });
-            mainTimeline.set("#reels-progress-bar-3", { width: "100%" });
-            mainTimeline.set("#reels-progress-bar-4", { width: "0%" });
-
-            // Mostrar Scene 4, esconder Scene 3
-            mainTimeline.set("#scene-payments", { display: "none" }, "chapter-4-start");
-            mainTimeline.set("#scene-performance", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-4-start");
-            mainTimeline.to("#scene-performance", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-4-start");
-
-            // Animação da barra 4 progredindo no cap 4
-            mainTimeline.to("#reels-progress-bar-4", {
-                width: "100%",
-                duration: 10.0, // Tempo de exibição da seção de Performance
-                ease: "linear"
-            }, "chapter-4-start");
-
-            // Entrada dos textos de Performance
-            mainTimeline.to("#performance-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-4-start+=0.4");
-            mainTimeline.to("#performance-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-4-start+=0.6");
-            mainTimeline.to("#performance-main-card", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)", onStart: () => SoundFX.playSuccess() }, "chapter-4-start+=0.8");
-
-            // Entrada do Crachá de Núcleo Reativo
-            mainTimeline.to("#reactive-core-wrapper", { duration: 0.6, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-4-start+=1.4");
-
-            // Cursor se move e interage com o badge de velocidade
-            mainTimeline.to("#virtual-mouse", { duration: 0.8, opacity: 1, top: "27.5%", left: "70%", ease: "power3.out" }, "chapter-4-start+=2.2");
-            mainTimeline.to("#speed-time-badge", { 
-                duration: 0.15, 
-                scale: 1.15,
-                backgroundColor: "rgba(16, 185, 129, 0.3)",
-                borderColor: "rgba(16, 185, 129, 0.6)",
-                onStart: () => {
-                    SoundFX.playClick();
-                    // Efeito de trepidação de velocidade
-                    gsap.to("#reels-viewport", { x: "+=2", y: "+=2", duration: 0.05, repeat: 1, yoyo: true });
-                }
-            }, "chapter-4-start+=3.0");
-            mainTimeline.to("#speed-time-badge", { duration: 0.15, scale: 1, backgroundColor: "rgba(16, 185, 129, 0.12)", borderColor: "rgba(16, 185, 129, 0.2)" }, "chapter-4-start+=3.15");
-            mainTimeline.to("#virtual-mouse", { duration: 0.3, opacity: 0 }, "chapter-4-start+=3.4");
-
-            // Entrada progressiva de números empolgante com ticker
-            mainTimeline.call(() => animateNumber("#val-load-num", 98), null, "chapter-4-start+=3.6");
-            mainTimeline.call(() => animateNumber("#val-conversion-num", 94), null, "chapter-4-start+=4.0");
-            mainTimeline.call(() => animateNumber("#val-uptime-num", 99), null, "chapter-4-start+=4.4");
-            mainTimeline.call(() => animateNumber("#val-security-num", 100), null, "chapter-4-start+=4.8");
-
-            // Espera final
-            mainTimeline.to({}, { duration: 4.5 });
-
-            // Transição para a Cena 5 (fadeout da Scene 4)
-            mainTimeline.to("#scene-performance", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
 
             // ==========================================
-            // CAPÍTULO 5: SCENE 5 (ARQUITETURA DE ISOLAMENTO TOTAL)
+            // CAPÍTULO 5: SCENE 5 (PERFORMANCE BRUTAL)
             // ==========================================
             mainTimeline.add("chapter-5-start");
             mainTimeline.call(() => { currentChapter = 5; }, null, "chapter-5-start");
@@ -4745,64 +5351,66 @@
             mainTimeline.set("#reels-progress-bar-3", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-4", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-5", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
 
-            // Mostrar Scene 5, esconder Scene 4
-            mainTimeline.set("#scene-performance", { display: "none" }, "chapter-5-start");
-            mainTimeline.set("#scene-isolation", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-5-start");
-            mainTimeline.to("#scene-isolation", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-5-start");
+            // Mostrar Scene 5, esconder Scene 3
+            mainTimeline.set("#scene-payments", { display: "none" }, "chapter-5-start");
+            mainTimeline.set("#scene-performance", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-5-start");
+            mainTimeline.to("#scene-performance", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-5-start");
 
             // Animação da barra 5 progredindo no cap 5
             mainTimeline.to("#reels-progress-bar-5", {
                 width: "100%",
-                duration: 10.0, // Tempo de exibição da seção de Isolamento
+                duration: 10.0,
                 ease: "linear"
             }, "chapter-5-start");
 
-            // Entrada dos textos de Isolamento
-            mainTimeline.to("#isolation-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=0.4");
-            mainTimeline.to("#isolation-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=0.6");
-            mainTimeline.to("#isolation-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-5-start+=0.8");
+            // Entrada dos textos de Performance
+            mainTimeline.to("#performance-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=0.4");
+            mainTimeline.to("#performance-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-5-start+=0.6");
+            mainTimeline.to("#performance-main-card", { duration: 0.7, opacity: 1, y: 0, scale: 1, ease: "back.out(1.15)", onStart: () => SoundFX.playSuccess() }, "chapter-5-start+=0.8");
 
-            // Entrada da pilha de instâncias
-            mainTimeline.to("#isolation-instances-container", { duration: 0.6, opacity: 1, scale: 1, ease: "back.out(1.15)", onStart: () => SoundFX.playSuccess() }, "chapter-5-start+=1.2");
+            // Entrada do Crachá de Núcleo Reativo
+            mainTimeline.to("#reactive-core-wrapper", { duration: 0.6, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=1.4");
 
-            // Entrada do painel serverless principal
-            mainTimeline.to("#serverless-card", { duration: 0.6, opacity: 1, y: 0, scale: 1, ease: "back.out(1.1)" }, "chapter-5-start+=1.8");
-
-            // Entrada progressiva dos itens de checklist com ticks sonoros
-            mainTimeline.to("#chk-vps", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=2.2");
-            mainTimeline.to("#chk-server", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=2.4");
-            mainTimeline.to("#chk-monthly", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=2.6");
-            mainTimeline.to("#chk-maintenance", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-5-start+=2.8");
-
-            // Cursor se move e interage com a Instância #1
-            mainTimeline.to("#virtual-mouse", { duration: 0.8, opacity: 1, top: "37%", left: "38%", ease: "power3.out" }, "chapter-5-start+=3.5");
-            mainTimeline.to("#instance-node-1", {
-                duration: 0.15,
-                scale: 0.96,
-                backgroundColor: "rgba(168, 85, 247, 0.08)",
-                borderColor: "rgba(168, 85, 247, 0.4)",
+            // Cursor se move e interage com o badge de velocidade
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.8, 
+                opacity: 1, 
+                top: () => getElementCenter("#speed-time-badge").top, 
+                left: () => getElementCenter("#speed-time-badge").left, 
+                ease: "power3.out" 
+            }, "chapter-5-start+=2.2");
+            mainTimeline.to("#speed-time-badge", { 
+                duration: 0.15, 
+                scale: 1.15,
+                backgroundColor: "rgba(16, 185, 129, 0.3)",
+                borderColor: "rgba(16, 185, 129, 0.6)",
                 onStart: () => {
                     SoundFX.playClick();
-                    // Efeito de pulso de ring dinâmico no indicador ao clicar
-                    gsap.fromTo("#instance-indicator-1", 
-                        { scale: 1, boxShadow: "0 0 0px rgba(16,185,129,0)" },
-                        { scale: 1.5, boxShadow: "0 0 15px rgba(16,185,129,0.85)", duration: 0.4, yoyo: true, repeat: 1 }
-                    );
                     gsap.to("#reels-viewport", { x: "+=2", y: "+=2", duration: 0.05, repeat: 1, yoyo: true });
                 }
-            }, "chapter-5-start+=4.3");
-            mainTimeline.to("#instance-node-1", { duration: 0.15, scale: 1 }, "chapter-5-start+=4.45");
-            mainTimeline.to("#virtual-mouse", { duration: 0.3, opacity: 0 }, "chapter-5-start+=4.7");
+            }, "chapter-5-start+=3.0");
+            mainTimeline.to("#speed-time-badge", { duration: 0.15, scale: 1, backgroundColor: "rgba(16, 185, 129, 0.12)", borderColor: "rgba(16, 185, 129, 0.2)" }, "chapter-5-start+=3.15");
+            mainTimeline.to("#virtual-mouse", { duration: 0.3, opacity: 0 }, "chapter-5-start+=3.4");
 
-            // Espera final da cena
-            mainTimeline.to({}, { duration: 4.8 });
+            // Entrada progressiva de números empolgante com ticker
+            mainTimeline.call(() => animateNumber("#val-load-num", 98), null, "chapter-5-start+=3.6");
+            mainTimeline.call(() => animateNumber("#val-conversion-num", 94), null, "chapter-5-start+=4.0");
+            mainTimeline.call(() => animateNumber("#val-uptime-num", 99), null, "chapter-5-start+=4.4");
+            mainTimeline.call(() => animateNumber("#val-security-num", 100), null, "chapter-5-start+=4.8");
+
+            // Espera final
+            mainTimeline.to({}, { duration: 4.5 });
 
             // Transição para a Cena 6 (fadeout da Scene 5)
-            mainTimeline.to("#scene-isolation", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
+            mainTimeline.to("#scene-performance", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
 
             // ==========================================
-            // CAPÍTULO 6: SCENE 6 (AUTOMATED BUSINESS)
+            // CAPÍTULO 6: SCENE 6 (ARQUITETURA DE ISOLAMENTO TOTAL)
             // ==========================================
             mainTimeline.add("chapter-6-start");
             mainTimeline.call(() => { currentChapter = 6; }, null, "chapter-6-start");
@@ -4814,45 +5422,72 @@
             mainTimeline.set("#reels-progress-bar-4", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-5", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
 
             // Mostrar Scene 6, esconder Scene 5
-            mainTimeline.set("#scene-isolation", { display: "none" }, "chapter-6-start");
-            mainTimeline.set("#scene-automated", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-6-start");
-            mainTimeline.to("#scene-automated", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-6-start");
+            mainTimeline.set("#scene-performance", { display: "none" }, "chapter-6-start");
+            mainTimeline.set("#scene-isolation", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-6-start");
+            mainTimeline.to("#scene-isolation", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-6-start");
 
             // Animação da barra 6 progredindo no cap 6
             mainTimeline.to("#reels-progress-bar-6", {
                 width: "100%",
-                duration: 9.0, // Tempo de exibição da seção de Automated Business
+                duration: 10.0,
                 ease: "linear"
             }, "chapter-6-start");
 
-            // Entrada dos textos de Automated Business
-            mainTimeline.to("#automated-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=0.4");
-            mainTimeline.to("#automated-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=0.6");
+            // Entrada dos textos de Isolamento
+            mainTimeline.to("#isolation-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=0.4");
+            mainTimeline.to("#isolation-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=0.6");
+            mainTimeline.to("#isolation-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out" }, "chapter-6-start+=0.8");
 
-            // Entrada progressiva dos widgets de performance com ticks sonoros
-            mainTimeline.to("#automated-item-1", { duration: 0.4, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=1.0");
-            mainTimeline.to("#automated-item-2", { duration: 0.4, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=1.3");
-            mainTimeline.to("#automated-item-3", { duration: 0.4, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=1.6");
+            // Entrada da pilha de instâncias
+            mainTimeline.to("#isolation-instances-container", { duration: 0.6, opacity: 1, scale: 1, ease: "back.out(1.15)", onStart: () => SoundFX.playSuccess() }, "chapter-6-start+=1.2");
 
-            // Entrada do painel gráfico principal com som de sucesso
-            mainTimeline.to("#automated-graphic", { 
-                duration: 0.6, 
+            // Entrada do painel serverless principal
+            mainTimeline.to("#serverless-card", { duration: 0.6, opacity: 1, y: 0, scale: 1, ease: "back.out(1.1)" }, "chapter-6-start+=1.8");
+
+            // Entrada progressiva dos itens de checklist com ticks sonoros
+            mainTimeline.to("#chk-vps", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=2.2");
+            mainTimeline.to("#chk-server", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=2.4");
+            mainTimeline.to("#chk-monthly", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=2.6");
+            mainTimeline.to("#chk-maintenance", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.3)", onStart: () => SoundFX.playTick() }, "chapter-6-start+=2.8");
+
+            // Cursor se move e interage com a Instância #1
+            mainTimeline.to("#virtual-mouse", { 
+                duration: 0.8, 
                 opacity: 1, 
-                scale: 1, 
-                ease: "back.out(1.1)", 
-                onStart: () => SoundFX.playSuccess() 
-            }, "chapter-6-start+=2.0");
+                top: () => getElementCenter("#instance-node-1").top, 
+                left: () => getElementCenter("#instance-node-1").left, 
+                ease: "power3.out" 
+            }, "chapter-6-start+=3.5");
+            mainTimeline.to("#instance-node-1", {
+                duration: 0.15,
+                scale: 0.96,
+                backgroundColor: "rgba(168, 85, 247, 0.08)",
+                borderColor: "rgba(168, 85, 247, 0.4)",
+                onStart: () => {
+                    SoundFX.playClick();
+                    gsap.fromTo("#instance-indicator-1", 
+                        { scale: 1, boxShadow: "0 0 0px rgba(16,185,129,0)" },
+                        { scale: 1.5, boxShadow: "0 0 15px rgba(16,185,129,0.85)", duration: 0.4, yoyo: true, repeat: 1 }
+                    );
+                    gsap.to("#reels-viewport", { x: "+=2", y: "+=2", duration: 0.05, repeat: 1, yoyo: true });
+                }
+            }, "chapter-6-start+=4.3");
+            mainTimeline.to("#instance-node-1", { duration: 0.15, scale: 1 }, "chapter-6-start+=4.45");
+            mainTimeline.to("#virtual-mouse", { duration: 0.3, opacity: 0 }, "chapter-6-start+=4.7");
 
             // Espera final da cena
-            mainTimeline.to({}, { duration: 5.0 });
+            mainTimeline.to({}, { duration: 4.8 });
 
             // Transição para a Cena 7 (fadeout da Scene 6)
-            mainTimeline.to("#scene-automated", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
+            mainTimeline.to("#scene-isolation", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
 
             // ==========================================
-            // CAPÍTULO 7: SCENE 7 (ÁREA DE MEMBROS PROFISSIONAL)
+            // CAPÍTULO 7: SCENE 7 (AUTOMATED BUSINESS)
             // ==========================================
             mainTimeline.add("chapter-7-start");
             mainTimeline.call(() => { currentChapter = 7; }, null, "chapter-7-start");
@@ -4865,47 +5500,47 @@
             mainTimeline.set("#reels-progress-bar-5", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-6", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
 
             // Mostrar Scene 7, esconder Scene 6
-            mainTimeline.set("#scene-automated", { display: "none" }, "chapter-7-start");
-            mainTimeline.set("#scene-members", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-7-start");
-            mainTimeline.to("#scene-members", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-7-start");
+            mainTimeline.set("#scene-isolation", { display: "none" }, "chapter-7-start");
+            mainTimeline.set("#scene-automated", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-7-start");
+            mainTimeline.to("#scene-automated", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-7-start");
 
             // Animação da barra 7 progredindo no cap 7
             mainTimeline.to("#reels-progress-bar-7", {
                 width: "100%",
-                duration: 9.0, // Tempo de exibição da seção de Área de Membros
+                duration: 9.0,
                 ease: "linear"
             }, "chapter-7-start");
 
-            // Entrada dos textos de Área de Membros
-            mainTimeline.to("#members-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=0.4");
-            mainTimeline.to("#members-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=0.6");
+            // Entrada dos textos de Automated Business
+            mainTimeline.to("#automated-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=0.4");
+            mainTimeline.to("#automated-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=0.6");
 
-            // Entrada progressiva dos bullets de benefícios com ticks sonoros
-            mainTimeline.to("#members-bullets", { duration: 0.4, opacity: 1, y: 0, ease: "power2.out" }, "chapter-7-start+=1.0");
-            mainTimeline.to("#members-bullet-1", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=1.2");
-            mainTimeline.to("#members-bullet-2", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=1.4");
-            mainTimeline.to("#members-bullet-3", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=1.6");
-            mainTimeline.to("#members-bullet-4", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=1.8");
+            // Entrada progressiva dos widgets de performance com ticks sonoros
+            mainTimeline.to("#automated-item-1", { duration: 0.4, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=1.0");
+            mainTimeline.to("#automated-item-2", { duration: 0.4, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=1.3");
+            mainTimeline.to("#automated-item-3", { duration: 0.4, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-7-start+=1.6");
 
-            // Entrada do smartphone frame e badges flutuantes com som de sucesso
-            mainTimeline.to("#members-showcase", {
-                duration: 0.6,
-                opacity: 1,
-                scale: 1,
-                ease: "back.out(1.1)",
-                onStart: () => SoundFX.playSuccess()
-            }, "chapter-7-start+=2.2");
+            // Entrada do painel gráfico principal com som de sucesso
+            mainTimeline.to("#automated-graphic", { 
+                duration: 0.6, 
+                opacity: 1, 
+                scale: 1, 
+                ease: "back.out(1.1)", 
+                onStart: () => SoundFX.playSuccess() 
+            }, "chapter-7-start+=2.0");
 
             // Espera final da cena
             mainTimeline.to({}, { duration: 5.0 });
 
             // Transição para a Cena 8 (fadeout da Scene 7)
-            mainTimeline.to("#scene-members", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
+            mainTimeline.to("#scene-automated", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
 
             // ==========================================
-            // CAPÍTULO 8: SCENE 8 (VENDA QUALQUER PRODUTO DIGITAL)
+            // CAPÍTULO 8: SCENE 8 (ÁREA DE MEMBROS PROFISSIONAL)
             // ==========================================
             mainTimeline.add("chapter-8-start");
             mainTimeline.call(() => { currentChapter = 8; }, null, "chapter-8-start");
@@ -4919,30 +5554,86 @@
             mainTimeline.set("#reels-progress-bar-6", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-7", { width: "100%" });
             mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
 
             // Mostrar Scene 8, esconder Scene 7
-            mainTimeline.set("#scene-members", { display: "none" }, "chapter-8-start");
-            mainTimeline.set("#scene-products", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-8-start");
-            mainTimeline.to("#scene-products", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-8-start");
+            mainTimeline.set("#scene-automated", { display: "none" }, "chapter-8-start");
+            mainTimeline.set("#scene-members", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-8-start");
+            mainTimeline.to("#scene-members", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-8-start");
 
             // Animação da barra 8 progredindo no cap 8
             mainTimeline.to("#reels-progress-bar-8", {
                 width: "100%",
-                duration: 9.0, // Tempo de exibição da seção de Venda de Produtos
+                duration: 9.0,
                 ease: "linear"
             }, "chapter-8-start");
 
-            // Entrada dos textos de Gestão de Produtos
-            mainTimeline.to("#products-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=0.4");
-            mainTimeline.to("#products-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=0.6");
-            mainTimeline.to("#products-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out", onStart: () => SoundFX.playTick() }, "chapter-8-start+=0.8");
+            // Entrada dos textos de Área de Membros
+            mainTimeline.to("#members-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=0.4");
+            mainTimeline.to("#members-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=0.6");
 
             // Entrada progressiva dos bullets de benefícios com ticks sonoros
-            mainTimeline.to("#products-bullets", { duration: 0.4, opacity: 1, y: 0, ease: "power2.out" }, "chapter-8-start+=1.2");
-            mainTimeline.to("#products-bullet-1", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=1.4");
-            mainTimeline.to("#products-bullet-2", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=1.6");
-            mainTimeline.to("#products-bullet-3", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=1.8");
-            mainTimeline.to("#products-bullet-4", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=2.0");
+            mainTimeline.to("#members-bullets", { duration: 0.4, opacity: 1, y: 0, ease: "power2.out" }, "chapter-8-start+=1.0");
+            mainTimeline.to("#members-bullet-1", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=1.2");
+            mainTimeline.to("#members-bullet-2", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=1.4");
+            mainTimeline.to("#members-bullet-3", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=1.6");
+            mainTimeline.to("#members-bullet-4", { duration: 0.3, opacity: 1, scale: 1, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-8-start+=1.8");
+
+            // Entrada do smartphone frame e badges flutuantes com som de sucesso
+            mainTimeline.to("#members-showcase", {
+                duration: 0.6,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.1)",
+                onStart: () => SoundFX.playSuccess()
+            }, "chapter-8-start+=2.2");
+
+            // Espera final da cena
+            mainTimeline.to({}, { duration: 5.0 });
+
+            // Transição para a Cena 9 (fadeout da Scene 8)
+            mainTimeline.to("#scene-members", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
+
+            // ==========================================
+            // CAPÍTULO 9: SCENE 9 (VENDA QUALQUER PRODUTO DIGITAL)
+            // ==========================================
+            mainTimeline.add("chapter-9-start");
+            mainTimeline.call(() => { currentChapter = 9; }, null, "chapter-9-start");
+
+            // Zerar barras no início do cap 9
+            mainTimeline.set("#reels-progress-bar-1", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-2", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-3", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-4", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-5", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-6", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-7", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-8", { width: "100%" });
+            mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
+
+            // Mostrar Scene 9, esconder Scene 8
+            mainTimeline.set("#scene-members", { display: "none" }, "chapter-9-start");
+            mainTimeline.set("#scene-products", { display: "flex", opacity: 0, y: 40, className: "reels-scene active" }, "chapter-9-start");
+            mainTimeline.to("#scene-products", { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }, "chapter-9-start");
+
+            // Animação da barra 9 progredindo no cap 9
+            mainTimeline.to("#reels-progress-bar-9", {
+                width: "100%",
+                duration: 9.0,
+                ease: "linear"
+            }, "chapter-9-start");
+
+            // Entrada dos textos de Gestão de Produtos
+            mainTimeline.to("#products-badge", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-9-start+=0.4");
+            mainTimeline.to("#products-title", { duration: 0.5, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-9-start+=0.6");
+            mainTimeline.to("#products-sub", { duration: 0.5, opacity: 1, y: 0, ease: "power2.out", onStart: () => SoundFX.playTick() }, "chapter-9-start+=0.8");
+
+            // Entrada progressiva dos bullets de benefícios com ticks sonoros
+            mainTimeline.to("#products-bullets", { duration: 0.4, opacity: 1, y: 0, ease: "power2.out" }, "chapter-9-start+=1.2");
+            mainTimeline.to("#products-bullet-1", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-9-start+=1.4");
+            mainTimeline.to("#products-bullet-2", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-9-start+=1.6");
+            mainTimeline.to("#products-bullet-3", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-9-start+=1.8");
+            mainTimeline.to("#products-bullet-4", { duration: 0.3, opacity: 1, y: 0, ease: "back.out(1.2)", onStart: () => SoundFX.playTick() }, "chapter-9-start+=2.0");
 
             // Entrada do smartphone frame, cards flutuantes e dashboard com som de sucesso
             mainTimeline.to("#products-showcase", {
@@ -4951,49 +5642,34 @@
                 scale: 1,
                 ease: "back.out(1.1)",
                 onStart: () => SoundFX.playSuccess()
-            }, "chapter-8-start+=2.4");
+            }, "chapter-9-start+=2.4");
 
-            // --- ANIMAÇÃO DE CLIQUE VIRTUAL (Mouse no botão de adicionar produto do celular) ---
+            // --- ANIMAÇÃO DE CLIQUE VIRTUAL (Mouse no botão de adicionar produto do deck) ---
             // 1. Mostrar cursor
-            mainTimeline.set("#virtual-mouse", { opacity: 0, scale: 1, x: 0, y: 250 }, "chapter-8-start+=3.2");
-            mainTimeline.to("#virtual-mouse", { duration: 0.4, opacity: 1, ease: "power2.out" }, "chapter-8-start+=3.2");
+            mainTimeline.set("#virtual-mouse", { opacity: 0, scale: 1, top: "70%", left: "50%", x: 0, y: 0 }, "chapter-9-start+=3.2");
+            mainTimeline.to("#virtual-mouse", { duration: 0.4, opacity: 1, ease: "power2.out" }, "chapter-9-start+=3.2");
             
-            // 2. Mover cursor até o topo do deck sobreposto para clicar
+            // 2. Mover cursor até o centro do deck de produtos para clicar
             mainTimeline.to("#virtual-mouse", {
                 duration: 1.2,
-                x: 20,
-                y: 40,
+                top: () => getElementCenter(".products-staggered-deck").top,
+                left: () => getElementCenter(".products-staggered-deck").left,
                 ease: "power2.inOut"
-            }, "chapter-8-start+=3.6");
+            }, "chapter-9-start+=3.6");
 
-            // 3. Efeito visual do ponto de toque (toque virtual) no celular
-            mainTimeline.to(".virtual-touch-indicator-scene8", {
-                duration: 0.2,
-                opacity: 1,
-                scale: 1,
-                ease: "power2.out",
+            // 3. Clicar nas cartas (pulso do mouse e som de clique)
+            mainTimeline.to("#virtual-mouse", {
+                duration: 0.15,
+                scale: 0.85,
+                yoyo: true,
+                repeat: 1,
                 onStart: () => {
                     SoundFX.playTick();
-                    gsap.to("#virtual-mouse", { duration: 0.1, scale: 0.85, yoyo: true, repeat: 1 });
-                    document.getElementById("mobile-add-product-btn").style.background = "#fff";
-                    document.getElementById("mobile-add-product-btn").style.color = "#a855f7";
                 }
-            }, "chapter-8-start+=4.9");
-
-            // 4. Esconder indicador de toque e restaurar cor do botão
-            mainTimeline.to(".virtual-touch-indicator-scene8", {
-                duration: 0.3,
-                opacity: 0,
-                scale: 0,
-                ease: "power2.in",
-                onComplete: () => {
-                    document.getElementById("mobile-add-product-btn").style.background = "#a855f7";
-                    document.getElementById("mobile-add-product-btn").style.color = "#fff";
-                }
-            }, "chapter-8-start+=5.2");
+            }, "chapter-9-start+=4.9");
 
             // 5. Mover cursor de volta e sumir
-            mainTimeline.to("#virtual-mouse", { duration: 0.8, x: 50, y: 150, opacity: 0, ease: "power2.in" }, "chapter-8-start+=5.3");
+            mainTimeline.to("#virtual-mouse", { duration: 0.8, top: "75%", left: "60%", opacity: 0, ease: "power2.in" }, "chapter-9-start+=5.3");
 
             // 6. EFEITO SINCRONIZADO: O novo produto é cadastrado!
             // Aparece na lista do celular
@@ -5005,7 +5681,7 @@
                 border: "0.5px solid rgba(16, 185, 129, 0.2)",
                 background: "rgba(16, 185, 129, 0.05)",
                 ease: "back.out(1.2)"
-            }, "chapter-8-start+=5.1");
+            }, "chapter-9-start+=5.1");
 
             // Aparece na tabela do Dashboard Desktop, atualiza a quantidade de produtos para '3'
             mainTimeline.to("#dashboard-row-new", {
@@ -5021,7 +5697,7 @@
                     document.getElementById("dashboard-products-count").style.color = "#a855f7";
                     gsap.to("#dashboard-products-count", { duration: 0.2, scale: 1.3, yoyo: true, repeat: 1 });
                 }
-            }, "chapter-8-start+=5.3");
+            }, "chapter-9-start+=5.3");
 
             // Materialização do Card 3D Translúcido VIP flutuando brilhante
             mainTimeline.to("#new-product-card-3d", {
@@ -5032,12 +5708,12 @@
                 y: 0,
                 className: "products-floating-card p-card-3 active-float",
                 ease: "back.out(1.2)"
-            }, "chapter-8-start+=5.5");
+            }, "chapter-9-start+=5.5");
 
             // Espera final da cena
             mainTimeline.to({}, { duration: 4.5 });
 
-            // Transição para reiniciar (fadeout da Scene 8)
+            // Transição para reiniciar (fadeout da Scene 9)
             mainTimeline.to("#scene-products", { duration: 0.5, opacity: 0, y: -40, ease: "power2.in" });
 
             mainTimeline.call(() => {
@@ -5064,18 +5740,68 @@
                 gsap.set("#pm-bullets-wrapper", { opacity: 0, y: 20 });
                 mainTimeline.set("#reels-progress-bar-3", { width: "0%" });
 
-                // Resetar inputs Scene 4
+                // Resetar inputs Scene 4 (Direct Flow - Novo)
+                gsap.set("#direct-flow-title", { opacity: 0, y: 20 });
+                gsap.set("#direct-flow-sub", { opacity: 0, y: 15 });
+                const dFlowTitle = document.getElementById("direct-flow-title");
+                const dFlowSub = document.getElementById("direct-flow-sub");
+                if (dFlowTitle && dFlowSub) {
+                    dFlowTitle.innerHTML = `Refém de plataformas. <br> <span style="color: #ef4444; text-shadow: 0 0 15px rgba(239, 68, 68, 0.25);">Dinheiro Confiscado.</span>`;
+                    dFlowSub.textContent = `Taxas abusivas e até 30 dias de espera para poder sacar o que já é seu por direito.`;
+                }
+                gsap.set("#direct-flow-card", { opacity: 0, scale: 0.95, y: 35 });
+                gsap.set("#lock-trad", { opacity: 0, scale: 0.5 });
+                gsap.set("#part-trad-1", { opacity: 0, left: "0%" });
+                gsap.set("#part-trad-2", { opacity: 0, left: "0%" });
+                gsap.set("#part-dir-1", { opacity: 0, left: "0%" });
+                
+                // Resets de Badge de Simulação
+                gsap.set("#sim-badge-container", { opacity: 0, y: 10 });
+                const badge = document.getElementById("sim-phase-badge");
+                if (badge) {
+                    badge.className = "flow-badge red";
+                    badge.style.backgroundColor = "rgba(239, 68, 68, 0.12)";
+                    badge.style.color = "#f87171";
+                    badge.style.borderColor = "rgba(239, 68, 68, 0.2)";
+                    badge.textContent = "🔴 MERCADO TRADICIONAL";
+                }
+
+                // Resets de Overlay de Impacto (X / Check)
+                document.getElementById("flow-impact-overlay").style.opacity = 0;
+                document.getElementById("flow-impact-overlay").style.backdropFilter = "none";
+                document.getElementById("impact-x").style.display = "none";
+                gsap.set("#impact-x", { scale: 0, opacity: 1, rotation: 0 });
+                document.getElementById("impact-check").style.display = "none";
+                gsap.set("#impact-check", { scale: 0, opacity: 1, rotation: 0 });
+                
+                // Garantir exibição correta inicial do Tradicional e ocultação do Direto
+                document.getElementById("flow-row-trad").style.display = "flex";
+                gsap.set("#flow-row-trad", { opacity: 1, filter: "none", scale: 1 });
+                
+                document.getElementById("flow-row-direct").style.display = "none";
+                gsap.set("#flow-row-direct", { opacity: 0, scale: 0.95, borderColor: "rgba(255, 255, 255, 0.03)", boxShadow: "none" });
+                
+                gsap.set("#node-dir-bank", { scale: 1, boxShadow: "none", borderColor: "var(--glass-border)" });
+                document.getElementById("direct-balance-value").textContent = "0,00";
+                
+                document.getElementById("direct-balance-banner").style.display = "none";
+                gsap.set("#direct-balance-banner", { opacity: 0, y: 15, x: 0, scale: 0.9 });
+                document.getElementById("trad-info-banner").style.display = "none";
+                gsap.set("#trad-info-banner", { opacity: 0, y: 15, x: 0, scale: 0.9 });
+                mainTimeline.set("#reels-progress-bar-4", { width: "0%" });
+
+                // Resetar inputs Scene 5
                 gsap.set("#performance-title", { opacity: 0, y: 20 });
                 gsap.set("#performance-sub", { opacity: 0, y: 15 });
                 gsap.set("#performance-main-card", { opacity: 0, y: 35, scale: 0.95 });
                 gsap.set("#reactive-core-wrapper", { opacity: 0, y: 20 });
-                document.getElementById("val-load-num").textContent = "0";
-                document.getElementById("val-conversion-num").textContent = "0";
-                document.getElementById("val-uptime-num").textContent = "0";
-                document.getElementById("val-security-num").textContent = "0";
-                mainTimeline.set("#reels-progress-bar-4", { width: "0%" });
+                document.querySelector("#metric-load .metric-val-num").textContent = "0";
+                document.querySelector("#metric-conversion .metric-val-num").textContent = "0";
+                document.querySelector("#metric-uptime .metric-val-num").textContent = "0";
+                document.querySelector("#metric-security .metric-val-num").textContent = "0";
+                mainTimeline.set("#reels-progress-bar-5", { width: "0%" });
 
-                // Resetar inputs Scene 5
+                // Resetar inputs Scene 6
                 gsap.set("#isolation-badge", { opacity: 0, y: 15 });
                 gsap.set("#isolation-title", { opacity: 0, y: 20 });
                 gsap.set("#isolation-sub", { opacity: 0, y: 15 });
@@ -5085,18 +5811,18 @@
                 gsap.set("#chk-server", { opacity: 0, scale: 0.8 });
                 gsap.set("#chk-monthly", { opacity: 0, scale: 0.8 });
                 gsap.set("#chk-maintenance", { opacity: 0, scale: 0.8 });
-                mainTimeline.set("#reels-progress-bar-5", { width: "0%" });
+                mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
 
-                // Resetar inputs Scene 6
+                // Resetar inputs Scene 7
                 gsap.set("#automated-badge", { opacity: 0, y: 15 });
                 gsap.set("#automated-title", { opacity: 0, y: 20 });
                 gsap.set("#automated-item-1", { opacity: 0, y: 15 });
                 gsap.set("#automated-item-2", { opacity: 0, y: 15 });
                 gsap.set("#automated-item-3", { opacity: 0, y: 15 });
                 gsap.set("#automated-graphic", { opacity: 0, scale: 0.95 });
-                mainTimeline.set("#reels-progress-bar-6", { width: "0%" });
+                mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
 
-                // Resetar inputs Scene 7
+                // Resetar inputs Scene 8
                 gsap.set("#members-badge", { opacity: 0, y: 20 });
                 gsap.set("#members-title", { opacity: 0, y: 25 });
                 gsap.set("#members-bullets", { opacity: 0, y: 15 });
@@ -5105,9 +5831,9 @@
                 gsap.set("#members-bullet-3", { opacity: 0, scale: 0.8 });
                 gsap.set("#members-bullet-4", { opacity: 0, scale: 0.8 });
                 gsap.set("#members-showcase", { opacity: 0, scale: 0.95 });
-                mainTimeline.set("#reels-progress-bar-7", { width: "0%" });
+                mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
 
-                // Resetar inputs Scene 8
+                // Resetar inputs Scene 9
                 gsap.set("#products-badge", { opacity: 0, y: 20 });
                 gsap.set("#products-title", { opacity: 0, y: 25 });
                 gsap.set("#products-sub", { opacity: 0, y: 15 });
@@ -5122,7 +5848,7 @@
                 document.getElementById("dashboard-products-count").textContent = "2";
                 document.getElementById("dashboard-products-count").style.color = "#fff";
                 gsap.set("#new-product-card-3d", { opacity: 0, scale: 0.75, x: 30, y: 30, className: "products-floating-card p-card-3" });
-                mainTimeline.set("#reels-progress-bar-8", { width: "0%" });
+                mainTimeline.set("#reels-progress-bar-9", { width: "0%" });
             });
         }
 
@@ -5149,8 +5875,8 @@
 
             // Calcular próximo capítulo
             let targetChapter = currentChapter + direction;
-            if (targetChapter < 1) targetChapter = 8;
-            if (targetChapter > 8) targetChapter = 1;
+            if (targetChapter < 1) targetChapter = 9;
+            if (targetChapter > 9) targetChapter = 1;
 
             // Resetar todos os estados visuais antes do salto
             resetAllScenesVisuals();
@@ -5181,6 +5907,7 @@
             document.getElementById("scene-hero").style.display = "none";
             document.getElementById("scene-checkout").style.display = "none";
             document.getElementById("scene-payments").style.display = "none";
+            document.getElementById("scene-direct-flow").style.display = "none";
             document.getElementById("scene-performance").style.display = "none";
             document.getElementById("scene-isolation").style.display = "none";
             document.getElementById("scene-automated").style.display = "none";
@@ -5191,6 +5918,7 @@
             document.getElementById("scene-hero").classList.remove("active");
             document.getElementById("scene-checkout").classList.remove("active");
             document.getElementById("scene-payments").classList.remove("active");
+            document.getElementById("scene-direct-flow").classList.remove("active");
             document.getElementById("scene-performance").classList.remove("active");
             document.getElementById("scene-isolation").classList.remove("active");
             document.getElementById("scene-automated").classList.remove("active");
@@ -5233,7 +5961,52 @@
             gsap.set("#payments-main-card", { opacity: 0, y: 35, scale: 0.95 });
             gsap.set("#pm-bullets-wrapper", { opacity: 0, y: 20 });
 
-            // Resetar Scene 4 (Performance)
+            // Resetar Scene 4 (Direct Flow - Novo)
+            gsap.set("#direct-flow-title", { opacity: 0, y: 20 });
+            gsap.set("#direct-flow-sub", { opacity: 0, y: 15 });
+            const dFlowTitleGlobal = document.getElementById("direct-flow-title");
+            const dFlowSubGlobal = document.getElementById("direct-flow-sub");
+            if (dFlowTitleGlobal && dFlowSubGlobal) {
+                dFlowTitleGlobal.innerHTML = `Refém de plataformas. <br> <span style="color: #ef4444; text-shadow: 0 0 15px rgba(239, 68, 68, 0.25);">Dinheiro Confiscado.</span>`;
+                dFlowSubGlobal.textContent = `Taxas abusivas e até 30 dias de espera para poder sacar o que já é seu por direito.`;
+            }
+            gsap.set("#direct-flow-card", { opacity: 0, scale: 0.95, y: 35 });
+            gsap.set("#lock-trad", { opacity: 0, scale: 0.5 });
+            gsap.set("#part-trad-1", { opacity: 0, left: "0%" });
+            gsap.set("#part-trad-2", { opacity: 0, left: "0%" });
+            gsap.set("#part-dir-1", { opacity: 0, left: "0%" });
+            
+            // Resets de Badge de Simulação
+            gsap.set("#sim-badge-container", { opacity: 0, y: 10 });
+            const badgeGlobal = document.getElementById("sim-phase-badge");
+            if (badgeGlobal) {
+                badgeGlobal.className = "flow-badge red";
+                badgeGlobal.style.backgroundColor = "rgba(239, 68, 68, 0.12)";
+                badgeGlobal.style.color = "#f87171";
+                badgeGlobal.style.borderColor = "rgba(239, 68, 68, 0.2)";
+                badgeGlobal.textContent = "🔴 MERCADO TRADICIONAL";
+            }
+
+            // Resets de Overlay de Impacto (X / Check)
+            document.getElementById("flow-impact-overlay").style.opacity = 0;
+            document.getElementById("flow-impact-overlay").style.backdropFilter = "none";
+            document.getElementById("impact-x").style.display = "none";
+            gsap.set("#impact-x", { scale: 0, opacity: 1, rotation: 0 });
+            document.getElementById("impact-check").style.display = "none";
+            gsap.set("#impact-check", { scale: 0, opacity: 1, rotation: 0 });
+
+            document.getElementById("flow-row-trad").style.display = "flex";
+            gsap.set("#flow-row-trad", { opacity: 1, filter: "none", scale: 1 });
+            document.getElementById("flow-row-direct").style.display = "none";
+            gsap.set("#flow-row-direct", { opacity: 0, scale: 0.95, borderColor: "rgba(255, 255, 255, 0.03)", boxShadow: "none" });
+            gsap.set("#node-dir-bank", { scale: 1, boxShadow: "none", borderColor: "var(--glass-border)" });
+            document.getElementById("direct-balance-value").textContent = "0,00";
+            document.getElementById("direct-balance-banner").style.display = "none";
+            gsap.set("#direct-balance-banner", { opacity: 0, y: 15, x: 0, scale: 0.9 });
+            document.getElementById("trad-info-banner").style.display = "none";
+            gsap.set("#trad-info-banner", { opacity: 0, y: 15, x: 0, scale: 0.9 });
+
+            // Resetar Scene 5 (Performance)
             gsap.set("#performance-title", { opacity: 0, y: 20 });
             gsap.set("#performance-sub", { opacity: 0, y: 15 });
             gsap.set("#performance-main-card", { opacity: 0, y: 35, scale: 0.95 });
@@ -5243,7 +6016,7 @@
             document.querySelector("#metric-uptime .metric-val-num").textContent = "0";
             document.querySelector("#metric-security .metric-val-num").textContent = "0";
 
-            // Resetar Scene 5 (Isolamento)
+            // Resetar Scene 6 (Isolamento)
             gsap.set("#isolation-badge", { opacity: 0, y: 15 });
             gsap.set("#isolation-title", { opacity: 0, y: 20 });
             gsap.set("#isolation-sub", { opacity: 0, y: 15 });
@@ -5254,7 +6027,7 @@
             gsap.set("#chk-monthly", { opacity: 0, scale: 0.8 });
             gsap.set("#chk-maintenance", { opacity: 0, scale: 0.8 });
 
-            // Resetar Scene 6 (Automated Business)
+            // Resetar Scene 7 (Automated Business)
             gsap.set("#automated-badge", { opacity: 0, y: 15 });
             gsap.set("#automated-title", { opacity: 0, y: 20 });
             gsap.set("#automated-item-1", { opacity: 0, y: 15 });
@@ -5262,7 +6035,7 @@
             gsap.set("#automated-item-3", { opacity: 0, y: 15 });
             gsap.set("#automated-graphic", { opacity: 0, scale: 0.95 });
 
-            // Resetar Scene 7 (Área de Membros)
+            // Resetar Scene 8 (Área de Membros)
             gsap.set("#members-badge", { opacity: 0, y: 20 });
             gsap.set("#members-title", { opacity: 0, y: 25 });
             gsap.set("#members-bullets", { opacity: 0, y: 15 });
@@ -5272,7 +6045,7 @@
             gsap.set("#members-bullet-4", { opacity: 0, scale: 0.8 });
             gsap.set("#members-showcase", { opacity: 0, scale: 0.95 });
 
-            // Resetar Scene 8 (Venda de Produtos)
+            // Resetar Scene 9 (Venda de Produtos)
             gsap.set("#products-badge", { opacity: 0, y: 20 });
             gsap.set("#products-title", { opacity: 0, y: 25 });
             gsap.set("#products-sub", { opacity: 0, y: 15 });
@@ -5302,6 +6075,7 @@
             gsap.set("#reels-progress-bar-6", { width: "0%" });
             gsap.set("#reels-progress-bar-7", { width: "0%" });
             gsap.set("#reels-progress-bar-8", { width: "0%" });
+            gsap.set("#reels-progress-bar-9", { width: "0%" });
 
             // Setar concluídas
             if (chapter > 1) gsap.set("#reels-progress-bar-1", { width: "100%" });
@@ -5311,6 +6085,7 @@
             if (chapter > 5) gsap.set("#reels-progress-bar-5", { width: "100%" });
             if (chapter > 6) gsap.set("#reels-progress-bar-6", { width: "100%" });
             if (chapter > 7) gsap.set("#reels-progress-bar-7", { width: "100%" });
+            if (chapter > 8) gsap.set("#reels-progress-bar-8", { width: "100%" });
         }
     </script>
 </body>

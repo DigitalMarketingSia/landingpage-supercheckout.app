@@ -131,6 +131,8 @@ const HeroV2: React.FC = () => {
                             <img
                                 src="/assets/dashboard.png"
                                 alt="Infrastructure Dashboard"
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-700"
                             />
                         </div>

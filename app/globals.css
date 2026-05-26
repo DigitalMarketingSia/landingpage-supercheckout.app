@@ -27,6 +27,7 @@
   pointer-events: none;
   opacity: 0.15;
   mix-blend-mode: screen;
+  will-change: transform;
 }
 .bg-glow-orb-1 {
   top: -20%;
@@ -60,6 +61,14 @@
 @keyframes pulse-glow-3 {
   0% { transform: scale(0.9) translate(-50%, -50%); opacity: 0.05; }
   100% { transform: scale(1.1) translate(-40%, -45%); opacity: 0.15; }
+}
+
+/* Reduce blur on mobile for better performance */
+@media (max-width: 768px) {
+  .bg-glow-orb {
+    filter: blur(60px);
+    opacity: 0.12;
+  }
 }
 
 html {

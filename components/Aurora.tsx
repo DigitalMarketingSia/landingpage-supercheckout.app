@@ -180,7 +180,24 @@ export default function Aurora(props: AuroraProps) {
         ctn.appendChild(gl.canvas);
 
         let animateId = 0;
+        let isVisible = true;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                isVisible = entries[0].isIntersecting;
+                if (isVisible && animateId === 0) {
+                    animateId = requestAnimationFrame(update);
+                }
+            },
+            { threshold: 0.01 }
+        );
+        observer.observe(ctn);
+
         const update = (t: number) => {
+            if (!isVisible) {
+                animateId = 0;
+                return;
+            }
             animateId = requestAnimationFrame(update);
             const { time = t * 0.01, speed = 1.0, amplitude: currentAmp = amplitude, blend: currentBlend = blend, colorStops: currentStops = colorStops } = propsRef.current;
 
@@ -207,6 +224,7 @@ export default function Aurora(props: AuroraProps) {
 
         return () => {
             cancelAnimationFrame(animateId);
+            observer.disconnect();
             window.removeEventListener('resize', resize);
             if (ctn && gl.canvas.parentNode === ctn) {
                 ctn.removeChild(gl.canvas);

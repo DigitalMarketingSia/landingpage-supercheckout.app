@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import BlurText from './components/BlurText';
 import GradientText from './components/GradientText';
@@ -105,16 +105,18 @@ const App: React.FC = () => {
   // Smooth scroll-based animations
   const dashScale = useSpring(useTransform(scrollYProgress, [0, 0.3], [0.85, 1]), { stiffness: 100, damping: 30 });
   const dashOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+  const dashOpacity2 = useTransform(scrollYProgress, [0, 0.15], [0.2, 1]);
   const dashY = useTransform(scrollYProgress, [0, 0.3], [50, 0]);
   const glowOpacity = useTransform(scrollYProgress, [0, 0.25], [0, 0.4]);
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
-  const showcaseFeatures = [
+  const showcaseFeatures = useMemo(() => [
     { id: 'checkout', icon: <Icons.Checkout />, title: "Checkout Brutal", desc: "Aumente sua conversão com a tecnologia de carregamento mais rápida do mercado.", highlights: ["Conversão Imediata", "Order Bump 1-Click", "Mobile First"] },
     { id: 'members', icon: <Icons.Members />, title: "Área de Membros Pro", desc: "Seus alunos merecem uma experiência de streaming, não uma pasta de arquivos.", highlights: ["Layout Netflix", "Hospedagem Inclusa", "Engajamento Real"] },
     { id: 'domains', icon: <Icons.Domains />, title: "Brand Experience", desc: "Whitelabel total para você usar seu domínio e fortalecer sua autoridade.", highlights: ["SSL Ilimitado", "Setup Instantâneo", "Marca Própria"] },
     { id: 'products', icon: <Icons.Products />, title: "Escala Infinita", desc: "Infraestrutura preparada para escalar no seu ritmo.", highlights: ["Escala sob demanda", "Sem limite artificial de vendas", "Sem taxas ocultas"] }
-  ];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ], []);
 
   // Scroll-based card navigation for vertical carousel
   React.useEffect(() => {
@@ -163,7 +165,7 @@ const App: React.FC = () => {
       <nav className="fixed top-0 left-0 w-full z-50 py-6 backdrop-blur-2xl border-b border-white/5 bg-black/20">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Super Checkout Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-xl md:rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)]" />
+            <img src="/logo.png" alt="Super Checkout Logo" fetchPriority="high" className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-xl md:rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)]" />
             <span className="text-lg md:text-xl font-bold tracking-tighter uppercase italic">Super Checkout <span className="text-purple-500">.app</span></span>
           </div>
           <div className="hidden md:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">
@@ -523,7 +525,7 @@ const App: React.FC = () => {
           <motion.div
             style={{
               scale: dashScale,
-              opacity: useTransform(scrollYProgress, [0, 0.15], [0.2, 1]),
+              opacity: dashOpacity2,
               y: dashY
             }}
             whileHover={{ scale: 1.02 }}
@@ -543,12 +545,12 @@ const App: React.FC = () => {
 
               {/* A IMAGEM ATUALIZADA */}
               <div className="w-full h-full p-3 md:p-6 flex items-center justify-center relative z-10">
-                <motion.img
+                <img
                   src="/assets/dashboard.png"
                   alt="Super Checkout .app Dashboard"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain"
-                  initial={{ filter: "grayscale(0%)" }}
-                  whileHover={{ filter: "brightness(1.1)", transition: { duration: 0.6 } }}
                 />
               </div>
 
@@ -820,13 +822,8 @@ const App: React.FC = () => {
         </div>
       </section>
 
-
-
-
-
-
       {/* SECTION: INFRA & SEGURANÇA */}
-      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -884,10 +881,10 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
-      < section className="py-32 px-6 relative z-10" >
+      <section className="py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
@@ -941,6 +938,8 @@ const App: React.FC = () => {
                     <motion.img
                       src="/members-area-showcase.png"
                       alt="Área de Membros - Vitrine de Produtos"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-auto min-h-full object-cover object-top opacity-80"
                       style={{
                         filter: "grayscale(15%) brightness(0.85) contrast(0.95)"
@@ -1056,6 +1055,8 @@ const App: React.FC = () => {
                       <img
                         src="/assets/nova-aula.png"
                         alt="Nova Aula Dashboard"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover rounded-[20px]"
                       />
                     </div>

@@ -202,18 +202,23 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
             {/* Virtual Checkout Visualization */}
+            {/* Virtual Checkout Visualization */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group order-2 lg:order-1"
+              className="relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group order-2 lg:order-1 isolate"
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden', willChange: 'transform' }}
             >
               {/* Radial Gradient Background */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.1)_0%,_transparent_70%)]" />
+              <div 
+                className="absolute inset-0 pointer-events-none" 
+                style={{ backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.1) 0%, transparent 70%)' }}
+              />
 
               {/* Virtual Checkout Elements */}
-              <div className="relative z-10 space-y-6">
+              <div className="relative z-10 space-y-6" style={{ transform: 'translateZ(0)' }}>
 
                 {/* Product Header with Image Placeholder */}
                 <motion.div
@@ -222,6 +227,7 @@ const App: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.1, duration: 0.5 }}
                   className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
                   <div className="w-16 h-16 bg-purple-600/20 rounded-xl flex items-center justify-center">
                     <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -241,6 +247,7 @@ const App: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, duration: 0.5 }}
                   className="space-y-3"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
                   <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
                     <div className="h-2 w-1/4 bg-white/10 rounded-full mb-3" />
@@ -259,6 +266,7 @@ const App: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3, duration: 0.5 }}
                   className="flex gap-3"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
                   <div className="flex-1 p-4 bg-purple-600/10 border border-purple-500/20 rounded-2xl flex items-center justify-center gap-2">
                     <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,6 +289,7 @@ const App: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="p-4 bg-green-600/5 border border-green-500/20 rounded-2xl"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded bg-green-500/20 flex items-center justify-center mt-1">
@@ -301,6 +310,7 @@ const App: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.5, duration: 0.5 }}
                   className="pt-4"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
                   <div className="w-full p-5 bg-gradient-to-r from-purple-600 to-purple-500 rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-shadow">
                     <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

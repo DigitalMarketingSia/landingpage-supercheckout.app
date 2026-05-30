@@ -1,15 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useTransform, useSpring } from 'framer-motion';
 import Aurora from './Aurora';
 import GradientText from './GradientText';
 
 const CTAComponent = ({ onOpenVideo }: { onOpenVideo: () => void }) => (
     <div className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
         <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(168,85,247,0.4)" }}
+            whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(168,85,247,0.5)" }}
             whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
             onClick={onOpenVideo}
             className="relative px-8 py-3.5 text-white rounded-2xl font-black text-base uppercase italic tracking-tighter shadow-[0_20px_50px_rgba(168,85,247,0.3)] transition-all flex items-center justify-center gap-2 group overflow-hidden w-full md:w-auto"
         >
@@ -41,11 +42,37 @@ const CTAComponent = ({ onOpenVideo }: { onOpenVideo: () => void }) => (
     </div>
 );
 
-const HeroV2: React.FC = () => {
+interface HeroV2Props {
+    scrollYProgress?: any;
+    isDesktop?: boolean;
+}
+
+const HeroV2: React.FC<HeroV2Props> = ({ scrollYProgress, isDesktop }) => {
     const [isVideoOpen, setIsVideoOpen] = useState(false);
+    const [isDashLoaded, setIsDashLoaded] = useState(false);
+
+    // Spring-smoothed scroll calculations for desktop scrollytelling
+    const springProgress = useSpring(scrollYProgress || 0, { stiffness: 95, damping: 22 });
+
+    // Left Column text animation
+    const textOpacity = useTransform(springProgress, [0, 0.4], [1, 0]);
+    const textY = useTransform(springProgress, [0, 0.4], [0, -100]);
+
+    // Right Column dashboard animation (centering, tilting, scaling)
+    const mockupScale = useTransform(springProgress, [0, 0.45], [1, 1.25]);
+    const mockupX = useTransform(springProgress, [0, 0.45], ["0%", "-45%"]); // center mockup inside grid
+    const mockupRotateX = useTransform(springProgress, [0, 0.45], [5, 0]);
+    const mockupRotateY = useTransform(springProgress, [0, 0.45], [-10, 0]);
+    const mockupOpacity = useTransform(springProgress, [0, 0.8, 0.95], [1, 1, 0]);
+
+    // Floating widgets fade-out
+    const widget1Opacity = useTransform(springProgress, [0, 0.25], [1, 0]);
+    const widget1Scale = useTransform(springProgress, [0, 0.25], [1, 0.8]);
+    const widget2Opacity = useTransform(springProgress, [0, 0.2], [1, 0]);
+    const widget2Scale = useTransform(springProgress, [0, 0.2], [1, 0.8]);
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
+        <section className="relative min-h-screen w-full flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
             {/* Ambient Background Gradient Glows */}
             <div className="absolute inset-0 z-0 opacity-25 pointer-events-none bg-gradient-to-tr from-emerald-500/20 via-transparent to-purple-500/20" />
 
@@ -53,6 +80,7 @@ const HeroV2: React.FC = () => {
 
                 {/* Left Column: Content */}
                 <motion.div
+                    style={isDesktop && scrollYProgress ? { opacity: textOpacity, y: textY } : undefined}
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -63,7 +91,7 @@ const HeroV2: React.FC = () => {
                         isBackground
                         colors={["#a855f7", "#86efac"]}
                         animationSpeed={0.1}
-                        className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-black font-black uppercase tracking-wider backdrop-blur-sm shadow-[0_0_30px_rgba(168,85,247,0.3)]"
+                        className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-black font-black uppercase tracking-wider backdrop-blur-sm border border-white/15 shadow-[0_0_30px_rgba(168,85,247,0.35)]"
                     >
                         <div className="flex items-center gap-2 mix-blend-multiply italic">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,6 +145,13 @@ const HeroV2: React.FC = () => {
 
                 {/* Right Column: Visual Excellence */}
                 <motion.div
+                    style={isDesktop && scrollYProgress ? { 
+                        scale: mockupScale, 
+                        x: mockupX, 
+                        rotateX: mockupRotateX, 
+                        rotateY: mockupRotateY, 
+                        opacity: mockupOpacity
+                    } : undefined}
                     initial={{ opacity: 0, scale: 0.8, rotateY: -10 }}
                     animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                     transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -126,6 +161,13 @@ const HeroV2: React.FC = () => {
                     <div className="relative aspect-[16/10] bg-[#050508] rounded-[24px] md:rounded-[32px] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden group scale-[1.2] md:scale-100 mb-12 md:mb-0">
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent opacity-50" />
 
+                        {/* Skeleton Shimmer Screen */}
+                        {!isDashLoaded && (
+                            <div className="absolute inset-0 bg-gradient-to-r from-purple-900/15 via-[#050508] to-purple-900/15 animate-pulse z-20 flex items-center justify-center">
+                                <div className="w-10 h-10 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
+                            </div>
+                        )}
+
                         {/* Dashboard Image */}
                         <div className="w-full h-full p-4 flex items-center justify-center relative z-10 pb-12">
                             <img
@@ -133,7 +175,10 @@ const HeroV2: React.FC = () => {
                                 alt="Infrastructure Dashboard"
                                 loading="lazy"
                                 decoding="async"
-                                className="w-full h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-700"
+                                onLoad={() => setIsDashLoaded(true)}
+                                className={`w-full h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-700 ${
+                                    isDashLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                                }`}
                             />
                         </div>
 
@@ -179,9 +224,10 @@ const HeroV2: React.FC = () => {
 
                     {/* Floating Widget: Conversion Rate */}
                     <motion.div
+                        style={isDesktop && scrollYProgress ? { opacity: widget1Opacity, scale: widget1Scale } : undefined}
                         animate={{ y: [0, -15, 0] }}
                         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -right-20 md:-right-16 top-[5%] md:top-[-25%] p-3 md:p-6 bg-[#0a0a0f]/90 backdrop-blur-2xl border border-purple-500/30 rounded-[20px] md:rounded-[24px] shadow-[0_20px_50px_rgba(168,85,247,0.2)] z-30 scale-[0.7] md:scale-110"
+                        className="absolute -right-20 md:-right-16 top-[5%] md:top-[-25%] p-3 md:p-6 bg-[#0a0a0f]/95 backdrop-blur-2xl border border-purple-500/40 rounded-[20px] md:rounded-[24px] shadow-[0_20px_50px_rgba(168,85,247,0.25)] z-30 scale-[0.7] md:scale-110"
                     >
                         <div className="flex flex-col gap-1">
                             <p className="text-[8px] md:text-[10px] font-black text-purple-400 uppercase tracking-[0.2em]">Taxa de Conversão</p>
@@ -207,9 +253,10 @@ const HeroV2: React.FC = () => {
 
                     {/* Floating Widget: Zero Taxas */}
                     <motion.div
+                        style={isDesktop && scrollYProgress ? { opacity: widget2Opacity, scale: widget2Scale } : undefined}
                         animate={{ y: [0, 15, 0] }}
                         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                        className="absolute -left-16 md:-left-20 bottom-[8%] md:bottom-[70%] p-3 md:p-4 bg-green-500/5 backdrop-blur-xl border border-green-500/20 rounded-[20px] md:rounded-[24px] shadow-[0_20px_50px_rgba(34,197,94,0.15)] z-20 scale-[0.7] md:scale-105"
+                        className="absolute -left-16 md:-left-20 bottom-[8%] md:bottom-[70%] p-3 md:p-4 bg-green-500/[0.07] backdrop-blur-xl border border-green-500/35 rounded-[20px] md:rounded-[24px] shadow-[0_20px_50px_rgba(34,197,94,0.22)] z-20 scale-[0.7] md:scale-105"
                     >
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 font-black text-xl shadow-[0_0_15px_rgba(34,197,94,0.3)]">

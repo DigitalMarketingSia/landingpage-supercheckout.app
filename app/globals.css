@@ -3,9 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --bg: #020205;
-  --accent: #a855f7;
-  --secondary: #22c55e;
+  --bg-main: #020205;
+  --bg-card: #050508;
+  --bg-widget: #0a0a0f;
+  --color-primary: #a855f7;
+  --color-secondary: #86efac;
+  --color-accent: #3b82f6;
+  --color-success: #22c55e;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  /* Backward compatibility shortcuts */
+  --bg: var(--bg-main);
+  --accent: var(--color-primary);
+  --secondary: var(--color-success);
 }
 
 .bg-grid-glow {
@@ -74,7 +86,7 @@
 html {
   scrollbar-width: none;
   -ms-overflow-style: none;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 html::-webkit-scrollbar {
@@ -136,7 +148,7 @@ body::-webkit-scrollbar {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 50;
+  z-index: 0;
   /* Hidden on mobile — feTurbulence SVG filter causes rendering artifacts on Android browsers */
   display: none;
 }

@@ -195,7 +195,7 @@ const App: React.FC = () => {
       {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
       <MembrosSection glowOpacity={glowOpacity} dashScale={dashScale} dashY={dashY} yParallax={yParallax} />
 
-      {/* GROUPED SECTION: FEATURES CAROUSEL & CHECKOUT DASHBOARD (UNIFIED VISUAL) */}
+      {/* GROUPED SECTION: FEATURES CAROUSEL & CHECKOUT DASHBOARD (UNIFIED VISUAL - DEPLOY TRG V1.0) */}
       <div className="relative w-full bg-transparent overflow-hidden mt-12 md:mt-48">
         {/* Shared WebGL Aurora Background with smooth fade at boundaries */}
         <div 

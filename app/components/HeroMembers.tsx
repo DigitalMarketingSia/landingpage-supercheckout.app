@@ -49,39 +49,57 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
     const [isPlayerLoaded, setIsPlayerLoaded] = useState(false);
 
     return (
-        <section className="relative w-full flex flex-col justify-start pt-40 pb-24 px-6 overflow-visible bg-transparent">
+        <section className="relative w-full flex flex-col justify-start pt-28 pb-12 lg:pt-40 lg:pb-24 px-6 overflow-visible bg-transparent">
             {/* Ambient Background Glows */}
             <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent" />
             <div className="absolute top-[-10%] left-[20%] w-[50vw] h-[50vw] bg-purple-600/5 rounded-full blur-[140px] pointer-events-none" />
             <div className="absolute bottom-[20%] right-[10%] w-[40vw] h-[40vw] bg-emerald-500/5 rounded-full blur-[140px] pointer-events-none" />
 
-            <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10 px-4 sm:px-8 md:px-16">
+            {/* Mobile-only Headline (rendered above grid on mobile, hidden on desktop) */}
+            <div className="block lg:hidden w-full text-center mb-6 max-w-xl mx-auto relative z-20">
+                <h1 className="text-4xl sm:text-5xl font-black leading-[1.1] tracking-tighter uppercase italic text-white flex flex-col items-center select-none w-full">
+                    <BlurText
+                        text="EXPERIMENTE"
+                        animateBy="words"
+                        delay={40}
+                        className="text-white font-black justify-center w-full"
+                    />
+                    <BlurText
+                        text="GRÁTIS"
+                        animateBy="words"
+                        delay={40}
+                        className="text-purple-500 font-black justify-center w-full"
+                    />
+                </h1>
+            </div>
+
+            <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center relative z-10 px-4 sm:px-8 md:px-16">
                 
                 {/* Left Column: Text & Content */}
-                <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left gap-6">
-                    {/* Headline aligned correctly */}
-                    <div className="space-y-4 max-w-xl">
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tighter uppercase italic text-white flex flex-col items-center lg:items-start select-none w-full">
+                <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left gap-4 lg:gap-6 order-2 lg:order-1 relative z-20">
+                    {/* Headline aligned correctly - desktop only */}
+                    <div className="hidden lg:block space-y-4 max-w-xl w-full">
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tighter uppercase italic text-white flex flex-col items-start select-none w-full">
                             <BlurText
                                 text="EXPERIMENTE"
                                 animateBy="words"
                                 delay={40}
-                                className="text-white font-black justify-center lg:justify-start w-full"
+                                className="text-white font-black justify-start w-full"
                             />
                             <BlurText
                                 text="GRÁTIS"
                                 animateBy="words"
                                 delay={40}
-                                className="text-purple-500 font-black justify-center lg:justify-start w-full"
+                                className="text-purple-500 font-black justify-start w-full"
                             />
                         </h1>
-                        <p className="text-lg sm:text-xl font-light text-purple-200/80 leading-relaxed tracking-wide font-sans mt-2">
-                            Monte sua área de membros premium hoje. Whitelabel total, alta velocidade e zero taxas de transação.
-                        </p>
                     </div>
-
+                    <p className="text-lg sm:text-xl font-light text-purple-200/80 leading-relaxed tracking-wide font-sans max-w-xl">
+                        Monte sua área de membros premium hoje. Whitelabel total, alta velocidade e zero taxas de transação.
+                    </p>
+                    
                     {/* Checkpoints centered row on mobile, left-aligned on desktop */}
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-3 text-white text-[10px] md:text-xs font-light tracking-wide font-sans mt-2">
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-3 text-white text-[10px] md:text-xs font-light tracking-wide font-sans">
                         {[
                             'Ativação Imediata',
                             'Whitelabel Total',
@@ -98,22 +116,22 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
                     </div>
 
                     {/* CTA buttons */}
-                    <div className="w-full mt-2">
+                    <div className="w-full mt-0">
                         <CTAComponent />
                     </div>
                 </div>
 
                 {/* Right Column: Premium Video Player Mockup with vertical light beam glow */}
-                <div className="lg:col-span-7 relative flex justify-center items-center w-full min-h-[400px] lg:min-h-[500px]">
+                <div className="lg:col-span-7 relative flex justify-center items-center w-full min-h-[220px] sm:min-h-[300px] lg:min-h-[500px] order-1 lg:order-2 z-10">
                     
                     {/* Facho de Luz Vertical Lilás/Roxo (Estilo Chama da Imagem de Referência) */}
-                    <div className="absolute bottom-[-15%] left-1/2 -translate-x-1/2 w-[160px] md:w-[260px] h-[160vh] pointer-events-none z-0 overflow-visible opacity-90 mix-blend-screen">
+                    <div className="absolute bottom-[-15%] left-1/2 -translate-x-1/2 w-[120px] md:w-[260px] h-[100vh] md:h-[160vh] pointer-events-none z-0 overflow-visible opacity-40 md:opacity-90 mix-blend-screen">
                         {/* Aura Difusa Roxa Externa */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-purple-600/40 to-purple-400/80 blur-[80px] md:blur-[120px] rounded-full" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-purple-600/40 to-purple-400/80 blur-[60px] md:blur-[120px] rounded-full" />
                         {/* Facho Lilás Vibrante Intermediário */}
-                        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[80px] md:w-[130px] h-full bg-gradient-to-t from-transparent via-[#a855f7]/60 to-[#c084fc]/90 blur-[30px] md:blur-[45px] rounded-full" />
+                        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[60px] md:w-[130px] h-full bg-gradient-to-t from-transparent via-[#a855f7]/60 to-[#c084fc]/90 blur-[20px] md:blur-[45px] rounded-full" />
                         {/* Núcleo Brilhante Branco/Lilás */}
-                        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[24px] md:w-[36px] h-full bg-gradient-to-t from-purple-500/10 via-white/80 to-white/95 blur-[8px] md:blur-[12px] rounded-full" />
+                        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[16px] md:w-[36px] h-full bg-gradient-to-t from-purple-500/10 via-white/80 to-white/95 blur-[6px] md:blur-[12px] rounded-full" />
                     </div>
                     
                     <motion.div

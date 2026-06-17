@@ -1,11 +1,13 @@
-
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence, useMotionValueEvent } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import BlurText from './components/BlurText';
 import GradientText from './components/GradientText';
-import HeroV2 from './components/HeroV2';
+import HeroMembers from './components/HeroMembers';
+import MembrosSection from './components/MembrosSection';
+import CheckoutDashboardSection from './components/CheckoutDashboardSection';
+import Aurora from './components/Aurora';
 import FAQ from './components/FAQ';
-import SmoothScroll from './components/SmoothScroll';
+import GlowCard from './components/GlowCard';
 
 // Ícones Minimalistas Premium (SVG Single-Tone)
 const Icons = {
@@ -96,155 +98,13 @@ const FeatureVisual: React.FC<{ type: string }> = ({ type }) => {
 const App: React.FC = () => {
   const containerRef = useRef(null);
   const [activeFeature, setActiveFeature] = useState(0);
-  const [isMembersLoaded, setIsMembersLoaded] = useState(false);
-  const [isAulaLoaded, setIsAulaLoaded] = useState(false);
   const featuresRef = useRef<HTMLDivElement>(null);
-  const productsShowcaseRef = useRef(null);
-
-  // Responsive state
-  const [isDesktop, setIsDesktop] = useState(false);
-  const [activeProductStep, setActiveProductStep] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Section Refs for global pinning & scrollytelling
-  const heroRef = useRef(null);
-  const checkoutRef = useRef(null);
-  const paymentsRef = useRef(null);
-  const metricsRef = useRef(null);
-  const serverlessRef = useRef(null);
-  const membersRef = useRef(null);
-  const automationRef = useRef(null);
-
-  // individual useScroll hooks
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
-  const { scrollYProgress: heroScrollY } = useScroll(isDesktop ? { target: heroRef, offset: ["start start", "end end"] } : undefined);
-  const { scrollYProgress: checkoutScrollY } = useScroll(isDesktop ? { target: checkoutRef, offset: ["start start", "end end"] } : undefined);
-  const { scrollYProgress: paymentsScrollY } = useScroll(isDesktop ? { target: paymentsRef, offset: ["start start", "end end"] } : undefined);
-  const { scrollYProgress: metricsScrollY } = useScroll(isDesktop ? { target: metricsRef, offset: ["start start", "end end"] } : undefined);
-  const { scrollYProgress: serverlessScrollY } = useScroll(isDesktop ? { target: serverlessRef, offset: ["start start", "end end"] } : undefined);
-  const { scrollYProgress: membersScrollY } = useScroll(isDesktop ? { target: membersRef, offset: ["start start", "end end"] } : undefined);
-  const { scrollYProgress: productsScrollY } = useScroll(isDesktop ? { target: productsShowcaseRef, offset: ["start start", "end end"] } : undefined);
-  const { scrollYProgress: automationScrollY } = useScroll(isDesktop ? { target: automationRef, offset: ["start start", "end end"] } : undefined);
-
-  // Spring smoothers for scroll animations
-  const heroSpring = useSpring(heroScrollY, { stiffness: 95, damping: 22 });
-  const checkoutSpring = useSpring(checkoutScrollY, { stiffness: 95, damping: 22 });
-  const paymentsSpring = useSpring(paymentsScrollY, { stiffness: 95, damping: 22 });
-  const metricsSpring = useSpring(metricsScrollY, { stiffness: 95, damping: 22 });
-  const serverlessSpring = useSpring(serverlessScrollY, { stiffness: 95, damping: 22 });
-  const membersSpring = useSpring(membersScrollY, { stiffness: 95, damping: 22 });
-  const automationSpring = useSpring(automationScrollY, { stiffness: 95, damping: 22 });
-
-  // --- TRANSFORMS FOR SECTION 2: CHECKOUT QUE VENDE ---
-  const checkoutTextOpacity = useTransform(checkoutSpring, [0, 0.35, 0.75, 0.95], [0, 1, 1, 0]);
-  const checkoutTextY = useTransform(checkoutSpring, [0, 0.35, 0.75, 0.95], [100, 0, 0, -100]);
-  const checkoutMockupScale = useTransform(checkoutSpring, [0, 0.35, 0.75, 0.95], [0.8, 1, 1, 0.8]);
-  const checkoutMockupOpacity = useTransform(checkoutSpring, [0, 0.25, 0.75, 0.95], [0, 1, 1, 0]);
-  const checkoutMockupRotateX = useTransform(checkoutSpring, [0, 0.35], [10, 0]);
-  const checkoutMockupRotateY = useTransform(checkoutSpring, [0, 0.35], [-12, 0]);
-
-  // Checkout virtual elements assembly timeline
-  const checkoutPart1 = useTransform(checkoutSpring, [0.05, 0.2], [0, 1]); // Header
-  const checkoutPart2 = useTransform(checkoutSpring, [0.15, 0.35], [0, 1]); // Form
-  const checkoutPart3 = useTransform(checkoutSpring, [0.3, 0.5], [0, 1]); // Payments
-  const checkoutPart4 = useTransform(checkoutSpring, [0.45, 0.65], [0, 1]); // Bump
-  const checkoutPart5 = useTransform(checkoutSpring, [0.6, 0.8], [0, 1]); // Button
-
-  // Inline transforms for checkout assembly parts (must be at top level to respect rules of hooks)
-  const checkoutPart1Y = useTransform(checkoutSpring, [0.05, 0.2], [-20, 0]);
-  const checkoutPart2X = useTransform(checkoutSpring, [0.15, 0.35], [-20, 0]);
-  const checkoutPart3X = useTransform(checkoutSpring, [0.3, 0.5], [20, 0]);
-  const checkoutPart4X = useTransform(checkoutSpring, [0.45, 0.65], [-20, 0]);
-  const checkoutPart5Y = useTransform(checkoutSpring, [0.6, 0.8], [20, 0]);
-
-  // --- TRANSFORMS FOR SECTION 3: BENTO GRID ---
-  const bentoTitleOpacity = useTransform(paymentsSpring, [0, 0.3, 0.75, 0.95], [0, 1, 1, 0]);
-  const bentoTitleY = useTransform(paymentsSpring, [0, 0.3, 0.75, 0.95], [50, 0, 0, -50]);
-  const bentoCard1X = useTransform(paymentsSpring, [0.05, 0.35], [-200, 0]);
-  const bentoCard1Opacity = useTransform(paymentsSpring, [0.05, 0.35, 0.75, 0.95], [0, 1, 1, 0]);
-  const bentoCard2X = useTransform(paymentsSpring, [0.15, 0.5], [200, 0]);
-  const bentoCard2Opacity = useTransform(paymentsSpring, [0.15, 0.5, 0.75, 0.95], [0, 1, 1, 0]);
-  const bentoCard3Y = useTransform(paymentsSpring, [0.3, 0.65], [200, 0]);
-  const bentoCard3Opacity = useTransform(paymentsSpring, [0.3, 0.65, 0.75, 0.95], [0, 1, 1, 0]);
-
-  // --- TRANSFORMS FOR PERFORMANCE METRICS ---
-  const metricsTitleOpacity = useTransform(metricsSpring, [0, 0.3, 0.8, 0.95], [0, 1, 1, 0]);
-  const metricsTitleY = useTransform(metricsSpring, [0, 0.3, 0.8, 0.95], [50, 0, 0, -50]);
-  const metric0PathLength = useTransform(metricsSpring, [0.05, 0.3], [0, 1]);
-  const metric1PathLength = useTransform(metricsSpring, [0.2, 0.45], [0, 1]);
-  const metric2PathLength = useTransform(metricsSpring, [0.35, 0.6], [0, 1]);
-  const metric3PathLength = useTransform(metricsSpring, [0.5, 0.75], [0, 1]);
-  const metricItemsOpacity = useTransform(metricsSpring, [0, 0.2, 0.8, 0.95], [0, 1, 1, 0]);
-  const coreCardScale = useTransform(metricsSpring, [0.55, 0.8], [0.8, 1]);
-  const coreCardOpacity = useTransform(metricsSpring, [0.5, 0.7, 0.8, 0.95], [0, 1, 1, 0]);
-
-  // --- TRANSFORMS FOR SECTION 5: SERVERLESS CLOUD ---
-  const cloudTitleOpacity = useTransform(serverlessSpring, [0, 0.3, 0.8, 0.95], [0, 1, 1, 0]);
-  const cloudTitleY = useTransform(serverlessSpring, [0, 0.3, 0.8, 0.95], [50, 0, 0, -50]);
-  const cloudCardScale = useTransform(serverlessSpring, [0, 0.4], [0.8, 1]);
-  const cloudCardOpacity = useTransform(serverlessSpring, [0, 0.3, 0.8, 0.95], [0, 1, 1, 0]);
-  const instance1X = useTransform(serverlessSpring, [0.1, 0.3], [-150, 0]);
-  const instance2X = useTransform(serverlessSpring, [0.18, 0.38], [-150, 0]);
-  const instance3X = useTransform(serverlessSpring, [0.26, 0.46], [-150, 0]);
-  const instancesOpacity = useTransform(serverlessSpring, [0.1, 0.25, 0.8, 0.95], [0, 1, 1, 0]);
-
-  // --- TRANSFORMS FOR SECTION 6: ÁREA DE MEMBROS ---
-  const membersTitleOpacity = useTransform(membersSpring, [0, 0.3, 0.8, 0.95], [0, 1, 1, 0]);
-  const membersTitleY = useTransform(membersSpring, [0, 0.3, 0.8, 0.95], [50, 0, 0, -50]);
-  const membersMockupScale = useTransform(membersSpring, [0, 0.4], [0.85, 1]);
-  const membersMockupOpacity = useTransform(membersSpring, [0, 0.3, 0.8, 0.95], [0, 1, 1, 0]);
-  const membersBadge1Y = useTransform(membersSpring, [0.1, 0.55], [60, -40]);
-  const membersBadge2Y = useTransform(membersSpring, [0.1, 0.55], [-40, 60]);
-  const membersBadgesOpacity = useTransform(membersSpring, [0.1, 0.3, 0.8, 0.95], [0, 1, 1, 0]);
-
-  // --- TRANSFORMS FOR SECTION 7: PRODUTOS DIGITAIS ---
-  useMotionValueEvent(productsScrollY, "change", (latest) => {
-    if (latest < 0.35) {
-      setActiveProductStep(0);
-    } else if (latest < 0.68) {
-      setActiveProductStep(1);
-    } else {
-      setActiveProductStep(2);
-    }
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
   });
 
-  // Smooth transforms for Section 7 cards (starting first card at 100% active on entry)
-  const p1Opacity = useSpring(useTransform(productsScrollY, [0, 0.35, 0.45], [1, 1, 0]), { stiffness: 90, damping: 20 });
-  const p1Scale = useSpring(useTransform(productsScrollY, [0, 0.35, 0.45], [1, 1, 0.85]), { stiffness: 90, damping: 20 });
-  const p1Y = useSpring(useTransform(productsScrollY, [0, 0.35, 0.45], [0, 0, -50]), { stiffness: 90, damping: 20 });
-  const p1Rotate = useSpring(useTransform(productsScrollY, [0, 0.35, 0.45], [0, 0, 5]), { stiffness: 90, damping: 20 });
-
-  const p2Opacity = useSpring(useTransform(productsScrollY, [0.35, 0.45, 0.68, 0.75], [0, 1, 1, 0]), { stiffness: 90, damping: 20 });
-  const p2Scale = useSpring(useTransform(productsScrollY, [0.35, 0.45, 0.68, 0.75], [0.85, 1, 1, 0.85]), { stiffness: 90, damping: 20 });
-  const p2Y = useSpring(useTransform(productsScrollY, [0.35, 0.45, 0.68, 0.75], [50, 0, 0, -50]), { stiffness: 90, damping: 20 });
-  const p2Rotate = useSpring(useTransform(productsScrollY, [0.35, 0.45, 0.68, 0.75], [-5, 0, 0, 5]), { stiffness: 90, damping: 20 });
-
-  const p3Opacity = useSpring(useTransform(productsScrollY, [0.68, 0.75, 0.9, 1.0], [0, 1, 1, 1]), { stiffness: 90, damping: 20 });
-  const p3Scale = useSpring(useTransform(productsScrollY, [0.68, 0.75, 0.9, 1.0], [0.85, 1, 1, 1]), { stiffness: 90, damping: 20 });
-  const p3Y = useSpring(useTransform(productsScrollY, [0.68, 0.75, 0.9, 1.0], [50, 0, 0, 0]), { stiffness: 90, damping: 20 });
-  const p3Rotate = useSpring(useTransform(productsScrollY, [0.68, 0.75, 0.9, 1.0], [-5, 0, 0, 0]), { stiffness: 90, damping: 20 });
-
-  // --- TRANSFORMS FOR SECTION 8: AUTOMATION (TUDO CONECTADO) ---
-  const automationTitleOpacity = useTransform(automationSpring, [0, 0.25, 0.75, 0.95], [0, 1, 1, 0]);
-  const automationTitleY = useTransform(automationSpring, [0, 0.25, 0.75, 0.95], [50, 0, 0, -50]);
-  const autoPath0Length = useTransform(automationSpring, [0.05, 0.3], [0, 1]);
-  const autoPath1Length = useTransform(automationSpring, [0.18, 0.43], [0, 1]);
-  const autoPath2Length = useTransform(automationSpring, [0.31, 0.56], [0, 1]);
-  const autoPath3Length = useTransform(automationSpring, [0.44, 0.69], [0, 1]);
-  const autoNode0Opacity = useTransform(automationSpring, [0.2, 0.3, 0.75, 0.95], [0, 1, 1, 0]);
-  const autoNode1Opacity = useTransform(automationSpring, [0.35, 0.45, 0.75, 0.95], [0, 1, 1, 0]);
-  const autoNode2Opacity = useTransform(automationSpring, [0.5, 0.6, 0.75, 0.95], [0, 1, 1, 0]);
-  const autoNode3Opacity = useTransform(automationSpring, [0.65, 0.75, 0.75, 0.95], [0, 1, 1, 0]);
-  const coreNodeScale = useTransform(automationSpring, [0, 0.25], [0.8, 1]);
-  const coreNodeOpacity = useTransform(automationSpring, [0, 0.2, 0.75, 0.95], [0, 1, 1, 0]);
-
-  // Smooth scroll-based animations (Legacy/FAQ & layout utilities)
+  // Smooth scroll-based animations
   const dashScale = useSpring(useTransform(scrollYProgress, [0, 0.3], [0.85, 1]), { stiffness: 100, damping: 30 });
   const dashOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
   const dashY = useTransform(scrollYProgress, [0, 0.3], [50, 0]);
@@ -293,7 +153,6 @@ const App: React.FC = () => {
 
   return (
     <div ref={containerRef} className="relative w-full bg-[#020205] text-white selection:bg-purple-600/30 overflow-x-hidden font-['Outfit']">
-      <SmoothScroll />
 
       {/* High-Performance GPU Shifting Gradient & Grid Background */}
       <div className="bg-grid-glow">
@@ -303,1108 +162,815 @@ const App: React.FC = () => {
       </div>
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 w-full z-50 py-6 backdrop-blur-2xl border-b border-white/5 bg-black/20">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center w-full">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Super Checkout Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-xl md:rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)]" />
-            <span className="text-lg md:text-xl font-bold tracking-tighter uppercase italic">Super Checkout <span className="text-purple-500">.app</span></span>
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-3xl z-50 py-2.5 px-6 backdrop-blur-xl border border-white/10 bg-[#050508]/85 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.7)] transition-all">
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="Super Checkout Logo" width={24} height={24} className="w-6 h-6 object-contain rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.3)]" />
+            <span className="text-xs font-bold tracking-tighter uppercase italic text-white">Super Checkout <span className="text-purple-500">.app</span></span>
           </div>
-          <div className="hidden md:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">
-            <motion.a 
-              href="#features" 
-              whileHover={{ scale: 1.05, color: "#ffffff" }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="transition-colors"
-            >
-              Tecnologia
-            </motion.a>
-            <motion.a 
-              href="#plans" 
-              whileHover={{ scale: 1.05, color: "#ffffff" }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="transition-colors"
-            >
-              Planos
-            </motion.a>
-            <motion.button 
-              whileHover={{ 
-                scale: 1.05, 
-                backgroundColor: "var(--color-primary)", 
-                color: "#ffffff",
-                boxShadow: "0 0 25px rgba(168,85,247,0.5)" 
+          <div className="hidden sm:flex items-center gap-6 text-[8px] font-black uppercase tracking-[0.3em] text-gray-400">
+            <a href="#features" className="hover:text-white transition-all">Tecnologia</a>
+            <a href="#plans" className="hover:text-white transition-all">Planos</a>
+          </div>
+          <div className="flex items-center gap-4">
+            <button className="text-[8px] font-black uppercase tracking-widest text-gray-300 hover:text-white transition-all">LOGAR</button>
+            <button 
+              onClick={() => {
+                const plansSec = document.getElementById('plans');
+                if (plansSec) {
+                  plansSec.scrollIntoView({ behavior: 'smooth' });
+                }
               }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="px-8 py-2.5 bg-white text-black rounded-full text-[9px] font-black shadow-xl"
+              className="px-4 py-1.5 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-full text-[8px] font-black hover:scale-105 transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] uppercase tracking-wider"
             >
-              LOGAR
-            </motion.button>
+              Começar
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* SECTION 1: HERO - PINNED STICKY PRESENTATION */}
-      {isDesktop ? (
-        <section ref={heroRef} className="relative w-full z-10" style={{ height: "140vh" }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-            <HeroV2 scrollYProgress={heroSpring} isDesktop={true} />
-          </div>
-        </section>
-      ) : (
-        <HeroV2 isDesktop={false} />
-      )}
+      {/* New Hero Section */}
+      <HeroMembers />
 
-      {/* SECTION 2: CHECKOUT QUE VENDE */}
-      {isDesktop ? (
-        <section ref={checkoutRef} className="relative w-full z-10" style={{ height: "150vh" }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6">
-            <div className="max-w-5xl mx-auto w-full">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                {/* Left Column: Title & Description */}
-                <motion.div
-                  style={{ opacity: checkoutTextOpacity, y: checkoutTextY }}
-                  className="flex flex-col justify-center"
-                >
-                  <h2 className="text-6xl md:text-[6vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85] text-white">
-                    Checkout que <br /> <span className="text-purple-500">Vende.</span>
-                  </h2>
-                  <p className="text-gray-400 text-base md:text-lg font-light tracking-wide max-w-xl font-sans mb-8">
-                    Otimizado para conversão máxima. Onde a velocidade encontra o design persuasivo para garantir que nenhuma venda escape do seu funil.
-                  </p>
-                  
-                  {/* Staggered progress indicator inline highlights */}
-                  <div className="space-y-4">
-                    {[
-                      { step: "01", label: "Carregamento Ultra-Rápido", desc: "Menos de 0.8 segundos para evitar qualquer desistência." },
-                      { step: "02", label: "Order Bump 1-Clique", desc: "Ofertas complementares no checkout com aprovação imediata." },
-                      { step: "03", label: "Mobile First UX", desc: "Experiência perfeita desenhada especialmente para smartphones." }
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex gap-4 items-start">
-                        <span className="text-purple-500 font-bold text-sm tracking-widest">{item.step}</span>
-                        <div>
-                          <h4 className="text-white text-sm font-black uppercase tracking-tight">{item.label}</h4>
-                          <p className="text-xs text-gray-500 font-sans mt-0.5">{item.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
+      {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
+      <MembrosSection glowOpacity={glowOpacity} dashScale={dashScale} dashY={dashY} yParallax={yParallax} />
 
-                {/* Right Column: Virtual Checkout Assembly */}
-                <div className="relative flex items-center justify-center h-[550px] w-full">
-                  <motion.div
-                    style={{
-                      opacity: checkoutMockupOpacity,
-                      scale: checkoutMockupScale,
-                      rotateX: checkoutMockupRotateX,
-                      rotateY: checkoutMockupRotateY,
-                      transformStyle: "preserve-3d",
-                      perspective: 1200,
-                      transform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden',
-                      willChange: 'transform'
-                    }}
-                    className="relative w-full max-w-[420px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group isolate shadow-[0_50px_100px_rgba(0,0,0,0.8)]"
-                  >
-                    {/* Radial Background */}
-                    <div 
-                      className="absolute inset-0 pointer-events-none" 
-                      style={{ backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.1) 0%, transparent 70%)' }}
-                    />
-
-                    {/* Virtual Checkout Elements */}
-                    <div className="relative z-10 space-y-6" style={{ transform: 'translateZ(0)' }}>
-
-                      {/* Part 1: Product Header */}
-                      <motion.div
-                        style={{
-                          opacity: checkoutPart1,
-                          y: checkoutPart1Y,
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden'
-                        }}
-                        className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
-                      >
-                        <div className="w-16 h-16 bg-purple-600/20 rounded-xl flex items-center justify-center">
-                          <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <div className="flex-1">
-                          <div className="h-3 w-3/4 bg-white/10 rounded-full mb-2" />
-                          <div className="h-2 w-1/2 bg-white/5 rounded-full" />
-                        </div>
-                      </motion.div>
-
-                      {/* Part 2: Form Fields */}
-                      <motion.div
-                        style={{
-                          opacity: checkoutPart2,
-                          x: checkoutPart2X,
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden'
-                        }}
-                        className="space-y-3"
-                      >
-                        <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                          <div className="h-2 w-1/4 bg-white/10 rounded-full mb-3" />
-                          <div className="h-3 w-full bg-white/5 rounded-full" />
-                        </div>
-                        <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                          <div className="h-2 w-1/3 bg-white/10 rounded-full mb-3" />
-                          <div className="h-3 w-full bg-white/5 rounded-full" />
-                        </div>
-                      </motion.div>
-
-                      {/* Part 3: Payment Methods */}
-                      <motion.div
-                        style={{
-                          opacity: checkoutPart3,
-                          x: checkoutPart3X,
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden'
-                        }}
-                        className="flex gap-3"
-                      >
-                        <div className="flex-1 p-4 bg-purple-600/10 border border-purple-500/20 rounded-2xl flex items-center justify-center gap-2">
-                          <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <div className="h-2 w-12 bg-purple-400/30 rounded-full" />
-                        </div>
-                        <div className="flex-1 p-4 bg-white/[0.02] border border-white/5 rounded-2xl flex items-center justify-center gap-2">
-                          <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                          </svg>
-                          <div className="h-2 w-12 bg-white/10 rounded-full" />
-                        </div>
-                      </motion.div>
-
-                      {/* Part 4: Order Bump */}
-                      <motion.div
-                        style={{
-                          opacity: checkoutPart4,
-                          x: checkoutPart4X,
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden'
-                        }}
-                        className="p-4 bg-green-600/5 border border-green-500/20 rounded-2xl"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="w-5 h-5 rounded bg-green-500/20 flex items-center justify-center mt-1">
-                            <div className="w-2 h-2 rounded-sm bg-green-500" />
-                          </div>
-                          <div className="flex-1 space-y-2">
-                            <div className="h-2 w-2/3 bg-green-400/20 rounded-full" />
-                            <div className="h-2 w-full bg-white/5 rounded-full" />
-                          </div>
-                        </div>
-                      </motion.div>
-
-                      {/* Part 5: Payment Button */}
-                      <motion.div
-                        style={{
-                          opacity: checkoutPart5,
-                          y: checkoutPart5Y,
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden'
-                        }}
-                        className="pt-4"
-                      >
-                        <div className="w-full p-5 bg-gradient-to-r from-purple-600 to-purple-500 rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(168,85,247,0.3)]">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                          </svg>
-                          <div className="h-3 w-32 bg-white/90 rounded-full" />
-                        </div>
-                      </motion.div>
-
-                    </div>
-                  </motion.div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-24 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-20">
-              <motion.div
-                initial={{ opacity: 0, y: 60, scale: 0.96, rotateX: 10 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 45, damping: 20 }}
-                style={{ transformOrigin: "top center" }}
-              >
-                <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                  Checkout que <br /> <span className="text-purple-500">Vende.</span>
-                </h2>
-                <p className="text-gray-400 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto mt-6 font-sans">
-                  Otimizado para conversão máxima em qualquer dispositivo.
-                </p>
-              </motion.div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 50, scale: 0.94, rotateY: -8, rotateX: 5 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0, rotateX: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 35, damping: 18 }}
-                style={{ transformStyle: "preserve-3d", perspective: 1200, transform: 'translateZ(0)', backfaceVisibility: 'hidden', willChange: 'transform' }}
-                className="relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group order-2 lg:order-1 isolate shadow-[0_50px_100px_rgba(0,0,0,0.8)]"
-              >
-                <div 
-                  className="absolute inset-0 pointer-events-none" 
-                  style={{ backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.1) 0%, transparent 70%)' }}
-                />
-
-                <div className="relative z-10 space-y-6" style={{ transform: 'translateZ(0)' }}>
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, margin: "-60px" }}
-                    transition={{ delay: 0.1, duration: 0.5 }}
-                    className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                  >
-                    <div className="w-16 h-16 bg-purple-600/20 rounded-xl flex items-center justify-center">
-                      <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <div className="h-3 w-3/4 bg-white/10 rounded-full mb-2" />
-                      <div className="h-2 w-1/2 bg-white/5 rounded-full" />
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-60px" }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="space-y-3"
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                  >
-                    <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                      <div className="h-2 w-1/4 bg-white/10 rounded-full mb-3" />
-                      <div className="h-3 w-full bg-white/5 rounded-full" />
-                    </div>
-                    <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                      <div className="h-2 w-1/3 bg-white/10 rounded-full mb-3" />
-                      <div className="h-3 w-full bg-white/5 rounded-full" />
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-60px" }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                    className="flex gap-3"
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                  >
-                    <div className="flex-1 p-4 bg-purple-600/10 border border-purple-500/20 rounded-2xl flex items-center justify-center gap-2">
-                      <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <div className="h-2 w-12 bg-purple-400/30 rounded-full" />
-                    </div>
-                    <div className="flex-1 p-4 bg-white/[0.02] border border-white/5 rounded-2xl flex items-center justify-center gap-2">
-                      <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                      </svg>
-                      <div className="h-2 w-12 bg-white/10 rounded-full" />
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-60px" }}
-                    transition={{ delay: 0.4, duration: 0.5 }}
-                    className="p-4 bg-green-600/5 border border-green-500/20 rounded-2xl"
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded bg-green-500/20 flex items-center justify-center mt-1">
-                        <div className="w-2 h-2 rounded-sm bg-green-500" />
-                      </div>
-                      <div className="flex-1 space-y-2">
-                        <div className="h-2 w-2/3 bg-green-400/20 rounded-full" />
-                        <div className="h-2 w-full bg-white/5 rounded-full" />
-                        <div className="h-2 w-4/5 bg-white/5 rounded-full" />
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, margin: "-60px" }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
-                    className="pt-4"
-                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                  >
-                    <motion.div 
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                      className="w-full p-5 bg-gradient-to-r from-purple-600 to-purple-500 rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] cursor-pointer transition-shadow"
-                    >
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      <div className="h-3 w-32 bg-white/90 rounded-full" />
-                    </motion.div>
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              <div className="space-y-8 order-1 lg:order-2">
-                {[
-                  { title: 'Alta Conversão', desc: 'Design otimizado para maximizar vendas com UX testada', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg> },
-                  { title: 'Mobile First', desc: 'Experiência perfeita em smartphones e tablets', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> },
-                  { title: 'Order Bump & Upsell', desc: 'Aumente o ticket médio automaticamente com ofertas inteligentes', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
-                  { title: 'Recuperação de Carrinho', desc: 'Não perca nenhuma venda com automação inteligente', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
-                  { title: 'Checkout Seguro', desc: 'SSL e criptografia de ponta a ponta para proteção total', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> },
-                  { title: 'Carregamento Instantâneo', desc: 'Menos de 0.8s para garantir que nenhum cliente desista', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
-                ].map((feature, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-40px" }}
-                    transition={{ delay: i * 0.05, type: "spring", stiffness: 350, damping: 25 }}
-                    className="flex items-start gap-4 group cursor-pointer"
-                    whileHover={{ x: 5 }}
-                  >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all duration-300">
-                      {feature.icon}
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <h3 className="text-lg font-black uppercase tracking-tight mb-1 group-hover:text-purple-400 transition-colors">
-                        {feature.title}
-                      </h3>
-                      <p className="text-sm text-gray-400 leading-relaxed font-light tracking-wide font-sans group-hover:text-gray-300 transition-colors">
-                        {feature.desc}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-       {/* SECTION 3: PAGAMENTOS SEM FRICÇÃO */}
-      {isDesktop ? (
-        <section ref={paymentsRef} className="relative w-full z-10" style={{ height: "150vh" }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6">
-            <div className="max-w-5xl mx-auto w-full">
-              
-              {/* Title Block */}
-              <motion.div
-                style={{ opacity: bentoTitleOpacity, y: bentoTitleY }}
-                className="text-center mb-16"
-              >
-                <h2 className="text-6xl md:text-[6vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85] text-white">
-                  Pagamentos sem <br /> <span className="text-purple-500">Fricção.</span>
-                </h2>
-                <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto" />
-              </motion.div>
-
-              {/* BENTO GRID LAYOUT */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-auto md:auto-rows-[240px]">
-                
-                {/* Main Feature: Gateways Integrados (Large) */}
-                <motion.div
-                  style={{ x: bentoCard1X, opacity: bentoCard1Opacity }}
-                  className="md:col-span-2 md:row-span-2 group relative p-6 md:p-10 bg-[#0a0a0f] border-2 border-purple-500/20 rounded-[48px] overflow-hidden hover:border-purple-500/50 hover:shadow-[0_0_50px_rgba(168,85,247,0.15)] transition-all duration-500 shadow-2xl"
-                >
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/5 blur-[80px] rounded-full group-hover:bg-purple-600/10 transition-all" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent pointer-events-none" />
-                  <div className="relative z-10 h-full flex flex-col justify-between">
-                    <div>
-                      <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-all">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
-                      </div>
-                      <h3 className="text-3xl font-black italic uppercase tracking-tight mb-4">Gateways <br /> Integrados</h3>
-                      <p className="text-gray-400 text-sm font-light leading-relaxed max-w-xs font-sans tracking-wide">Conexão nativa com os principais processadores do mundo para garantir que cada venda passe sem obstáculos.</p>
-                    </div>
-                    <div className="flex gap-2 mt-8 opacity-20 group-hover:opacity-40 transition-opacity">
-                      <div className="h-2 w-20 bg-white rounded-full" />
-                      <div className="h-2 w-10 bg-purple-500 rounded-full" />
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Feature 2: Aprovação Instantânea (Tall) */}
-                <motion.div
-                  style={{ x: bentoCard2X, opacity: bentoCard2Opacity }}
-                  className="md:col-span-2 md:row-span-1 group relative p-8 bg-white/[0.02] border border-white/10 rounded-[40px] overflow-hidden hover:bg-[#0a0a0f] hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all duration-500"
-                >
-                  <div className="flex items-center gap-6 h-full">
-                    <div className="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-black italic uppercase tracking-tight mb-2">Aprovação Instantânea</h3>
-                      <p className="text-xs text-gray-500 uppercase tracking-widest font-black">Zero abandono. Alta velocidade.</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Feature 3: Pix, Cartão, Boleto (Wide) */}
-                <motion.div
-                  style={{ y: bentoCard3Y, opacity: bentoCard3Opacity }}
-                  className="md:col-span-2 md:row-span-1 group relative p-8 bg-white/[0.02] border border-white/10 rounded-[40px] overflow-hidden hover:bg-[#0a0a0f] hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all duration-500"
-                >
-                  <div className="flex flex-col justify-center h-full">
-                    <div className="flex gap-4 mb-4">
-                      <div className="text-purple-500">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                      </div>
-                      <h3 className="text-xl font-black italic uppercase tracking-tight">Multi-Pagamentos</h3>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {['PIX', 'CARTÃO DE CRÉDITO', 'BOLETO'].map(tag => (
-                        <span key={tag} className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">{tag}</span>
-                      ))}
-                      <span className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">
-                        CRIPTO <span className="text-white/40 ml-1">( breve )</span>
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-
-              </div>
-
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-32 relative z-10">
-          <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-20">
-            <div className="text-center mb-20">
-              <motion.div
-                initial={{ opacity: 0, y: 60, scale: 0.96, rotateX: 10 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 45, damping: 20 }}
-                style={{ transformOrigin: "top center" }}
-              >
-                <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                  Pagamentos sem <br /> <span className="text-purple-500">Fricção.</span>
-                </h2>
-                <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
-              </motion.div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-auto md:auto-rows-[240px]">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.93, y: 50, rotateY: -5 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0, rotateY: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 40, damping: 18 }}
-                className="md:col-span-2 md:row-span-2 group relative p-6 md:p-10 bg-[#0a0a0f] border-2 border-purple-500/20 rounded-[48px] overflow-hidden hover:border-purple-500/50 hover:shadow-[0_0_50px_rgba(168,85,247,0.15)] transition-all duration-500 shadow-2xl"
-              >
-                <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/5 blur-[80px] rounded-full group-hover:bg-purple-600/10 transition-all" />
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent pointer-events-none" />
-                <div className="relative z-10 h-full flex flex-col justify-between">
-                  <div>
-                    <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-all">
-                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
-                    </div>
-                    <h3 className="text-3xl font-black italic uppercase tracking-tight mb-4">Gateways <br /> Integrados</h3>
-                    <p className="text-gray-400 text-sm font-light leading-relaxed max-w-xs font-sans tracking-wide">Conexão nativa com os principais processadores do mundo para garantir que cada venda passe sem obstáculos.</p>
-                  </div>
-                  <div className="flex gap-2 mt-8 opacity-20 group-hover:opacity-40 transition-opacity">
-                    <div className="h-2 w-20 bg-white rounded-full" />
-                    <div className="h-2 w-10 bg-purple-500 rounded-full" />
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 40, scale: 0.95, rotateY: 5 }}
-                whileInView={{ opacity: 1, x: 0, scale: 1, rotateY: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 45, damping: 18, delay: 0.12 }}
-                className="md:col-span-2 md:row-span-1 group relative p-8 bg-white/[0.02] border border-white/10 rounded-[40px] overflow-hidden hover:bg-[#0a0a0f] hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all duration-500"
-              >
-                <div className="flex items-center gap-6 h-full">
-                  <div className="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-black italic uppercase tracking-tight mb-2">Aprovação Instantânea</h3>
-                    <p className="text-xs text-gray-500 uppercase tracking-widest font-black">Zero abandono. Alta velocidade.</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 40, scale: 0.95, rotateX: 5 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 45, damping: 18, delay: 0.24 }}
-                className="md:col-span-2 md:row-span-1 group relative p-8 bg-white/[0.02] border border-white/10 rounded-[40px] overflow-hidden hover:bg-[#0a0a0f] hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] transition-all duration-500"
-              >
-                <div className="flex flex-col justify-center h-full">
-                  <div className="flex gap-4 mb-4">
-                    <div className="text-purple-500">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                    </div>
-                    <h3 className="text-xl font-black italic uppercase tracking-tight">Multi-Pagamentos</h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {['PIX', 'CARTÃO DE CRÉDITO', 'BOLETO'].map(tag => (
-                      <span key={tag} className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">{tag}</span>
-                    ))}
-                    <span className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">
-                      CRIPTO <span className="text-white/40 ml-1">( breve )</span>
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* TRULY FULL-WIDTH INFINITE SCROLL GATEWAY BAND (Refined) */}
-      <div className="mt-16 border-y border-white/5 py-10 relative overflow-hidden bg-white/[0.01] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#030303] to-transparent z-10" />
-        <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#030303] to-transparent z-10" />
-
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-          className="flex items-center gap-16 whitespace-nowrap"
+      {/* GROUPED SECTION: FEATURES CAROUSEL & CHECKOUT DASHBOARD (UNIFIED VISUAL) */}
+      <div className="relative w-full bg-transparent overflow-hidden mt-12 md:mt-48">
+        {/* Shared WebGL Aurora Background with smooth fade at boundaries */}
+        <div 
+          className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-20"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)'
+          }}
         >
-          {[
-            { name: 'Mercado Pago', status: 'Ativado' },
-            { name: 'Stripe', status: 'em breve' },
-            { name: 'PagSeguro', status: 'em breve' },
-            { name: 'Asaas', status: 'em breve' },
-            { name: 'Pagar.me', status: 'em breve' },
-            { name: 'PayPal', status: 'em breve' },
-            // Repeated for seamless cycle
-            { name: 'Mercado Pago', status: 'Ativado' },
-            { name: 'Stripe', status: 'em breve' },
-            { name: 'PagSeguro', status: 'em breve' },
-            { name: 'Asaas', status: 'em breve' },
-            { name: 'Pagar.me', status: 'em breve' },
-            { name: 'PayPal', status: 'em breve' }
-          ].map((gw, i) => (
-            <div key={i} className="flex flex-col items-center group min-w-[200px]">
-              <span className={`text-4xl font-black italic uppercase tracking-tighter transition-colors ${gw.status === 'Ativado' ? 'text-white' : 'text-white/20'}`}>
-                {gw.name}
-              </span>
-              <span className={`text-[7px] font-black uppercase tracking-[0.5em] mt-2 ${gw.status === 'Ativado' ? 'text-purple-500' : 'text-white/5'}`}>
-                {gw.status}
-              </span>
+          <Aurora colorStops={['#a855f7', '#22c55e', '#a855f7']} amplitude={1.0} blend={0.5} speed={0.4} />
+        </div>
+
+        {/* Shared Ambient Background Gradient Glows */}
+        <div 
+          className="absolute inset-0 z-0 opacity-15 pointer-events-none bg-gradient-to-tr from-emerald-500/10 via-transparent to-purple-500/10"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)'
+          }}
+        />
+
+        {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
+        <section id="features" className="relative z-10 mt-0">
+          <div className="pt-12 pb-0 lg:h-[65vh] lg:sticky lg:top-[18vh] flex items-center justify-center px-6">
+            <div className="max-w-7xl mx-auto w-full">
+              <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
+                <div>
+                  <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                    Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
+                  </h2>
+                  <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
+                </div>
+                <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
+                  Design minimalista. <br />Engenharia máxima.
+                </p>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
+
+                {/* MOBILE: Simple Stacked Cards */}
+                <div className="lg:hidden w-full space-y-4">
+                  {showcaseFeatures.map((f, i) => (
+                    <motion.div
+                      key={f.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.05, duration: 0.5 }}
+                      onClick={() => setActiveFeature(i)}
+                      className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
+                        ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
+                        : 'bg-[#0a0a0f]/50 border border-white/10'
+                        }`}
+                    >
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_15px_#a855f7]' : 'bg-white/5 text-gray-500'
+                          }`}>
+                          {f.icon}
+                        </div>
+                        <h3 className="text-base font-black italic uppercase tracking-wide">{f.title}</h3>
+                      </div>
+
+                      {/* Expandable Content */}
+                      <AnimatePresence>
+                        {activeFeature === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pt-4 border-t border-white/10">
+                              <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
+                              <div className="space-y-3">
+                                {f.highlights.map(h => (
+                                  <div key={h} className="flex items-center gap-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
+                                    <span className="text-xs font-bold uppercase tracking-wider text-white/70">{h}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* DESKTOP: Vertical Card Carousel */}
+                <div className="hidden lg:flex lg:w-[400px] relative h-full flex-col justify-center">
+                  <div className="relative h-[500px] flex flex-col items-center justify-center">
+                    {showcaseFeatures.map((f, i) => {
+                      const offset = i - activeFeature;
+                      const isActive = i === activeFeature;
+                      const isPrev = offset === -1;
+                      const isNext = offset === 1;
+                      const isVisible = Math.abs(offset) <= 1;
+
+                      return (
+                        <motion.div
+                          key={f.id}
+                          animate={{
+                            y: offset * 140,
+                            scale: isActive ? 1 : 0.85,
+                            opacity: isActive ? 1 : isPrev || isNext ? 0.3 : 0,
+                            filter: isActive ? 'blur(0px)' : 'blur(2px)'
+                          }}
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          className={`absolute w-full p-8 rounded-[48px] cursor-pointer flex items-center gap-6 ${isActive
+                            ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_30px_#a855f7] z-20'
+                            : 'bg-[#0a0a0f]/50 border border-white/5 z-10'
+                            }`}
+                          style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
+                          onClick={() => setActiveFeature(i)}
+                        >
+                          <div className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${isActive ? 'bg-purple-600 text-white shadow-[0_0_20px_#a855f7]' : 'bg-white/5 text-gray-500'
+                            }`}>
+                            {f.icon}
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-sm font-black italic uppercase tracking-[0.15em]">{f.title}</h3>
+                            {isActive && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-2" />}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Scroll Indicators */}
+                  <div className="flex justify-center gap-2 mt-8">
+                    {showcaseFeatures.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveFeature(i)}
+                        className={`w-2 h-2 rounded-full transition-all ${i === activeFeature ? 'bg-purple-500 w-8' : 'bg-white/20'
+                          }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* DESKTOP: Content Display */}
+                <div className="hidden lg:flex flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex-col lg:flex-row shadow-inner h-full">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
+
+                  <div className="flex-1 relative min-h-[400px]">
+                    <AnimatePresence mode="wait">
+                      <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
+                    <AnimatePresence mode="wait">
+                      <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
+                        <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
+                        <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
+                        <div className="space-y-5">
+                          {showcaseFeatures[activeFeature].highlights.map(h => (
+                            <div key={h} className="flex items-center gap-4 group">
+                              <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
+                              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+              </div>
             </div>
-          ))}
-        </motion.div>
+          </div>
+
+          {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
+          <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 25}vh` }} />
+        </section>
+
+        {/* SECTION: CHECKOUT DASHBOARD & INFRASTRUCTURE */}
+        <CheckoutDashboardSection showBackground={false} />
       </div>
 
-      {/* PERFORMANCE METRICS */}
-      {isDesktop ? (
-        <section ref={metricsRef} className="relative w-full z-10" style={{ height: "150vh" }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6">
-            <div className="max-w-5xl mx-auto w-full">
-              
-              {/* Title */}
-              <motion.div
-                style={{ opacity: metricsTitleOpacity, y: metricsTitleY }}
-                className="text-center mb-12"
-              >
-                <h2 className="text-6xl md:text-[6vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85] text-white">
-                  Performance <br /> <span className="text-purple-500">Brutal.</span>
-                </h2>
-              </motion.div>
+      {/* SECTION 2: CHECKOUT QUE VENDE */}
+      <section className="py-0 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Checkout que <br /> <span className="text-purple-500">Vende.</span>
+              </h2>
+              <p className="text-gray-400 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto mt-6 font-sans">
+                Otimizado para conversão máxima em qualquer dispositivo.
+              </p>
+            </motion.div>
+          </div>
 
-              {/* Metrics Grid */}
-              <motion.div 
-                style={{ opacity: metricItemsOpacity }}
-                className="grid grid-cols-2 lg:grid-cols-4 gap-6"
-              >
-                {[
-                  { label: 'Velocidade de Carga', value: 98, color: '#a855f7', path: "M0,80 Q50,75 100,30 T200,40 T300,10" },
-                  { label: 'Taxa de Conversão', value: 94, color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
-                  { label: 'Uptime & Estabilidade', value: 99, color: '#3b82f6', path: "M0,70 Q150,65 300,68" },
-                  { label: 'Segurança & LGPD', value: 100, color: '#f97316', path: "M0,85 Q50,30 100,50 T200,20 T300,5" }
-                ].map((metric, i) => (
-                  <div key={i} className="relative group p-4 bg-white/[0.01] border border-white/5 rounded-3xl">
-                    <div className="flex justify-between items-end mb-4">
-                      <div>
-                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 block">{metric.label}</span>
-                        <div className="h-1 w-8 bg-white/10 rounded-full" />
-                      </div>
-                      <span className="text-2xl font-black italic text-white flex items-end gap-0.5">
-                        {metric.value}<span className="text-xs opacity-30 mt-1">%</span>
-                      </span>
-                    </div>
+          {/* Grid Layout: Checkout Mockup + Feature Bullets */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-                    <div className="h-32 w-full relative">
-                      <svg className="w-full h-full overflow-visible" viewBox="0 0 300 100" preserveAspectRatio="none">
-                        <defs>
-                          <linearGradient id={`grad-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor={metric.color} stopOpacity="0.3" />
-                            <stop offset="100%" stopColor={metric.color} stopOpacity="0" />
-                          </linearGradient>
-                        </defs>
+            {/* Virtual Checkout Visualization */}
+            {/* Virtual Checkout Visualization */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group order-2 lg:order-1 isolate"
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden', willChange: 'transform' }}
+            >
+              {/* Radial Gradient Background */}
+              <div 
+                className="absolute inset-0 pointer-events-none" 
+                style={{ backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.1) 0%, transparent 70%)' }}
+              />
 
-                        {/* Reference Grid */}
-                        <line x1="0" y1="100" x2="300" y2="100" stroke="white" strokeWidth="0.5" strokeOpacity="0.1" />
+              {/* Virtual Checkout Elements */}
+              <div className="relative z-10 space-y-6" style={{ transform: 'translateZ(0)' }}>
 
-                        {/* Area Fill */}
-                        <path
-                          d={`${metric.path} L300,100 L0,100 Z`}
-                          fill={`url(#grad-${i})`}
-                        />
-
-                        {/* Main Stroke */}
-                        <motion.path
-                          d={metric.path}
-                          fill="none"
-                          stroke={metric.color}
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          style={{
-                            pathLength: i === 0 ? metric0PathLength : i === 1 ? metric1PathLength : i === 2 ? metric2PathLength : metric3PathLength
-                          }}
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-
-              {/* New Card: Núcleo Reativo */}
-              <motion.div
-                style={{ scale: coreCardScale, opacity: coreCardOpacity }}
-                className="mt-12 p-8 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[32px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)]"
-              >
-                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-                <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                  <div className="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl shrink-0">
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                {/* Product Header with Image Placeholder */}
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
+                  className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                >
+                  <div className="w-16 h-16 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                    <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
-
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-2xl font-black mb-2 italic uppercase tracking-tight text-white">Núcleo Reativo</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed max-w-2xl font-sans">
-                      Processamos dados em milissegundos usando arquitetura serverless de última geração. <span className="text-purple-400 font-bold">Nada de espera, apenas resultados.</span>
-                    </p>
+                  <div className="flex-1">
+                    <div className="h-3 w-3/4 bg-white/10 rounded-full mb-2" />
+                    <div className="h-2 w-1/2 bg-white/5 rounded-full" />
                   </div>
+                </motion.div>
 
-                  <div className="px-6 py-3 bg-white/5 rounded-xl border border-white/10 backdrop-blur-md shrink-0">
-                    <div className="text-[8px] font-black uppercase tracking-[0.3em] text-purple-500 mb-1">LOAD SPEED</div>
-                    <div className="text-2xl font-black italic text-white">120ms</div>
-                  </div>
-                </div>
-              </motion.div>
-
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="pt-32 pb-8 px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Performance <br /> <span className="text-purple-500">Brutal.</span>
-              </h2>
-            </div>
-
-            <div className="max-w-4xl mx-auto space-y-16">
-              {[
-                { label: 'Velocidade de Carga', value: 98, color: '#a855f7', path: "M0,80 Q50,75 100,30 T200,40 T300,10" },
-                { label: 'Taxa de Conversão', value: 94, color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
-                { label: 'Uptime & Estabilidade', value: 99, color: '#3b82f6', path: "M0,70 Q150,65 300,68" },
-                { label: 'Segurança & LGPD', value: 100, color: '#f97316', path: "M0,85 Q50,30 100,50 T200,20 T300,5" }
-              ].map((metric, i) => (
+                {/* Form Fields (Email & Name) */}
                 <motion.div
-                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="space-y-3"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                >
+                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                    <div className="h-2 w-1/4 bg-white/10 rounded-full mb-3" />
+                    <div className="h-3 w-full bg-white/5 rounded-full" />
+                  </div>
+                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                    <div className="h-2 w-1/3 bg-white/10 rounded-full mb-3" />
+                    <div className="h-3 w-full bg-white/5 rounded-full" />
+                  </div>
+                </motion.div>
+
+                {/* Payment Methods (Pix & Card) */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="flex gap-3"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                >
+                  <div className="flex-1 p-4 bg-purple-600/10 border border-purple-500/20 rounded-2xl flex items-center justify-center gap-2">
+                    <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="h-2 w-12 bg-purple-400/30 rounded-full" />
+                  </div>
+                  <div className="flex-1 p-4 bg-white/[0.02] border border-white/5 rounded-2xl flex items-center justify-center gap-2">
+                    <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    <div className="h-2 w-12 bg-white/10 rounded-full" />
+                  </div>
+                </motion.div>
+
+                {/* Order Bump */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="p-4 bg-green-600/5 border border-green-500/20 rounded-2xl"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded bg-green-500/20 flex items-center justify-center mt-1">
+                      <div className="w-2 h-2 rounded-sm bg-green-500" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <div className="h-2 w-2/3 bg-green-400/20 rounded-full" />
+                      <div className="h-2 w-full bg-white/5 rounded-full" />
+                      <div className="h-2 w-4/5 bg-white/5 rounded-full" />
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Payment Button */}
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false }}
-                  transition={{ delay: i * 0.05, type: "spring", stiffness: 120, damping: 18 }}
-                  className="relative group"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                  className="pt-4"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
-                  <div className="flex justify-between items-end mb-4">
-                    <div>
-                      <span className="text-xs font-black uppercase tracking-[0.3em] text-gray-500 mb-2 block">{metric.label}</span>
-                      <div className="h-1 w-12 bg-white/10 rounded-full" />
-                    </div>
-                    <span className="text-4xl font-black italic text-white flex items-end gap-1">
-                      {metric.value}<span className="text-lg opacity-30 mt-1">%</span>
-                    </span>
+                  <div className="w-full p-5 bg-gradient-to-r from-purple-600 to-purple-500 rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(168,85,247,0.3)] group-hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-shadow">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <div className="h-3 w-32 bg-white/90 rounded-full" />
+                  </div>
+                </motion.div>
+
+              </div>
+            </motion.div>
+
+            {/* Modern Bullet Points List */}
+            <div className="space-y-8 order-1 lg:order-2">
+              {[
+                {
+                  title: 'Alta Conversão',
+                  desc: 'Design otimizado para maximizar vendas com UX testada',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                },
+                {
+                  title: 'Mobile First',
+                  desc: 'Experiência perfeita em smartphones e tablets',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                },
+                {
+                  title: 'Order Bump & Upsell',
+                  desc: 'Aumente o ticket médio automaticamente com ofertas inteligentes',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                },
+                {
+                  title: 'Recuperação de Carrinho',
+                  desc: 'Não perca nenhuma venda com automação inteligente',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                },
+                {
+                  title: 'Checkout Seguro',
+                  desc: 'SSL e criptografia de ponta a ponta para proteção total',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                },
+                {
+                  title: 'Carregamento Instantâneo',
+                  desc: 'Menos de 0.8s para garantir que nenhum cliente desista',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                }
+              ].map((feature, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="flex items-start gap-4 group cursor-pointer"
+                >
+                  {/* Icon */}
+                  <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all duration-300">
+                    {feature.icon}
                   </div>
 
-                  <div className="h-40 w-full relative">
-                    <svg className="w-full h-full overflow-visible" viewBox="0 0 300 100" preserveAspectRatio="none">
-                      <defs>
-                        <linearGradient id={`grad-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stopColor={metric.color} stopOpacity="0.3" />
-                          <stop offset="100%" stopColor={metric.color} stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-
-                      <line x1="0" y1="100" x2="300" y2="100" stroke="white" strokeWidth="0.5" strokeOpacity="0.1" />
-
-                      <motion.path
-                        d={`${metric.path} L300,100 L0,100 Z`}
-                        fill={`url(#grad-${i})`}
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: false, margin: "-50px" }}
-                        transition={{ duration: 1.5, delay: 0.8 }}
-                      />
-
-                      <motion.path
-                        d={metric.path}
-                        fill="none"
-                        stroke={metric.color}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        initial={{ pathLength: 0 }}
-                        whileInView={{ pathLength: 1 }}
-                        viewport={{ once: false, margin: "-50px" }}
-                        transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
-                      />
-
-                      <motion.path
-                        d={metric.path}
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        initial={{ pathLength: 0.1, pathOffset: 0, opacity: 0 }}
-                        animate={{
-                          pathOffset: [0, 1.2],
-                          opacity: [0, 1, 1, 0]
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "linear",
-                          delay: 1.5 + (i * 0.4)
-                        }}
-                        style={{ filter: `drop-shadow(0 0 8px white)` }}
-                      />
-                    </svg>
+                  {/* Content */}
+                  <div className="flex-1 pt-1">
+                    <h3 className="text-lg font-black uppercase tracking-tight mb-1 group-hover:text-purple-400 transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-gray-400 leading-relaxed font-light tracking-wide font-sans group-hover:text-gray-300 transition-colors">
+                      {feature.desc}
+                    </p>
                   </div>
                 </motion.div>
               ))}
             </div>
 
+          </div>
+        </div>
+      </section >
+
+      {/* SECTION 3: PAGAMENTOS SEM FRICÃ‡ÃƒO */}
+      <section className="py-32 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+          <div className="text-center mb-20">
             <motion.div
-              initial={{ opacity: 0, scale: 0.93, y: 50, rotateX: 6 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ type: "spring", stiffness: 35, damping: 18 }}
-              whileHover={{ scale: 1.02 }}
-              className="mt-16 p-12 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[48px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)] cursor-pointer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-              <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
-                <div className="w-20 h-20 bg-purple-600/20 rounded-3xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
-                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl font-black mb-4 italic uppercase tracking-tight">Núcleo Reativo</h3>
-                  <p className="text-gray-400 text-lg leading-relaxed max-w-3xl">
-                    Processamos dados em milissegundos usando arquitetura serverless de última geração. <span className="text-purple-400 font-bold">Nada de espera, apenas resultados.</span>
-                  </p>
-                </div>
-
-                <div className="px-8 py-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-500 mb-1">LOAD SPEED</div>
-                  <div className="text-3xl font-black italic">120ms</div>
-                </div>
-              </div>
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Pagamentos sem <br /> <span className="text-purple-500">Fricção.</span>
+              </h2>
+              <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
             </motion.div>
           </div>
-        </section>
-      )}
 
-      {/* SECTION: INDEPENDENT INSTALLATION & SERVERLESS INFRA */}
-      {isDesktop ? (
-        <section ref={serverlessRef} className="relative w-full z-10" style={{ height: "150vh" }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6">
-            <div className="max-w-5xl mx-auto w-full">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* BENTO GRID LAYOUT */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-auto md:auto-rows-[240px]">
+            {/* Main Feature: Gateways Integrados (Large) */}
+            {/* Main Feature: Gateways Integrados (Large) */}
+            <GlowCard
+              className="md:col-span-2 md:row-span-2 bg-[#0a0a0f] !border-purple-500/20 hover:!border-purple-500/40 !rounded-[48px] !p-6 md:!p-10 shadow-2xl"
+            >
+              {/* Background Glow Flare */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/5 blur-[80px] rounded-full group-hover:bg-purple-600/10 transition-all" />
 
-                {/* Left: Deep Info & Interactive Visual */}
-                <motion.div
-                  style={{ opacity: cloudTitleOpacity, y: cloudTitleY }}
-                  className="relative"
-                >
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest mb-6">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                    Arquitetura de Isolamento Total
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent pointer-events-none" />
+              <div className="relative z-10 h-full flex flex-col justify-between">
+                <div>
+                  <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-all">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
                   </div>
-                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
-                    Instalação <br />
-                    completa <br />
-                    <span className="text-purple-500">e independente.</span>
-                  </h2>
-                  <p className="text-gray-400 text-lg font-medium leading-relaxed max-w-xl mb-10">
-                    Cada instalação é <span className="text-white">100% isolada</span>, com sua própria estrutura, dados e controle total. Ideal tanto para uso próprio quanto para atender clientes com autoridade máxima.
-                  </p>
+                  <h3 className="text-3xl font-black italic uppercase tracking-tight mb-4">Gateways <br /> Integrados</h3>
+                  <p className="text-gray-400 text-sm font-light leading-relaxed max-w-xs font-sans tracking-wide">Conexão nativa com os principais processadores do mundo para garantir que cada venda passe sem obstáculos.</p>
+                </div>
 
-                  {/* Static Isolation Nodes Visual */}
-                  <motion.div style={{ opacity: instancesOpacity }} className="relative h-48 w-full hidden md:block mt-8">
-                    {[0, 1, 2].map((i) => {
-                      const instanceX = i === 0 ? instance1X : i === 1 ? instance2X : instance3X;
-                      return (
-                        <motion.div
-                          key={i}
-                          style={{
-                            left: `${15 + i * 28}%`,
-                            top: `${10 + i * 12}%`,
-                            zIndex: 10 - i,
-                            opacity: 1 - (i * 0.15),
-                            x: instanceX,
-                            transform: 'translateZ(0)',
-                            backfaceVisibility: 'hidden'
-                          }}
-                          whileHover={{ scale: 1.05, y: -4, borderColor: "var(--color-primary)" }}
-                          transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                          className="absolute p-4 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl flex items-center gap-3 cursor-pointer"
-                        >
-                          <div className="w-10 h-10 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-400">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                          </div>
-                          <div>
-                            <div className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Instância #{i + 1}</div>
-                            <div className="text-[10px] font-bold text-white italic">Ambiente Isolado</div>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
-                  </motion.div>
-                </motion.div>
-
-                {/* Right: Cloud Card */}
-                <motion.div
-                  style={{ opacity: cloudCardOpacity, scale: cloudCardScale, transformOrigin: "right center" }}
-                  className="relative group"
-                >
-                  {/* Dynamic Aura Glow */}
-                  <div className="absolute -inset-10 bg-purple-600/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-
-                  <div className="relative bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl overflow-hidden group-hover:border-purple-500/30 transition-all duration-700">
-                    {/* Cloud Header */}
-                    <div className="flex items-center gap-6 mb-10 mt-6 md:mt-0">
-                      <div className="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/30 shrink-0">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-black italic uppercase tracking-tighter text-white leading-tight">Infraestrutura própria</h3>
-                        <div className="text-purple-400 text-[10px] font-black uppercase tracking-[0.2em]">Zero Custos de Servidor</div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-8">
-                      <p className="text-gray-400 font-medium leading-relaxed">
-                        O sistema roda em infraestrutura moderna <span className="text-white font-bold">serverless</span>. Você usa sua própria conta, mas sem precisar contratar ou gerenciar servidores físicos.
-                      </p>
-
-                      {/* Feature Checklist Grid */}
-                      <div className="grid grid-cols-2 gap-2 md:gap-3">
-                        {[
-                          "Sem VPS",
-                          "Sem servidor",
-                          "Sem mensalidades",
-                          "Sem manutenção"
-                        ].map((feat, i) => (
-                          <motion.div
-                            key={i}
-                            whileHover={{ scale: 1.04, y: -2, borderColor: "rgba(168, 85, 247, 0.4)", backgroundColor: "rgba(255,255,255,0.05)" }}
-                            className="flex items-center gap-2 md:gap-3 p-2 md:p-4 bg-white/[0.03] rounded-2xl border border-purple-500/20 group/feat transition-colors cursor-pointer"
-                          >
-                            <div className="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
-                              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
-                            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-wide md:tracking-wider text-white/80 whitespace-nowrap">{feat}</span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Decorative Label - Top Centered */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 md:px-8 bg-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20 border border-purple-400/30 w-max max-w-[90%]">
-                    <p className="text-[9px] md:text-[10px] font-black italic text-white uppercase tracking-[0.15em] md:tracking-[0.2em] whitespace-nowrap text-center">Tecnologia Serverless</p>
-                  </div>
-                </motion.div>
-
+                {/* Visual Accent */}
+                <div className="flex gap-2 mt-8 opacity-20 group-hover:opacity-40 transition-opacity">
+                  <div className="h-2 w-20 bg-white rounded-full" />
+                  <div className="h-2 w-10 bg-purple-500 rounded-full" />
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-24 px-6 relative z-10 overflow-hidden">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            </GlowCard>
 
-              {/* Left: Deep Info & Interactive Visual */}
-              <motion.div
-                initial={{ opacity: 0, x: -60, scale: 0.95, rotateY: -8 }}
-                whileInView={{ opacity: 1, x: 0, scale: 1, rotateY: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 45, damping: 20 }}
-                style={{ transformOrigin: "left center" }}
-                className="relative"
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                  Arquitetura de Isolamento Total
+            {/* Feature 2: Aprovação Instantânea (Tall) */}
+            <GlowCard
+              delay={0.1}
+              className="md:col-span-2 md:row-span-1 bg-white/[0.02] !rounded-[40px]"
+            >
+              <div className="flex items-center gap-6 h-full">
+                <div className="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 </div>
-                <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
-                  Instalação <br />
-                  completa <br />
-                  <span className="text-purple-500">e independente.</span>
-                </h2>
-                <p className="text-gray-400 text-lg font-medium leading-relaxed max-w-xl mb-10">
-                  Cada instalação é <span className="text-white">100% isolada</span>, com sua própria estrutura, dados e controle total. Ideal tanto para uso próprio quanto para atender clientes com autoridade máxima.
-                </p>
+                <div>
+                  <h3 className="text-xl font-black italic uppercase tracking-tight mb-2">Aprovação Instantânea</h3>
+                  <p className="text-xs text-gray-500 uppercase tracking-widest font-black">Zero abandono. Alta velocidade.</p>
+                </div>
+              </div>
+            </GlowCard>
 
-                {/* Static Isolation Nodes Visual */}
-                <div className="relative h-48 w-full hidden md:block mt-8">
-                  {[0, 1, 2].map((i) => (
-                    <motion.div
-                      key={i}
-                      whileHover={{ scale: 1.05, y: -4, borderColor: "var(--color-primary)" }}
-                      transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                      className="absolute p-4 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl flex items-center gap-3 cursor-pointer"
-                      style={{
-                        left: `${15 + i * 28}%`,
-                        top: `${10 + i * 12}%`,
-                        zIndex: 10 - i,
-                        opacity: 1 - (i * 0.15)
-                      }}
-                    >
-                      <div className="w-10 h-10 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-400">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Instância #{i + 1}</div>
-                        <div className="text-[10px] font-bold text-white italic">Ambiente Isolado</div>
-                      </div>
-                    </motion.div>
+            {/* Feature 3: Pix, Cartão, Boleto (Wide) */}
+            <GlowCard
+              delay={0.2}
+              className="md:col-span-2 md:row-span-1 bg-white/[0.02] !rounded-[40px]"
+            >
+              <div className="flex flex-col justify-center h-full">
+                <div className="flex gap-4 mb-4">
+                  <div className="text-purple-500">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  </div>
+                  <h3 className="text-xl font-black italic uppercase tracking-tight">Multi-Pagamentos</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {['PIX', 'CARTÃO DE CRÉDITO', 'BOLETO'].map(tag => (
+                    <span key={tag} className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">{tag}</span>
                   ))}
+                  <span className="text-[8px] font-black px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 rounded-full tracking-[0.2em]">
+                    CRIPTO <span className="text-white/40 ml-1">( breve )</span>
+                  </span>
                 </div>
-              </motion.div>
+              </div>
+            </GlowCard>
+          </div>
+        </div>
 
-              {/* Right: Cloud Card */}
+        {/* TRULY FULL-WIDTH INFINITE SCROLL GATEWAY BAND (Refined) */}
+        <div className="mt-16 border-y border-white/5 py-10 relative overflow-hidden bg-white/[0.01] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+          <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#030303] to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#030303] to-transparent z-10" />
+
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+            className="flex items-center gap-16 whitespace-nowrap"
+          >
+            {[
+              { name: 'Mercado Pago', status: 'Ativado' },
+              { name: 'Stripe', status: 'em breve' },
+              { name: 'PagSeguro', status: 'em breve' },
+              { name: 'Asaas', status: 'em breve' },
+              { name: 'Pagar.me', status: 'em breve' },
+              { name: 'PayPal', status: 'em breve' },
+              // Repeated for seamless cycle
+              { name: 'Mercado Pago', status: 'Ativado' },
+              { name: 'Stripe', status: 'em breve' },
+              { name: 'PagSeguro', status: 'em breve' },
+              { name: 'Asaas', status: 'em breve' },
+              { name: 'Pagar.me', status: 'em breve' },
+              { name: 'PayPal', status: 'em breve' }
+            ].map((gw, i) => (
+              <div key={i} className="flex flex-col items-center group min-w-[200px]">
+                <span className={`text-4xl font-black italic uppercase tracking-tighter transition-colors ${gw.status === 'Ativado' ? 'text-white' : 'text-white/20'}`}>
+                  {gw.name}
+                </span>
+                <span className={`text-[7px] font-black uppercase tracking-[0.5em] mt-2 ${gw.status === 'Ativado' ? 'text-purple-500' : 'text-white/5'}`}>
+                  {gw.status}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* PERFORMANCE METRICS */}
+      <section className="pt-32 pb-8 px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+              Performance <br /> <span className="text-purple-500">Brutal.</span>
+            </h2>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-16">
+            {[
+              { label: 'Velocidade de Carga', value: 98, color: '#a855f7', path: "M0,80 Q50,75 100,30 T200,40 T300,10" },
+              { label: 'Taxa de Conversão', value: 94, color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
+              { label: 'Uptime & Estabilidade', value: 99, color: '#3b82f6', path: "M0,70 Q150,65 300,68" },
+              { label: 'Segurança & LGPD', value: 100, color: '#f97316', path: "M0,85 Q50,30 100,50 T200,20 T300,5" }
+            ].map((metric, i) => (
               <motion.div
-                initial={{ opacity: 0, scale: 0.92, y: 40, rotateY: 8 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0, rotateY: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ type: "spring", stiffness: 40, damping: 18, delay: 0.15 }}
-                style={{ transformOrigin: "right center" }}
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05, duration: 0.5 }}
                 className="relative group"
               >
-                {/* Dynamic Aura Glow */}
-                <div className="absolute -inset-10 bg-purple-600/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="flex justify-between items-end mb-4">
+                  <div>
+                    <span className="text-xs font-black uppercase tracking-[0.3em] text-gray-500 mb-2 block">{metric.label}</span>
+                    <div className="h-1 w-12 bg-white/10 rounded-full" />
+                  </div>
+                  <span className="text-4xl font-black italic text-white flex items-end gap-1">
+                    {metric.value}<span className="text-lg opacity-30 mt-1">%</span>
+                  </span>
+                </div>
 
-                <div className="relative bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl overflow-hidden group-hover:border-purple-500/30 transition-all duration-700">
-                  {/* Cloud Header */}
-                  <div className="flex items-center gap-6 mb-10 mt-6 md:mt-0">
-                    <div className="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/30 shrink-0">
-                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                <div className="h-40 w-full relative">
+                  <svg className="w-full h-full overflow-visible" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id={`grad-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={metric.color} stopOpacity="0.3" />
+                        <stop offset="100%" stopColor={metric.color} stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Reference Grid */}
+                    <line x1="0" y1="100" x2="300" y2="100" stroke="white" strokeWidth="0.5" strokeOpacity="0.1" />
+
+                    {/* Area Fill */}
+                    <motion.path
+                      d={`${metric.path} L300,100 L0,100 Z`}
+                      fill={`url(#grad-${i})`}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.5, delay: 0.8 }}
+                    />
+
+                    {/* Main Stroke */}
+                    <motion.path
+                      d={metric.path}
+                      fill="none"
+                      stroke={metric.color}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0 }}
+                      whileInView={{ pathLength: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+                    />
+
+                    {/* Laser Pulse Effect */}
+                    <motion.path
+                      d={metric.path}
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0.1, pathOffset: 0, opacity: 0 }}
+                      animate={{
+                        pathOffset: [0, 1.2],
+                        opacity: [0, 1, 1, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                        delay: 1.5 + (i * 0.4)
+                      }}
+                      style={{ filter: `drop-shadow(0 0 8px white)` }}
+                    />
+                  </svg>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* New Card: Núcleo Reativo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-16 p-12 bg-gradient-to-br from-purple-950/40 via-purple-900/10 to-transparent border border-purple-500/30 rounded-[48px] relative overflow-hidden group hover:border-purple-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(168,85,247,0.1)]"
+          >
+            {/* Ambient Glow */}
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(168,85,247,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+              <div className="w-20 h-20 bg-purple-600/20 rounded-3xl flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-xl">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-3xl font-black mb-4 italic uppercase tracking-tight">Núcleo Reativo</h3>
+                <p className="text-gray-400 text-lg leading-relaxed max-w-3xl">
+                  Processamos dados em milissegundos usando arquitetura serverless de última geração. <span className="text-purple-400 font-bold">Nada de espera, apenas resultados.</span>
+                </p>
+              </div>
+
+              <div className="px-8 py-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-500 mb-1">LOAD SPEED</div>
+                <div className="text-3xl font-black italic">120ms</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+
+
+
+      {/* SECTION: INDEPENDENT INSTALLATION & SERVERLESS INFRA */}
+      <section className="py-24 px-6 relative z-10 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left: Deep Info & Interactive Visual */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
+                Arquitetura de Isolamento Total
+              </div>
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
+                Instalação <br />
+                completa <br />
+                <span className="text-purple-500">e independente.</span>
+              </h2>
+              <p className="text-gray-400 text-lg font-medium leading-relaxed max-w-xl mb-10">
+                Cada instalação é <span className="text-white">100% isolada</span>, com sua própria estrutura, dados e controle total. Ideal tanto para uso próprio quanto para atender clientes com autoridade máxima.
+              </p>
+
+              {/* Static Isolation Nodes Visual */}
+              <div className="relative h-48 w-full hidden md:block mt-8">
+                {[0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="absolute p-4 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl flex items-center gap-3 transition-transform hover:translate-y-[-4px]"
+                    style={{
+                      left: `${15 + i * 28}%`,
+                      top: `${10 + i * 12}%`,
+                      zIndex: 10 - i,
+                      opacity: 1 - (i * 0.15)
+                    }}
+                  >
+                    <div className="w-10 h-10 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-400">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-2xl font-black italic uppercase tracking-tighter text-white leading-tight">Infraestrutura própria</h3>
-                      <div className="text-purple-400 text-[10px] font-black uppercase tracking-[0.2em]">Zero Custos de Servidor</div>
+                      <div className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Instância #{i + 1}</div>
+                      <div className="text-[10px] font-bold text-white italic">Ambiente Isolado</div>
                     </div>
                   </div>
+                ))}
+              </div>
+            </motion.div>
 
-                  <div className="space-y-8">
-                    <p className="text-gray-400 font-medium leading-relaxed">
-                      O sistema roda em infraestrutura moderna <span className="text-white font-bold">serverless</span>. Você usa sua própria conta, mas sem precisar contratar ou gerenciar servidores físicos.
-                    </p>
+            {/* Right: Cloud Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative group"
+            >
+              {/* Dynamic Aura Glow */}
+              <div className="absolute -inset-10 bg-purple-600/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
-                    {/* Feature Checklist Grid */}
-                    <div className="grid grid-cols-2 gap-2 md:gap-3">
-                      {[
-                        "Sem VPS",
-                        "Sem servidor",
-                        "Sem mensalidades",
-                        "Sem manutenção"
-                      ].map((feat, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, y: 15 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: false, margin: "-40px" }}
-                          transition={{ type: "spring", stiffness: 200, damping: 20, delay: i * 0.08 }}
-                          whileHover={{ scale: 1.04, y: -2, borderColor: "rgba(168, 85, 247, 0.4)", backgroundColor: "rgba(255,255,255,0.05)" }}
-                          className="flex items-center gap-2 md:gap-3 p-2 md:p-4 bg-white/[0.03] rounded-2xl border border-purple-500/20 group/feat transition-colors cursor-pointer"
-                        >
-                          <div className="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          <span className="text-[8px] md:text-[10px] font-black uppercase tracking-wide md:tracking-wider text-white/80 whitespace-nowrap">{feat}</span>
-                        </motion.div>
-                      ))}
-                    </div>
+              <div className="relative bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl overflow-hidden group-hover:border-purple-500/30 transition-all duration-700">
+                {/* Cloud Header */}
+                <div className="flex items-center gap-6 mb-10 mt-6 md:mt-0">
+                  <div className="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/30 shrink-0">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-black italic uppercase tracking-tighter text-white leading-tight">Infraestrutura própria</h3>
+                    <div className="text-purple-400 text-[10px] font-black uppercase tracking-[0.2em]">Zero Custos de Servidor</div>
                   </div>
                 </div>
 
-                {/* Decorative Label - Top Centered */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 md:px-8 bg-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20 border border-purple-400/30 w-max max-w-[90%]">
-                  <p className="text-[9px] md:text-[10px] font-black italic text-white uppercase tracking-[0.15em] md:tracking-[0.2em] whitespace-nowrap text-center">Tecnologia Serverless</p>
-                </div>
-              </motion.div>
+                <div className="space-y-8">
+                  <p className="text-gray-400 font-medium leading-relaxed">
+                    O sistema roda em infraestrutura moderna <span className="text-white font-bold">serverless</span>. Você usa sua própria conta, mas sem precisar contratar ou gerenciar servidores físicos.
+                  </p>
 
-            </div>
+                  {/* Feature Checklist Grid */}
+                  <div className="grid grid-cols-2 gap-2 md:gap-3">
+                    {[
+                      "Sem VPS",
+                      "Sem servidor",
+                      "Sem mensalidades",
+                      "Sem manutenção"
+                    ].map((feat, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-2 md:gap-3 p-2 md:p-4 bg-white/[0.03] rounded-2xl border border-purple-500/20 group/feat hover:bg-white/[0.06] transition-colors"
+                      >
+                        <div className="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-wide md:tracking-wider text-white/80 whitespace-nowrap">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative Label - Top Centered */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 md:px-8 bg-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20 border border-purple-400/30 w-max max-w-[90%]">
+                <p className="text-[9px] md:text-[10px] font-black italic text-white uppercase tracking-[0.15em] md:tracking-[0.2em] whitespace-nowrap text-center">Tecnologia Serverless</p>
+              </div>
+            </motion.div>
+
           </div>
-        </section>
-      )}
+        </div>
+      </section >
 
       {/* SECTION: AUTOMATED BUSINESS & METRICS */}
       < section className="py-12 md:py-24 px-6 relative z-10" >
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
 
             {/* Left Column: Text & Metrics */}
             <motion.div
-              initial={{ opacity: 0, x: -60, scale: 0.95, rotateY: -8 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1, rotateY: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ type: "spring", stiffness: 45, damping: 20 }}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
               <div className="mb-8">
                 <div className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-500 mb-2">Automated Business</div>
@@ -1425,7 +991,7 @@ const App: React.FC = () => {
                     key={i}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-50px" }}
+                    viewport={{ once: true }}
                     transition={{ delay: 0.3 + i * 0.1 }}
                     className="flex items-center gap-4 group/item"
                   >
@@ -1442,10 +1008,10 @@ const App: React.FC = () => {
 
             {/* Right Column: Standalone Animated Graphic */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.85, y: 40 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ type: "spring", stiffness: 40, damping: 18 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
               className="flex items-center justify-center"
             >
               <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
@@ -1477,805 +1043,104 @@ const App: React.FC = () => {
         </div>
       </section >
 
-      {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
-      {isDesktop ? (
-        <section ref={membersRef} className="relative w-full z-10" style={{ height: "150vh" }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6">
-            <div className="max-w-5xl mx-auto w-full">
-              <div className="text-center mb-8 md:mb-12">
-                <motion.div
-                  style={{ opacity: membersTitleOpacity, y: membersTitleY }}
-                >
-                  <h2 className="text-[12vw] md:text-[6vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                    Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
-                  </h2>
-                  <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-4">
-                    Uma experiência digna de streaming para seus clientes
-                  </p>
-                </motion.div>
-              </div>
 
-              {/* Grid Layout: Card + Text */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-                {/* Premium Showcase Card with Auto-Scroll */}
-                <motion.div
-                  style={{ scale: membersMockupScale, opacity: membersMockupOpacity }}
-                  className="relative group"
-                >
-                  {/* Atmospheric Glow */}
-                  <div className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none" />
-
-                  <div className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-[#1a1a24] rounded-[24px] border border-white/30 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden">
-                    {/* Inner Content Container */}
-                    <div className="w-full h-full relative">
-                      {/* Light overlay to lift blacks */}
-                      <div className="absolute inset-0 bg-white/5 z-5 pointer-events-none" />
-
-                      {/* Auto-Scrolling Image Container - 100% width */}
-                      <div className="w-full h-full flex items-start justify-center relative z-10 overflow-hidden">
-                        {!isMembersLoaded && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/15 via-[#1a1a24] to-purple-900/15 animate-pulse z-20 flex items-center justify-center">
-                            <div className="w-10 h-10 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
-                          </div>
-                        )}
-                        <motion.img
-                          src="/members-area-showcase.png"
-                          alt="Área de Membros - Vitrine de Produtos"
-                          loading="lazy"
-                          onLoad={() => setIsMembersLoaded(true)}
-                          className={`w-full h-auto object-cover object-top mix-blend-lighten transition-all duration-500 ${
-                            isMembersLoaded ? "opacity-90 scale-100" : "opacity-0 scale-95"
-                          }`}
-                          style={{
-                            filter: "contrast(0.95) saturate(1.2)",
-                            minHeight: "100%"
-                          }}
-                          animate={{
-                            y: ["0%", "-50%", "0%"]
-                          }}
-                          transition={{
-                            duration: 20,
-                            repeat: Infinity,
-                            ease: "linear",
-                            repeatDelay: 2
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Neon Borders */}
-                    <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
-                    <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-                  </div>
-
-                  {/* Floating Feature Badges */}
-                  <motion.div
-                    style={{ y: membersBadge1Y, opacity: membersBadgesOpacity }}
-                    className="absolute -right-4 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] z-40"
-                  >
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
-                      <div>
-                        <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Layout Premium</p>
-                        <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Streaming</p>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    style={{ y: membersBadge2Y, opacity: membersBadgesOpacity }}
-                    className="absolute -left-4 md:-left-6 bottom-[15%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl z-40"
-                  >
-                    <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 md:w-5 md:h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                      </svg>
-                      <div>
-                        <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-0">Design</p>
-                        <p className="text-base md:text-lg font-black text-white italic leading-tight">Moderno</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-
-                {/* Text Content with Bullet Points */}
-                <motion.div
-                  style={{ opacity: membersMockupOpacity }}
-                >
-                  <h3 className="text-5xl md:text-6xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
-                    Experiência <br /> <span className="text-purple-500">Premium.</span>
-                  </h3>
-                  <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
-                    Interface moderna tipo streaming para seus produtos digitais
-                  </p>
-                  <div className="space-y-6">
-                    {[
-                      'Vitrine de Produtos',
-                      'Acesso Centralizado',
-                      'Branding Próprio',
-                      'Experiência Premium'
-                    ].map((item, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-4 group"
-                      >
-                        <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
-                        <span className="text-lg font-black uppercase tracking-wide">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-12 md:py-24 px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-8 md:mb-20">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-120px" }}
-                transition={{ duration: 0.5 }}
-              >
-                <h2 className="text-[12vw] md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                  Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
-                </h2>
-                <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
-                  Uma experiência digna de streaming para seus clientes
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Grid Layout: Card + Text */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-              {/* Premium Showcase Card with Auto-Scroll */}
-              <div className="relative group">
-
-                {/* Atmospheric Glow */}
-                <motion.div
-                  style={{ opacity: glowOpacity }}
-                  className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
-                />
-
-                <motion.div
-                  style={{
-                    scale: dashScale,
-                    y: dashY
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 100, damping: 30 }}
-                  className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-[#1a1a24] rounded-[24px] border border-white/30 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
-                >
-                  {/* Inner Content Container */}
-                  <div className="w-full h-full relative">
-                    {/* Light overlay to lift blacks */}
-                    <div className="absolute inset-0 bg-white/5 z-5 pointer-events-none" />
-
-                    {/* Auto-Scrolling Image Container - 100% width */}
-                    <div className="w-full h-full flex items-start justify-center relative z-10 overflow-hidden">
-                      {!isMembersLoaded && (
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/15 via-[#1a1a24] to-purple-900/15 animate-pulse z-20 flex items-center justify-center">
-                          <div className="w-10 h-10 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
-                        </div>
-                      )}
-                      <motion.img
-                        src="/members-area-showcase.png"
-                        alt="Área de Membros - Vitrine de Produtos"
-                        loading="lazy"
-                        onLoad={() => setIsMembersLoaded(true)}
-                        className={`w-full h-auto object-cover object-top mix-blend-lighten transition-all duration-500 ${
-                          isMembersLoaded ? "opacity-90 scale-100" : "opacity-0 scale-95"
-                        }`}
-                        style={{
-                          filter: "contrast(0.95) saturate(1.2)",
-                          minHeight: "100%"
-                        }}
-                        animate={{
-                          y: ["0%", "-50%", "0%"]
-                        }}
-                        transition={{
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: "linear",
-                          repeatDelay: 2
-                        }}
-                        whileHover={{
-                          style: { filter: "contrast(1) saturate(1.3)" }
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Neon Borders */}
-                  <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
-                  <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-                </motion.div>
-
-                {/* Floating Feature Badges */}
-                <motion.div
-                  style={{ y: yParallax }}
-                  className="absolute -right-4 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] z-40"
-                >
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
-                    <div>
-                      <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Layout Premium</p>
-                      <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Streaming</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  animate={{ y: [0, -20, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -left-4 md:-left-6 bottom-[15%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl z-40"
-                >
-                  <div className="flex items-center gap-2">
-                    <svg className="w-4 h-4 md:w-5 md:h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                    </svg>
-                    <div>
-                      <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-0">Design</p>
-                      <p className="text-base md:text-lg font-black text-white italic leading-tight">Moderno</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Text Content with Bullet Points */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ duration: 0.6 }}
-              >
-                <h3 className="text-5xl md:text-6xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
-                  Experiência <br /> <span className="text-purple-500">Premium.</span>
-                </h3>
-                <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
-                  Interface moderna tipo streaming para seus produtos digitais
-                </p>
-                <div className="space-y-6">
-                  {[
-                    'Vitrine de Produtos',
-                    'Acesso Centralizado',
-                    'Branding Próprio',
-                    'Experiência Premium'
-                  ].map((item, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: false, margin: "-50px" }}
-                      transition={{ delay: i * 0.05, duration: 0.4 }}
-                      className="flex items-center gap-4 group"
-                    >
-                      <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
-                      <span className="text-lg font-black uppercase tracking-wide">{item}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-
-            {/* NEW CARD: Member Area Dashboard Style */}
+      {/* SECTION 4: PRODUTOS DIGITAIS */}
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, margin: "-80px" }}
-              transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
-              className="mt-12 relative group md:max-w-lg mx-auto"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
-              {/* Ambient Glow */}
-              <div className="absolute -inset-10 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-              <div className="relative w-full aspect-video bg-[#050508] rounded-[24px] border border-white/10 shadow-2xl overflow-hidden">
-                {/* Inner Content */}
-                <div className="w-full h-full relative">
-                  {/* Custom Shifting Gradient Glow Background */}
-                  <div className="absolute inset-0 z-0 opacity-35 bg-gradient-to-br from-purple-600/25 via-transparent to-emerald-500/15 pointer-events-none" />
-
-                  {/* Glass Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-                  {/* Image */}
-                  <div className="w-full h-full flex items-center justify-center relative z-30 p-4 md:p-6">
-                    {!isAulaLoaded && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-900/15 via-[#050508] to-purple-900/15 animate-pulse z-20 flex items-center justify-center rounded-[12px]">
-                        <div className="w-10 h-10 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
-                      </div>
-                    )}
-                    <img
-                      src="/assets/nova-aula.png"
-                      alt="Nova Aula Dashboard"
-                      loading="lazy"
-                      onLoad={() => setIsAulaLoaded(true)}
-                      className={`w-full h-full object-contain rounded-[12px] transition-all duration-500 ${
-                        isAulaLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                      }`}
-                    />
-                  </div>
-
-                  {/* Scan Line Effect */}
-                  <motion.div
-                    animate={{ y: ["-100%", "300%"] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
-                    className="absolute top-0 left-0 w-full h-[20%] bg-gradient-to-b from-transparent via-purple-500/10 to-transparent z-30 pointer-events-none blur-sm"
-                  />
-                </div>
-
-                {/* Neon Borders */}
-                <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/50 transition-colors duration-500" />
-                <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
-      <section id="features" className="relative z-10 mt-12 md:mt-48" >
-        <div className="py-32 lg:h-screen lg:sticky lg:top-0 flex items-center justify-center px-6">
-          <div className="max-w-5xl mx-auto w-full">
-            <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
-              <div>
-                <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                  Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
-                </h2>
-                <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
-              </div>
-              <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
-                Design minimalista. <br />Engenharia máxima.
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
+                Venda qualquer <br /> <span className="text-purple-500">Produto Digital.</span>
+              </h2>
+              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
+                Gerencie todos os seus produtos em um único lugar com total flexibilidade
               </p>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
-
-              {/* MOBILE: Simple Stacked Cards */}
-              <div className="lg:hidden w-full space-y-4">
-                {showcaseFeatures.map((f, i) => (
+              <div className="space-y-6">
+                {[
+                  { title: 'Produtos Ilimitados', desc: 'Crie quantos produtos quiser sem restrições' },
+                  { title: 'Multi-Checkouts', desc: 'Checkouts personalizados para cada produto' },
+                  { title: 'Liberação Automática', desc: 'Acesso instantâneo após a compra' },
+                  { title: 'Gestão Centralizada', desc: 'Controle total em um dashboard único' }
+                ].map((item, i) => (
                   <motion.div
-                    key={f.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.05, duration: 0.5 }}
-                    onClick={() => setActiveFeature(i)}
-                    className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
-                      ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
-                      : 'bg-[#0a0a0f]/50 border border-white/10'
-                      }`}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    className="flex items-start gap-4 group"
                   >
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_15px_#a855f7]' : 'bg-white/5 text-gray-500'
-                        }`}>
-                        {f.icon}
-                      </div>
-                      <h3 className="text-base font-black italic uppercase tracking-wide">{f.title}</h3>
+                    <div className="w-2 h-2 rounded-full bg-purple-600 mt-2 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
+                    <div>
+                      <h4 className="text-lg font-black uppercase tracking-wide mb-1">{item.title}</h4>
+                      <p className="text-sm text-gray-500">{item.desc}</p>
                     </div>
-
-                    {/* Expandable Content */}
-                    <AnimatePresence>
-                      {activeFeature === i && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pt-4 border-t border-white/10">
-                            <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
-                            <div className="space-y-3">
-                              {f.highlights.map(h => (
-                                <div key={h} className="flex items-center gap-3">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
-                                  <span className="text-xs font-bold uppercase tracking-wider text-white/70">{h}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </motion.div>
                 ))}
               </div>
+            </motion.div>
 
-              {/* DESKTOP: Vertical Card Carousel */}
-              <div className="hidden lg:flex lg:w-[400px] relative h-full flex-col justify-center">
-                <div className="relative h-[500px] flex flex-col items-center justify-center">
-                  {showcaseFeatures.map((f, i) => {
-                    const offset = i - activeFeature;
-                    const isActive = i === activeFeature;
-                    const isPrev = offset === -1;
-                    const isNext = offset === 1;
-                    const isVisible = Math.abs(offset) <= 1;
-
-                    return (
-                      <motion.div
-                        key={f.id}
-                        animate={{
-                          y: offset * 140,
-                          scale: isActive ? 1 : 0.85,
-                          opacity: isActive ? 1 : isPrev || isNext ? 0.3 : 0,
-                          filter: isActive ? 'blur(0px)' : 'blur(2px)'
-                        }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className={`absolute w-full p-8 rounded-[48px] cursor-pointer flex items-center gap-6 ${isActive
-                          ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_30px_#a855f7] z-20'
-                          : 'bg-[#0a0a0f]/50 border border-white/5 z-10'
-                          }`}
-                        style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
-                        onClick={() => setActiveFeature(i)}
-                      >
-                        <div className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${isActive ? 'bg-purple-600 text-white shadow-[0_0_20px_#a855f7]' : 'bg-white/5 text-gray-500'
-                          }`}>
-                          {f.icon}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-sm font-black italic uppercase tracking-[0.15em]">{f.title}</h3>
-                          {isActive && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-2" />}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-
-                {/* Scroll Indicators */}
-                <div className="flex justify-center gap-2 mt-8">
-                  {showcaseFeatures.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveFeature(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${i === activeFeature ? 'bg-purple-500 w-8' : 'bg-white/20'
-                        }`}
-                    />
-                  ))}
-                </div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative h-[500px]"
+            >
+              <div className="absolute inset-0 flex items-center justify-center">
+                {[1, 2, 3].map(i => (
+                  <GlowCard
+                    key={i}
+                    delay={i * 0.2}
+                    className="absolute w-64 h-80 bg-gradient-to-br from-white/[0.05] to-transparent shadow-2xl backdrop-blur-sm !p-8 !rounded-[40px]"
+                    style={{
+                      left: `${10 + i * 20}%`,
+                      top: `${10 + i * 10}%`,
+                      zIndex: 10 - i
+                    }}
+                  >
+                    <div className="w-12 h-12 bg-purple-600 rounded-2xl mb-6" />
+                    <div className="space-y-3">
+                      <div className="h-2 w-full bg-white/10 rounded-full" />
+                      <div className="h-2 w-2/3 bg-white/10 rounded-full" />
+                      <div className="h-2 w-1/2 bg-white/10 rounded-full" />
+                    </div>
+                  </GlowCard>
+                ))}
               </div>
-
-              {/* DESKTOP: Content Display */}
-              <div className="hidden lg:flex flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex-col lg:flex-row shadow-inner h-full">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
-
-                <div className="flex-1 relative min-h-[400px]">
-                  <AnimatePresence mode="wait">
-                    <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
-                  </AnimatePresence>
-                </div>
-
-                <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
-                  <AnimatePresence mode="wait">
-                    <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
-                      <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
-                      <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
-                      <div className="space-y-5">
-                        {showcaseFeatures[activeFeature].highlights.map(h => (
-                          <div key={h} className="flex items-center gap-4 group">
-                            <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </div>
-
-            </div>
+            </motion.div>
           </div>
         </div>
+      </section >
 
-        {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
-        <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 25}vh` }} />
-      </section>
 
-      {/* SECTION 7: PRODUTOS DIGITAIS - PINNED STICKY PRESENTATION */}
-      {isDesktop ? (
-        <section ref={productsShowcaseRef} className="relative z-10 w-full" style={{ height: "180vh" }}>
-          
-          {/* Left Sidebar Dots Vertical Indicator */}
-          <div className="fixed left-12 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-40 hidden xl:flex">
-            {[0, 1, 2].map((step) => (
-              <div 
-                key={step} 
-                className="flex items-center gap-3 group cursor-pointer" 
-                onClick={() => {
-                  const targetScroll = productsShowcaseRef.current;
-                  if (targetScroll) {
-                    const rect = targetScroll.getBoundingClientRect();
-                    const scrollTop = window.scrollY + rect.top;
-                    const sectionHeight = targetScroll.offsetHeight;
-                    const viewportHeight = window.innerHeight;
-                    const scrollProgress = step === 0 ? 0.1 : step === 1 ? 0.5 : 0.85;
-                    window.scrollTo({
-                      top: scrollTop + scrollProgress * (sectionHeight - viewportHeight),
-                      behavior: "smooth"
-                    });
-                  }
-                }}
-              >
-                <div className={`text-[10px] font-mono font-bold tracking-wider transition-all duration-300 ${activeProductStep === step ? 'text-purple-400 scale-110' : 'text-gray-600'}`}>
-                  0{step + 1}
-                </div>
-                <div className="h-8 w-[2px] bg-white/10 rounded-full relative overflow-hidden">
-                  <motion.div 
-                    className="absolute top-0 left-0 w-full bg-purple-500" 
-                    initial={{ height: 0 }}
-                    animate={{ height: activeProductStep === step ? "100%" : "0%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-transparent via-purple-950/5 to-transparent px-6">
-            <div className="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Left Column: Sticky Titles & Morphing Descriptions */}
-            <div className="relative flex flex-col justify-center h-[450px]">
-              <h2 className="text-5xl md:text-[6vw] font-black italic tracking-tighter uppercase mb-8 leading-[0.85] text-white">
-                Venda qualquer <br /> <span className="text-purple-500">Produto Digital.</span>
+      {/* SECTION 6: AUTOMAÃ‡ÃƒO - TUDO CONECTADO */}
+      < section className="py-16 md:py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                Tudo <br /> <span className="text-purple-500">Conectado.</span>
               </h2>
-              
-              {/* Descriptions Parent Container */}
-              <div className="relative h-[200px] w-full mt-4">
-                
-                {/* Description 1: Infoprodutos */}
-                <motion.div 
-                  style={{ opacity: p1Opacity, y: p1Y, pointerEvents: activeProductStep === 0 ? "auto" : "none" }} 
-                  className="absolute inset-0 flex flex-col justify-start"
-                >
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-400 mb-2">01 / Infoprodutos & Ebooks</span>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-wide mb-3 text-white italic">Cursos, Mentorias e E-books</h3>
-                  <p className="text-gray-400 text-sm md:text-base leading-relaxed font-sans max-w-md">
-                    Entregue conteúdo digital com velocidade brutal. Sistema de liberação automática de acessos e downloads imediato após a aprovação Pix/Cartão.
-                  </p>
-                </motion.div>
-                
-                {/* Description 2: Comunidades */}
-                <motion.div 
-                  style={{ opacity: p2Opacity, y: p2Y, pointerEvents: activeProductStep === 1 ? "auto" : "none" }} 
-                  className="absolute inset-0 flex flex-col justify-start"
-                >
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 mb-2">02 / Recorrência</span>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-wide mb-3 text-white italic">Área de Membros Pro</h3>
-                  <p className="text-gray-400 text-sm md:text-base leading-relaxed font-sans max-w-md">
-                    Hospede sua área de membros própria com experiência streaming tipo Netflix. Gerencie assinaturas mensais, anuais e planos recorrentes com cobrança automatizada.
-                  </p>
-                </motion.div>
-                
-                {/* Description 3: SaaS */}
-                <motion.div 
-                  style={{ opacity: p3Opacity, y: p3Y, pointerEvents: activeProductStep === 2 ? "auto" : "none" }} 
-                  className="absolute inset-0 flex flex-col justify-start"
-                >
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-2">03 / SaaS & Licenças</span>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-wide mb-3 text-white italic">Softwares, SaaS & APIs</h3>
-                  <p className="text-gray-400 text-sm md:text-base leading-relaxed font-sans max-w-md">
-                    Distribua licenças digitais, gerencie chaves de ativação automáticas e envie webhooks realtime para integrar diretamente com seu próprio servidor.
-                  </p>
-                </motion.div>
-                
-              </div>
-            </div>
-
-            {/* Right Column: 3D perspective morphing mockups */}
-            <div className="relative h-[500px] w-full flex items-center justify-center">
-              
-              {/* Card 1: Infoproduto Visual */}
-              <motion.div
-                style={{
-                  opacity: p1Opacity,
-                  scale: p1Scale,
-                  y: p1Y,
-                  rotate: p1Rotate,
-                  zIndex: activeProductStep === 0 ? 30 : 10,
-                  transformStyle: "preserve-3d",
-                  perspective: 1000
-                }}
-                className="absolute w-72 h-[380px] bg-gradient-to-br from-[#12121a] to-[#050508] border-2 border-purple-500/30 rounded-[40px] shadow-[0_50px_100px_rgba(0,0,0,0.85)] p-6 flex flex-col justify-between overflow-hidden group"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 blur-[40px] rounded-full" />
-                <div className="flex justify-between items-center w-full pb-3 border-b border-white/5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-purple-400">CURSO DE ELITE</span>
-                  </div>
-                  <span className="text-[8px] font-mono text-gray-500">Mód. 4 / 12</span>
-                </div>
-                
-                <div className="relative w-full aspect-video bg-[#030305] rounded-xl border border-white/10 flex items-center justify-center overflow-hidden my-4 group-hover:border-purple-500/30 transition-all">
-                  <div className="w-10 h-10 bg-purple-600/20 text-purple-400 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <div className="absolute bottom-1.5 left-2 right-2 h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div className="w-1/3 h-full bg-purple-500" />
-                  </div>
-                </div>
-                
-                <div className="space-y-2 w-full flex-1">
-                  <div className="p-2 bg-white/[0.02] border border-white/5 rounded-lg flex justify-between items-center">
-                    <span className="text-[9px] font-bold text-white/80">Aula 1: Aceleração da Conversão</span>
-                    <span className="text-[8px] text-green-500">Concluído</span>
-                  </div>
-                  <div className="p-2 bg-purple-500/5 border border-purple-500/20 rounded-lg flex justify-between items-center">
-                    <span className="text-[9px] font-bold text-purple-400">Aula 2: Tráfego e Otimização</span>
-                    <span className="text-[8px] text-purple-400 animate-pulse">Assistindo</span>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between items-center w-full pt-4 mt-2 border-t border-white/5">
-                  <span className="text-[8px] font-black tracking-widest text-gray-500 uppercase">🟢 1,248 ativos</span>
-                  <div className="h-6 px-3 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full flex items-center justify-center text-[7px] font-black uppercase tracking-wider">ACTIVE</div>
-                </div>
-              </motion.div>
-              
-              {/* Card 2: Área de Membros Visual */}
-              <motion.div
-                style={{
-                  opacity: p2Opacity,
-                  scale: p2Scale,
-                  y: p2Y,
-                  rotate: p2Rotate,
-                  zIndex: activeProductStep === 1 ? 30 : 20,
-                  transformStyle: "preserve-3d",
-                  perspective: 1000
-                }}
-                className="absolute w-72 h-[380px] bg-gradient-to-br from-[#12121a] to-[#050508] border-2 border-emerald-500/30 rounded-[40px] shadow-[0_50px_100px_rgba(0,0,0,0.85)] p-6 flex flex-col justify-between overflow-hidden group"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-600/10 blur-[40px] rounded-full" />
-                <div className="flex justify-between items-center w-full pb-3 border-b border-white/5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400">ÁREA RECORRENTE</span>
-                  </div>
-                  <span className="text-[8px] font-mono text-gray-500">Membro Premium</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-2 my-4 w-full">
-                  {[1, 2, 3].map((item) => (
-                    <div key={item} className="aspect-[2/3] bg-gradient-to-t from-black to-emerald-950/20 border border-white/10 rounded-lg overflow-hidden relative group/thumb hover:border-emerald-500/30 transition-all">
-                      <div className="absolute bottom-1 left-1 right-1 h-0.5 bg-emerald-500/40 rounded-full overflow-hidden" />
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="p-3 bg-emerald-950/20 border border-emerald-500/20 rounded-xl w-full">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-[7px] font-black text-emerald-400 uppercase tracking-widest">MRR Recorrente</span>
-                    <span className="text-[8px] font-mono text-emerald-400 font-bold">+12.4%</span>
-                  </div>
-                  <div className="text-base font-black text-white italic">R$ 42.850,00<span className="text-[9px] text-gray-500 font-light italic">/mês</span></div>
-                </div>
-                
-                <div className="flex justify-between items-center w-full pt-4 mt-2 border-t border-white/5">
-                  <span className="text-[8px] font-black tracking-widest text-gray-500 uppercase">📈 94.8% LTV RETENÇÃO</span>
-                  <div className="h-6 px-3 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-full flex items-center justify-center text-[7px] font-black uppercase tracking-wider">ACTIVE</div>
-                </div>
-              </motion.div>
-              
-              {/* Card 3: SaaS Visual */}
-              <motion.div
-                style={{
-                  opacity: p3Opacity,
-                  scale: p3Scale,
-                  y: p3Y,
-                  rotate: p3Rotate,
-                  zIndex: activeProductStep === 2 ? 30 : 10,
-                  transformStyle: "preserve-3d",
-                  perspective: 1000
-                }}
-                className="absolute w-72 h-[380px] bg-gradient-to-br from-[#12121a] to-[#050508] border-2 border-blue-500/30 rounded-[40px] shadow-[0_50px_100px_rgba(0,0,0,0.85)] p-6 flex flex-col justify-between overflow-hidden group"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 blur-[40px] rounded-full" />
-                <div className="flex justify-between items-center w-full pb-2 border-b border-white/5">
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-red-500" />
-                    <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                  </div>
-                  <span className="text-[8px] font-mono text-gray-500">terminal@supercheckout</span>
-                </div>
-                
-                <div className="w-full bg-[#030305] border border-white/10 rounded-xl p-3 font-mono text-[8px] text-blue-400 space-y-1.5 my-3 flex-1 overflow-hidden select-none">
-                  <div><span className="text-gray-500">$</span> npm run start:webhooks</div>
-                  <div className="text-green-400">✓ Webhook online [200 OK]</div>
-                  <div className="text-gray-400 mt-2">Listening to checkout.succeeded...</div>
-                  <div className="text-yellow-400 p-1 bg-yellow-500/10 border border-yellow-500/20 rounded">
-                    EVENT: checkout.succeeded
-                    <br />
-                    USER: jean@supercheckout.app
-                  </div>
-                </div>
-                
-                <div className="flex justify-between items-center w-full pt-4 mt-2 border-t border-white/5">
-                  <span className="text-[8px] font-black tracking-widest text-gray-500 uppercase">⚡ 120ms Latência</span>
-                  <div className="h-6 px-3 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-full flex items-center justify-center text-[7px] font-black uppercase tracking-wider">ACTIVE</div>
-                </div>
-              </motion.div>
-
-            </div>
+              <p className="text-gray-400 text-lg font-medium max-w-2xl mx-auto uppercase tracking-widest">
+                Arquitetura aberta para automações reais
+              </p>
+              <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
+            </motion.div>
           </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-24 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
-          <div className="max-w-5xl mx-auto w-full">
-            <h2 className="text-5xl font-black italic tracking-tighter uppercase mb-16 text-center text-white">
-              Venda qualquer <br /> <span className="text-purple-500">Produto Digital.</span>
-            </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  step: "01",
-                  title: "Cursos, Mentorias e E-books",
-                  desc: "Entregue conteúdo digital com velocidade brutal. Sistema de liberação automática de acessos e downloads imediato após a aprovação Pix/Cartão.",
-                  color: "border-purple-500/30"
-                },
-                {
-                  step: "02",
-                  title: "Área de Membros Pro",
-                  desc: "Hospede sua área de membros própria com experiência streaming tipo Netflix. Gerencie assinaturas mensais, anuais e planos recorrentes com cobrança automatizada.",
-                  color: "border-emerald-500/30"
-                },
-                {
-                  step: "03",
-                  title: "Softwares, SaaS & APIs",
-                  desc: "Distribua licenças digitais, gerencie chaves de ativação automáticas e envie webhooks realtime para integrar diretamente com seu próprio servidor.",
-                  color: "border-blue-500/30"
-                }
-              ].map((item, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.5 }}
-                  className={`p-8 bg-[#0a0a0f] border-2 ${item.color} rounded-[32px] space-y-4`}
-                >
-                  <span className="text-xs font-mono font-bold text-purple-400">0{idx + 1} / {idx === 0 ? "Infoproduto" : idx === 1 ? "Recorrência" : "SaaS"}</span>
-                  <h3 className="text-xl font-black italic uppercase text-white">{item.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-
-      {/* SECTION 8: AUTOMAÇÃO - TUDO CONECTADO */}
-      {isDesktop ? (
-        <section ref={automationRef} className="relative w-full z-10" style={{ height: "150vh" }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6">
-            <div className="max-w-5xl mx-auto w-full relative h-full flex items-center justify-center">
-              
-              {/* Title Block */}
-              <motion.div
-                style={{ opacity: automationTitleOpacity, y: automationTitleY }}
-                className="absolute top-20 text-center z-30"
-              >
-                <h2 className="text-6xl md:text-[6vw] font-black italic tracking-tighter uppercase mb-2 leading-[0.85] text-white">
-                  Tudo <br /> <span className="text-purple-500">Conectado.</span>
-                </h2>
-                <p className="text-gray-400 text-sm font-medium uppercase tracking-widest mt-4">
-                  Arquitetura aberta para automações reais
-                </p>
-                <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-4" />
-              </motion.div>
-
-              <div className="relative w-full h-[500px] flex items-center justify-center">
+          <div className="relative min-h-[900px] md:min-h-[600px] flex flex-col lg:flex-row items-center justify-center py-12 md:py-20">
             {/* SVG Connections Layer (Background) - Desktop Only */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="none">
               <defs>
@@ -2288,23 +1153,24 @@ const App: React.FC = () => {
 
               {/* Central to Feature Paths */}
               {[
-                { x: 300, y: 150, progress: autoPath0Length }, // Top Left
-                { x: 900, y: 150, progress: autoPath1Length }, // Top Right
-                { x: 300, y: 450, progress: autoPath2Length }, // Bottom Left
-                { x: 900, y: 450, progress: autoPath3Length }  // Bottom Right
+                { x: 300, y: 150 }, // Top Left
+                { x: 900, y: 150 }, // Top Right
+                { x: 300, y: 450 }, // Bottom Left
+                { x: 900, y: 450 }  // Bottom Right
               ].map((pos, i) => (
                 <g key={i}>
                   <motion.path
                     d={`M 600 300 L ${pos.x} ${pos.y}`}
-                    stroke="rgba(168, 85, 247, 0.35)"
-                    strokeWidth="2.5"
+                    stroke="rgba(168, 85, 247, 0.2)"
+                    strokeWidth="2"
                     fill="none"
-                    style={{
-                      pathLength: pos.progress
-                    }}
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    whileInView={{ pathLength: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, delay: i * 0.2 }}
                   />
                   <motion.circle
-                    r="4"
+                    r="3"
                     fill="#a855f7"
                     initial={{ offset: 0 }}
                     animate={{
@@ -2388,9 +1254,7 @@ const App: React.FC = () => {
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                  className="relative group pointer-events-auto cursor-pointer"
+                  className="relative group pointer-events-auto"
                 >
                   <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
                     <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
@@ -2416,12 +1280,11 @@ const App: React.FC = () => {
                 ].map((feature, i) => (
                   <div key={i} className={`flex items-center ${feature.align}`}>
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.9, x: i % 2 === 0 ? -40 : 40 }}
-                      whileInView={{ opacity: 1, scale: 1, x: 0 }}
-                      viewport={{ once: false, margin: "-100px" }}
-                      whileHover={{ scale: 1.05, y: -4 }}
-                      transition={{ delay: 0.05 + i * 0.08, type: "spring", stiffness: 120, damping: 15 }}
-                      className="pointer-events-auto group w-full max-w-[280px] cursor-pointer"
+                      initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
+                      className="pointer-events-auto group w-full max-w-[280px]"
                     >
                       <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/50 rounded-[32px] transition-all duration-300 shadow-[0_0_50px_rgba(168,85,247,0.4)] group-hover:border-purple-500/20 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] relative overflow-hidden">
                         <div className="absolute inset-0 bg-purple-600/5 opacity-100 group-hover:opacity-50 transition-opacity duration-300" />
@@ -2437,142 +1300,18 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
-          </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-16 md:py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Tudo <br /> <span className="text-purple-500">Conectado.</span>
-              </h2>
-              <p className="text-gray-400 text-lg font-medium max-w-2xl mx-auto uppercase tracking-widest">
-                Arquitetura aberta para automações reais
-              </p>
-              <div className="h-1.5 w-32 bg-purple-600 rounded-full mx-auto mt-8" />
-            </div>
-
-            <div className="relative min-h-[900px] md:min-h-[600px] flex flex-col lg:flex-row items-center justify-center py-12 md:py-20">
-              {/* SVG Connections Layer (Background) - Desktop Only */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" viewBox="0 0 1200 600" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="rgba(168, 85, 247, 0.1)" />
-                    <stop offset="50%" stopColor="rgba(168, 85, 247, 0.4)" />
-                    <stop offset="100%" stopColor="rgba(168, 85, 247, 0.1)" />
-                  </linearGradient>
-                </defs>
-
-                {/* Central to Feature Paths */}
-                {[
-                  { x: 300, y: 150 }, // Top Left
-                  { x: 900, y: 150 }, // Top Right
-                  { x: 300, y: 450 }, // Bottom Left
-                  { x: 900, y: 450 }  // Bottom Right
-                ].map((pos, i) => (
-                  <g key={i}>
-                    <motion.path
-                      d={`M 600 300 L ${pos.x} ${pos.y}`}
-                      stroke="rgba(168, 85, 247, 0.25)"
-                      strokeWidth="2"
-                      fill="none"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      whileInView={{ pathLength: 1, opacity: 1 }}
-                      viewport={{ once: false, margin: "-100px" }}
-                      transition={{ type: "spring", stiffness: 40, damping: 15, delay: i * 0.15 }}
-                    />
-                    <motion.circle
-                      r="3"
-                      fill="#a855f7"
-                      initial={{ offset: 0 }}
-                      animate={{
-                        cx: [600, pos.x],
-                        cy: [300, pos.y]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "linear",
-                        delay: i * 0.5
-                      }}
-                    />
-                  </g>
-                ))}
-              </svg>
-
-              {/* Mobile Layout: Vertical Stack */}
-              <div className="flex flex-col items-center gap-8 lg:hidden w-full px-6">
-                {/* Central Node (Core Engine) - Top on Mobile */}
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  className="relative z-20 group"
-                >
-                  <div className="w-40 h-40 bg-purple-600 rounded-full flex items-center justify-center p-1 relative">
-                    <div className="absolute inset-0 border-2 border-dashed border-purple-400/30 rounded-full animate-[spin_10s_linear_infinite]" />
-                    <div className="absolute inset-2 border-2 border-purple-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
-
-                    <div className="w-full h-full bg-[#030303] rounded-full flex flex-col items-center justify-center border border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.4)]">
-                      <div className="text-3xl font-black italic text-white flex items-center justify-center">S</div>
-                      <div className="text-[8px] font-black uppercase tracking-[0.2em] text-purple-400 mt-1">CORE</div>
-                    </div>
-                  </div>
-                  <div className="absolute -inset-10 bg-purple-600/20 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-600/30 transition-all duration-500" />
-                </motion.div>
-
-                {/* Vertical Line Connector */}
-                <div className="w-0.5 h-8 bg-gradient-to-b from-purple-500/50 to-purple-500/20" />
-
-                {/* Feature Cards - Vertical Stack on Mobile */}
-                <div className="flex flex-col gap-8 w-full max-w-[320px]">
-                  {[
-                    { title: 'Webhooks Nativos', desc: 'Eventos de venda e pagamento em tempo real.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg> },
-                    { title: 'Eventos Realtime', desc: 'Dados instantâneos a cada ação do sistema.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> },
-                    { title: 'Arquitetura Aberta', desc: 'Compatível com n8n, Zapier, Make e sistemas próprios.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg> },
-                    { title: 'Automação Livre', desc: 'Você define a lógica. O sistema entrega os dados.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
-                  ].map((feature, i) => (
-                    <div key={i} className="relative">
-                      {/* Connector Line */}
-                      {i < 3 && (
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full w-0.5 h-8 bg-gradient-to-b from-purple-500/20 to-purple-500/10" />
-                      )}
-
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.05, duration: 0.5 }}
-                        className="group w-full"
-                      >
-                        <div className="p-6 bg-[#0a0a0f]/80 backdrop-blur-2xl border border-purple-500/30 rounded-[32px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,0,0,0.5)] md:hover:border-white/5 md:hover:shadow-none">
-                          <div className="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:bg-purple-600/20 group-hover:scale-110 transition-all duration-500">
-                            {feature.icon}
-                          </div>
-                          <h3 className="text-xl font-black italic uppercase tracking-tight mb-2 group-hover:text-purple-400 transition-colors">{feature.title}</h3>
-                          <p className="text-[11px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-400 transition-colors uppercase tracking-wider">{feature.desc}</p>
-                        </div>
-                      </motion.div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+        </div>
+      </section >
 
       {/* SECTION 7: TRÃFEGO & DADOS */}
-      <section className="py-32 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
+      < section className="py-32 px-6 relative z-10" >
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
-              initial={{ opacity: 0, y: 60, scale: 0.96, rotateX: 10 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ type: "spring", stiffness: 45, damping: 20 }}
-              style={{ transformOrigin: "top center" }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Dados que <br /> <span className="text-purple-500">Importam.</span>
@@ -2590,19 +1329,18 @@ const App: React.FC = () => {
               { title: 'Rastreamento Completo', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>, color: '#3b82f6', glow: 'from-blue-500/20' },
               { title: 'Performance Real', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, color: '#f97316', glow: 'from-orange-500/20' }
             ].map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.85, y: 30 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: false, margin: "-80px" }}
-                  transition={{ type: "spring", stiffness: 120, damping: 18, delay: i * 0.08 }}
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: feature.color + '1a',
-                    borderColor: feature.color + '4d',
-                    y: -6
-                  }}
-                  className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group transition-all duration-500 overflow-hidden"
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: feature.color + '1a',
+                  borderColor: feature.color + '4d'
+                }}
+                className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group transition-all duration-500 overflow-hidden"
                 style={{
                   borderLeftWidth: '4px',
                   borderLeftColor: feature.color
@@ -2627,16 +1365,16 @@ const App: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 8: GESTÃƒO - CONTROLE TOTAL */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
-        <div className="max-w-5xl mx-auto">
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false, margin: "-100px" }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="relative h-[400px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group"
             >
@@ -2647,7 +1385,7 @@ const App: React.FC = () => {
                     key={i}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-50px" }}
+                    viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                     className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
                   >
@@ -2666,7 +1404,7 @@ const App: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
@@ -2686,7 +1424,7 @@ const App: React.FC = () => {
                     key={i}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-50px" }}
+                    viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                     className="flex items-center gap-4 group"
                   >
@@ -2698,18 +1436,17 @@ const App: React.FC = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 9: MARCA - SUA MARCA EM PRIMEIRO LUGAR */}
-      <section className="py-32 px-6 relative z-10" >
-        <div className="max-w-5xl mx-auto">
+      < section className="py-32 px-6 relative z-10" >
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
-              initial={{ opacity: 0, y: 60, scale: 0.96, rotateX: 10 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ type: "spring", stiffness: 45, damping: 20 }}
-              style={{ transformOrigin: "top center" }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Sua Marca em <br /> <span className="text-purple-500">Primeiro Lugar.</span>
@@ -2730,14 +1467,13 @@ const App: React.FC = () => {
             ].map((feature, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: false, margin: "-80px" }}
-                whileHover={{ y: -8, scale: 1.03, borderColor: 'rgba(168, 85, 247, 0.6)', boxShadow: '0 25px 60px rgba(168,85,247,0.2)' }}
-                transition={{ delay: i * 0.06, type: "spring", stiffness: 120, damping: 18 }}
-                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.04] cursor-pointer transition-all relative overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05, duration: 0.5 }}
+                whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.4)' }}
+                className="p-10 bg-white/[0.02] border border-white/10 rounded-[32px] group hover:bg-white/[0.05] transition-all duration-500"
               >
-                <div className="absolute -inset-10 bg-purple-600/5 blur-[50px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 <div className="text-purple-500 mb-6 group-hover:scale-110 transition-transform duration-500">
                   {feature.icon}
                 </div>
@@ -2747,18 +1483,17 @@ const App: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SECTION 10: INFRA & SEGURANÇA - ENHANCED */}
-      <section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
-        <div className="max-w-5xl mx-auto">
+      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
-              initial={{ opacity: 0, y: 60, scale: 0.96, rotateX: 10 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ type: "spring", stiffness: 45, damping: 20 }}
-              style={{ transformOrigin: "top center" }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
                 Pronto para <br /> <span className="text-purple-500">Escalar.</span>
@@ -2782,10 +1517,10 @@ const App: React.FC = () => {
               ].map((feature, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -40, scale: 0.95 }}
-                  whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                  viewport={{ once: false, margin: "-80px" }}
-                  transition={{ delay: i * 0.08, type: "spring", stiffness: 120, damping: 18 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05, duration: 0.5 }}
                   className="relative pl-24 group"
                 >
                   {/* Ãcone com Círculo */}
@@ -2809,13 +1544,13 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
 
 
       {/* PLANOS - HIGH CONTRAST */}
-      <section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
-        <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-20">
+      < section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
           <div className="text-center mb-16 md:mb-20">
             <h2 className="text-5xl md:text-7xl lg:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10 text-black">Comece <br /> <span className="text-purple-600">Agora.</span></h2>
 
@@ -2898,57 +1633,47 @@ const App: React.FC = () => {
               </div>
 
               {/* Botão WhatsApp */}
-              <motion.a 
+              <a 
                 href="https://wa.me/5551999999999?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20sobre%20o%20Super%20Checkout%20e%20ativar%20minha%20estrutura." 
                 target="_blank" 
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.03, boxShadow: "0 20px 50px rgba(16,185,129,0.5)" }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 350, damping: 20 }}
-                className="relative z-10 w-full py-5 md:py-7 px-4 md:px-8 bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 rounded-full font-black text-[11px] sm:text-xs md:text-base uppercase tracking-[0.05em] md:tracking-[0.2em] text-white flex items-center justify-center gap-2 md:gap-3 cursor-pointer shadow-[0_15px_35px_rgba(16,185,129,0.35)]"
+                className="relative z-10 w-full py-5 md:py-7 px-4 md:px-8 bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 rounded-full font-black text-[11px] sm:text-xs md:text-base uppercase tracking-[0.05em] md:tracking-[0.2em] text-white hover:from-emerald-400 hover:via-green-400 hover:to-emerald-500 shadow-[0_15px_35px_rgba(16,185,129,0.35)] hover:shadow-[0_20px_45px_rgba(16,185,129,0.5)] transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 md:gap-3"
               >
                 {/* Ícone de Chat Moderno Premium */}
                 <svg className="w-4 h-4 md:w-5 md:h-5 shrink-0 fill-current" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
                 </svg>
                 <span>Quero Minha Estrutura Própria</span>
-              </motion.a>
+              </a>
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
 
 
       {/* SECTION: FAQ */}
-      <FAQ />
+      < FAQ />
 
       {/* CTA FINAL */}
-      <section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
+      < section className="py-64 bg-black text-center relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-5xl mx-auto px-6 relative z-10">
           <h2 className="text-[12vw] md:text-[9vw] font-black leading-none tracking-tighter mb-20 uppercase italic text-white">
             Ative seu <br /> <span className="text-purple-500">Poder.</span>
           </h2>
           <motion.button
-            whileHover={{ 
-              scale: 1.05, 
-              rotate: -1,
-              backgroundColor: "var(--color-primary)",
-              color: "#ffffff",
-              boxShadow: "0 0 50px rgba(168,85,247,0.5)"
-            }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="px-12 py-6 md:px-32 md:py-14 bg-white text-black rounded-full font-black text-2xl md:text-5xl uppercase italic tracking-tighter shadow-2xl transition-colors w-full md:w-auto"
+            whileHover={{ scale: 1.05, rotate: -1 }}
+            whileTap={{ scale: 0.98 }}
+            className="px-12 py-6 md:px-32 md:py-14 bg-white text-black rounded-full font-black text-2xl md:text-5xl uppercase italic tracking-tighter shadow-2xl transition-all hover:bg-purple-600 hover:text-white w-full md:w-auto"
           >
             Instalar
           </motion.button>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.15)_0%,_transparent_70%)] opacity-30" />
-      </section>
+      </section >
 
       <footer className="py-32 bg-black border-t border-white/5 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="max-w-5xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.6em] text-gray-800">
+        <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.6em] text-gray-800">
           <div className="text-left">
             <h2 className="text-5xl font-black italic text-white mb-8 uppercase tracking-tighter">SUPER<span className="text-purple-500">CHECKOUT</span></h2>
             <p className="max-w-sm leading-loose">A plataforma definitiva para produtos digitais de alta escala. Built for the 1%.</p>
@@ -2956,10 +1681,9 @@ const App: React.FC = () => {
           <p className="max-w-sm md:text-right leading-loose">© 2026 SUPER CHECKOUT .APP — BRUTAL PERFORMANCE ENGINE. ALL RIGHTS RESERVED.</p>
         </div>
       </footer>
-    </div>
+    </div >
   );
 };
 
 export default App;
-
 

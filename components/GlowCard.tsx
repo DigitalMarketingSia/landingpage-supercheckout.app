@@ -6,11 +6,13 @@ interface GlowCardProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  style?: React.CSSProperties;
 }
 
-const GlowCard: React.FC<GlowCardProps> = ({ children, className = '', delay = 0 }) => {
+const GlowCard: React.FC<GlowCardProps> = ({ children, className = '', delay = 0, style }) => {
   return (
     <motion.div
+      style={style}
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}

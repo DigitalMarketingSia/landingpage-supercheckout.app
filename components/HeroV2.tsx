@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence, useTransform, useSpring } from 'framer-motion';
 import Aurora from './Aurora';
 import GradientText from './GradientText';
+import BlurText from './BlurText';
 
 const CTAComponent = ({ onOpenVideo }: { onOpenVideo: () => void }) => (
     <div className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
@@ -73,6 +74,11 @@ const HeroV2: React.FC<HeroV2Props> = ({ scrollYProgress, isDesktop }) => {
 
     return (
         <section className="relative min-h-screen w-full flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
+            {/* Dynamic WebGL Aurora Shifter */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
+                <Aurora colorStops={['#a855f7', '#22c55e', '#a855f7']} amplitude={1.2} blend={0.6} speed={0.5} />
+            </div>
+
             {/* Ambient Background Gradient Glows */}
             <div className="absolute inset-0 z-0 opacity-25 pointer-events-none bg-gradient-to-tr from-emerald-500/20 via-transparent to-purple-500/20" />
 
@@ -104,9 +110,27 @@ const HeroV2: React.FC<HeroV2Props> = ({ scrollYProgress, isDesktop }) => {
 
                     {/* Headline */}
                     <div className="space-y-4">
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tighter uppercase italic text-white">
-                            SEU PRÓPRIO <br />
-                            <span className="text-purple-500">SISTEMA</span> DE VENDAS
+                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tighter uppercase italic text-white flex flex-col items-center md:items-start select-none">
+                            <BlurText
+                                text="SEU PRÓPRIO"
+                                animateBy="letters"
+                                delay={30}
+                                className="text-white font-black"
+                            />
+                            <div className="flex gap-2 md:gap-4 flex-wrap justify-center md:justify-start">
+                                <BlurText
+                                    text="SISTEMA"
+                                    animateBy="letters"
+                                    delay={30}
+                                    className="text-purple-500 font-black"
+                                />
+                                <BlurText
+                                    text="DE VENDAS"
+                                    animateBy="letters"
+                                    delay={30}
+                                    className="text-white font-black"
+                                />
+                            </div>
                         </h1>
                         <p className="text-xl md:text-2xl font-light text-gray-300 leading-tight tracking-wide font-sans">
                             A Infraestrutura Completa que Plataformas Não Oferecem.
@@ -175,6 +199,8 @@ const HeroV2: React.FC<HeroV2Props> = ({ scrollYProgress, isDesktop }) => {
                                 alt="Infrastructure Dashboard"
                                 loading="lazy"
                                 decoding="async"
+                                width={1600}
+                                height={1000}
                                 onLoad={() => setIsDashLoaded(true)}
                                 className={`w-full h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-700 ${
                                     isDashLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"

@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Checkout - Reels Promocional Dinâmico</title>
+    <!-- Fontes Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Bibliotecas Necessárias -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --primary: #10b981; /* Emerald Green */
+            --primary-glow: rgba(16, 185, 129, 0.4);
+            --danger: #ef4444; /* Red */
+            --danger-glow: rgba(239, 68, 68, 0.5);
+            --bg: #020205;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --emerald-border: rgba(16, 185, 129, 0.2);
+            --red-border: rgba(239, 68, 68, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Container Reels 9:16 */
+        #reels-viewport {
+            width: 450px;
+            height: 800px;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            border-radius: 36px;
+            border: 4px solid #111;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 2px 2px rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            transform-origin: center center;
+        }
+
+        /* Grid de fundo estilo Register Page */
+        #grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.9;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Luzes Pulsantes Neon */
+        .neon-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 75%);
+            filter: blur(80px);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        #glow-top { top: -250px; left: -100px; }
+        #glow-bottom { bottom: -250px; right: -100px; }
+        #glow-red {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.12) 0%, transparent 70%);
+            opacity: 0;
+            z-index: 2;
+        }
+
+        /* Camadas de Cena */
+        .scene {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            padding: 30px;
+            text-align: center;
+            z-index: 5;
+            pointer-events: none;
+            transform: scale(1);
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Tipografia de Alta Conversão */
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            text-transform: uppercase;
+            font-size: 3.4rem;
+            line-height: 0.85;
+            letter-spacing: -2px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .highlight-red {
+            color: var(--danger);
+            text-shadow: 0 0 35px var(--danger-glow);
+        }
+
+        .highlight-green {
+            color: var(--primary);
+            text-shadow: 0 0 35px var(--primary-glow);
+        }
+
+        /* CENA 1 — GANCHO */
+        #typing-container {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #typing-cursor {
+            display: inline-block;
+            width: 4px;
+            height: 40px;
+            background: var(--primary);
+            margin-left: 5px;
+            animation: cursorBlink 0.8s infinite;
+        }
+
+        @keyframes cursorBlink {
+            50% { opacity: 0; }
+        }
+
+        /* Cadeado SVG customizado para impacto */
+        .lock-container {
+            width: 110px;
+            height: 110px;
+            margin-top: 15px;
+            position: relative;
+            transform: scale(0);
+        }
+
+        .lock-svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--danger);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 15px var(--danger-glow));
+        }
+
+        .sub-hook-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 15px;
+            transform: translateY(20px);
+            opacity: 0;
+            letter-spacing: -0.5px;
+        }
+
+        /* CENA 2 — O PROBLEMA */
+        .platform-logos {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 30px;
+            height: 65px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.6);
+            transition: all 0.3s ease;
+        }
+
+        .platform-icon {
+            filter: grayscale(15%) blur(0.3px);
+            opacity: 0.45;
+            transition: all 0.3s ease;
+        }
+
+        .scene-subtitle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 90%;
+            margin: -10px auto 25px auto;
+            line-height: 1.3;
+        }
+
+        /* Bloco do Negócio Sendo Mordido */
+        .revenue-block-wrapper {
+            position: relative;
+            width: 220px;
+            height: 150px;
+            margin-bottom: 25px;
+            perspective: 800px;
+        }
+
+        .revenue-block {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-block::before {
+            content: "SEU NEGÓCIO";
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+
+        .revenue-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        /* Efeito de "Mordida" (clip paths dinâmicos) */
+        .revenue-block.bite-1 {
+            clip-path: polygon(0% 0%, 85% 0%, 85% 25%, 100% 35%, 85% 45%, 85% 100%, 0% 100%);
+        }
+        .revenue-block.bite-2 {
+            clip-path: polygon(0% 0%, 85% 0%, 85% 25%, 100% 35%, 85% 45%, 85% 100%, 15% 100%, 15% 80%, 0% 70%, 15% 60%, 15% 0%);
+        }
+        .revenue-block.bite-3 {
+            clip-path: polygon(10% 15%, 85% 0%, 85% 25%, 100% 35%, 85% 45%, 85% 100%, 15% 100%, 15% 80%, 0% 70%, 15% 60%, 10% 15%);
+        }
+        .revenue-block.bite-4 {
+            clip-path: polygon(20% 20%, 80% 10%, 80% 25%, 100% 35%, 80% 45%, 80% 90%, 20% 90%);
+        }
+        .revenue-block.shattered {
+            transform: scale(0.2) rotateY(180deg);
+            opacity: 0;
+            filter: blur(15px);
+        }
+
+        /* Lista de Dores (Cena 2) */
+        .pain-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .pain-item {
+            background: rgba(239, 68, 68, 0.04);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transform: translateX(-100px);
+            opacity: 0;
+        }
+
+        .pain-item span {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .pain-item i {
+            color: var(--danger);
+            filter: drop-shadow(0 0 5px var(--danger));
+        }
+
+        /* CENA 3 — A SOLUÇÃO */
+        .solution-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .solution-item {
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid var(--emerald-border);
+            border-radius: 14px;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transform: translateY(40px);
+            opacity: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .solution-item span {
+            color: #fff;
+        }
+
+        .solution-item .check-icon {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--primary);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        /* CENA 4 — A EXPERIÊNCIA DE ELITE */
+        .phone-mockup-wrapper {
+            position: relative;
+            width: 200px;
+            height: 350px;
+            perspective: 1000px;
+            margin-top: 5px;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            height: 100%;
+            background: #05050d;
+            border: 4px solid rgba(255, 255, 255, 0.15);
+            border-radius: 36px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 20px rgba(16, 185, 129, 0.15);
+            transform: rotateY(-15deg) rotateX(10deg);
+            transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+        }
+
+        /* Notch superior */
+        .phone-notch {
+            width: 80px;
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 0 auto 8px auto;
+        }
+
+        .phone-screen {
+            flex: 1;
+            background: #020206;
+            border-radius: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* Checkout Form e Animações dentro do Celular */
+        .checkout-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transform: scale(0.9);
+        }
+
+        .checkout-input {
+            height: 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkout-input::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            opacity: 0.3;
+        }
+
+        .checkout-btn {
+            height: 30px;
+            background: var(--primary);
+            border-radius: 8px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: #000;
+            margin-top: 5px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .success-stamp {
+            position: absolute;
+            inset: 8px;
+            background: rgba(2, 2, 6, 0.95);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.6);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+            z-index: 10;
+        }
+
+        .success-stamp i {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+
+        .success-stamp span {
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        /* Floating Badges */
+        .metric-badge {
+            position: absolute;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            z-index: 10;
+            opacity: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        #badge-roi {
+            top: 40px;
+            right: -60px;
+            border-color: var(--primary);
+        }
+
+        #badge-sales {
+            bottom: 60px;
+            left: -60px;
+            border-color: var(--primary-glow);
+        }
+
+        .badge-label {
+            font-size: 0.55rem;
+            opacity: 0.5;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-val {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        /* Contador principal da Cena 4 */
+        .counter-container {
+            margin-bottom: 15px;
+        }
+
+        .counter-label {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            opacity: 0.6;
+            margin-bottom: 5px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .counter-value {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        /* CENA 5 — O CTA */
+        .cta-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 22px;
+            width: 100%;
+            backdrop-filter: blur(25px);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .cta-benefits-list {
+            text-align: left;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 10px;
+        }
+
+        .cta-benefit-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cta-benefit-row i {
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .btn-shimmer {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #000;
+            padding: 20px 25px;
+            border-radius: 18px;
+            font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            text-transform: uppercase;
+            font-size: 1.15rem;
+            border: none;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.4);
+            cursor: pointer;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-shimmer::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(255, 255, 255, 0.5),
+                transparent
+            );
+            transform: rotate(35deg);
+            animation: shimmerEffect 2s infinite linear;
+        }
+
+        @keyframes shimmerEffect {
+            0% { transform: translateX(-80%) rotate(35deg); }
+            100% { transform: translateX(80%) rotate(35deg); }
+        }
+
+        .cta-urgency {
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            opacity: 0.85;
+            font-weight: 900;
+            color: var(--danger);
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+
+        /* Elementos Decorativos de Fundo / Partículas */
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0.6;
+        }
+
+        .glow-ring {
+            position: absolute;
+            border: 1px solid rgba(16, 185, 129, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        /* Barra de Progresso do Reels */
+        #progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* TELA DE INICIALIZAÇÃO E ATIVAÇÃO */
+        #tap-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 2, 5, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            border-radius: 32px;
+        }
+
+        #tap-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .tap-pulse-btn {
+            width: 85px;
+            height: 85px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+            margin-bottom: 25px;
+            animation: tapPulse 1.8s infinite;
+        }
+
+        @keyframes tapPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+            70% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .tap-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .tap-subtext {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="reels-viewport">
+        <!-- TELA DE TAP TO PLAY (Autoplay guard) -->
+        <div id="tap-overlay" onclick="startReels()">
+            <div class="tap-pulse-btn">
+                <i data-lucide="play" style="width: 35px; height: 35px; fill: var(--primary); margin-left: 5px;"></i>
+            </div>
+            <div class="tap-text">Iniciar Animação</div>
+            <div class="tap-subtext">Ativa Som & Vídeo Cinematográfico</div>
+        </div>
+
+        <!-- Barra de Progresso -->
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <div id="grid"></div>
+        <div class="neon-glow" id="glow-top"></div>
+        <div class="neon-glow" id="glow-bottom"></div>
+        <div class="neon-glow" id="glow-red"></div>
+
+        <!-- Anéis de Luz Conêntricos -->
+        <div class="glow-ring" style="width: 200px; height: 200px;"></div>
+        <div class="glow-ring" style="width: 400px; height: 400px;"></div>
+        <div class="glow-ring" style="width: 600px; height: 600px;"></div>
+
+        <!-- CENA 1 — GANCHO -->
+        <div class="scene" id="scene-1">
+            <div id="typing-container">
+                <span id="typing-text"></span>
+                <span id="typing-cursor"></span>
+            </div>
+            
+            <div class="lock-container">
+                <svg class="lock-svg" viewBox="0 0 100 100">
+                    <rect x="25" y="45" width="50" height="40" rx="10" />
+                    <path d="M35 45V30a15 15 0 0 1 30 0v15" id="lock-shackle" />
+                </svg>
+            </div>
+            
+            <h1 id="preso-headline" style="opacity: 0; transform: scale(3) rotate(-10deg); margin-top: 15px;">
+                E CONTINUA<br><span class="highlight-red">PRESO.</span>
+            </h1>
+
+            <div class="sub-hook-text" id="sub-hook-1">Não por falta de produto...</div>
+            <div class="sub-hook-text" id="sub-hook-2">Não por falta de tráfego...</div>
+            <div class="sub-hook-text" id="sub-hook-3" style="color: var(--danger); font-size: 1.3rem; font-weight: 900;">POR ESTRUTURA ERRADA!</div>
+        </div>
+
+        <!-- CENA 2 — O PROBLEMA -->
+        <div class="scene" id="scene-2">
+            <div class="platform-logos">
+                <!-- Hotmart Parody: Cute Foguinho with a little face -->
+                <div class="logo-item" id="logo-hotmart">
+                    <svg class="platform-icon" viewBox="0 0 100 100" style="width: 55px; height: 55px;">
+                        <!-- Outer Flame -->
+                        <path d="M50 12 C62 28 78 38 78 58 C78 74 65 86 50 86 C35 86 22 74 22 58 C22 38 38 28 50 12 Z" fill="#f97316" />
+                        <!-- Inner Flame -->
+                        <path d="M50 32 C55 42 66 50 66 62 C66 71 59 78 50 78 C41 78 34 71 34 62 C34 50 45 42 50 32 Z" fill="#ef4444" />
+                        <!-- Cute Eyes -->
+                        <circle cx="43" cy="58" r="3.5" fill="#000" />
+                        <circle cx="57" cy="58" r="3.5" fill="#000" />
+                        <circle cx="42.5" cy="57" r="1" fill="#fff" />
+                        <circle cx="56.5" cy="57" r="1" fill="#fff" />
+                        <!-- Pink Cheeks -->
+                        <circle cx="38" cy="62" r="2.5" fill="#fda4af" />
+                        <circle cx="62" cy="62" r="2.5" fill="#fda4af" />
+                        <!-- Happy Smile -->
+                        <path d="M47 63 Q50 66 53 63" stroke="#000" stroke-width="2" stroke-linecap="round" fill="none" />
+                    </svg>
+                </div>
+                
+                <!-- Kiwify Parody: Cute kiwi bird / fruit hybrid with a face -->
+                <div class="logo-item" id="logo-kiwify">
+                    <svg class="platform-icon" viewBox="0 0 100 100" style="width: 55px; height: 55px;">
+                        <!-- Outer brown rind -->
+                        <circle cx="50" cy="52" r="26" fill="#854d0e" />
+                        <!-- Green inner fruit -->
+                        <circle cx="50" cy="52" r="22" fill="#84cc16" />
+                        <!-- White core -->
+                        <circle cx="50" cy="52" r="7" fill="#fff" />
+                        <!-- Kiwi seeds -->
+                        <circle cx="42" cy="46" r="1.5" fill="#000" />
+                        <circle cx="58" cy="46" r="1.5" fill="#000" />
+                        <circle cx="39" cy="53" r="1.5" fill="#000" />
+                        <circle cx="61" cy="53" r="1.5" fill="#000" />
+                        <circle cx="44" cy="59" r="1.5" fill="#000" />
+                        <circle cx="56" cy="59" r="1.5" fill="#000" />
+                        <!-- Cute Eyes -->
+                        <circle cx="44" cy="50" r="3" fill="#000" />
+                        <circle cx="56" cy="50" r="3" fill="#000" />
+                        <!-- Red Cheeks -->
+                        <circle cx="40" cy="53" r="2" fill="#f87171" />
+                        <circle cx="60" cy="53" r="2" fill="#f87171" />
+                        <!-- Small Smile -->
+                        <path d="M48 54 Q50 56 52 54" stroke="#000" stroke-width="1.8" stroke-linecap="round" fill="none" />
+                    </svg>
+                </div>
+                
+                <!-- Eduzz Parody: Cute star/sun helper character -->
+                <div class="logo-item" id="logo-eduzz">
+                    <svg class="platform-icon" viewBox="0 0 100 100" style="width: 55px; height: 55px;">
+                        <!-- Yellow Sun Rays / Star Body -->
+                        <path d="M50 14 L59 36 L82 36 L64 50 L71 73 L50 59 L29 73 L36 50 L18 36 L41 36 Z" fill="#eab308" />
+                        <!-- Soft center circle -->
+                        <circle cx="50" cy="46" r="15" fill="#fef08a" />
+                        <!-- Cute Eyes -->
+                        <circle cx="45" cy="44" r="2.8" fill="#000" />
+                        <circle cx="55" cy="44" r="2.8" fill="#000" />
+                        <!-- Cheeks -->
+                        <circle cx="41" cy="47" r="1.8" fill="#f472b6" />
+                        <circle cx="59" cy="47" r="1.8" fill="#f472b6" />
+                        <!-- Smile -->
+                        <path d="M48 48 Q50 50 52 48" stroke="#000" stroke-width="1.8" stroke-linecap="round" fill="none" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="scene-subtitle" id="prob-sub-1">
+                Você constrói o negócio.<br>
+                <span style="color: var(--danger); font-weight: 800;">A plataforma controla a operação.</span>
+            </div>
+
+            <div class="revenue-block-wrapper">
+                <div class="revenue-block" id="business-block">
+                    <div class="revenue-value">R$ 48.950</div>
+                </div>
+            </div>
+
+            <div class="pain-list">
+                <div class="pain-item" id="pain-1">
+                    <span>Taxa por venda</span>
+                    <i data-lucide="trending-down"></i>
+                </div>
+                <div class="pain-item" id="pain-2">
+                    <span>Mensalidade todo mês</span>
+                    <i data-lucide="calendar"></i>
+                </div>
+                <div class="pain-item" id="pain-3">
+                    <span>Saldo retido</span>
+                    <i data-lucide="lock"></i>
+                </div>
+                <div class="pain-item" id="pain-4">
+                    <span>Limite de plano</span>
+                    <i data-lucide="alert-triangle"></i>
+                </div>
+                <div class="pain-item" id="pain-5" style="background: rgba(239, 68, 68, 0.1); border-color: var(--danger);">
+                    <span>Dependência total</span>
+                    <i data-lucide="alert-octagon"></i>
+                </div>
+            </div>
+
+            <div class="scene-subtitle" id="prob-sub-2" style="margin-top: 15px; opacity: 0; font-size: 0.9rem; transform: translateY(15px);">
+                E quanto mais você cresce... <span style="color: #fff; font-weight: 700;">mais isso pesa.</span>
+            </div>
+        </div>
+
+        <!-- CENA 3 — A SOLUÇÃO -->
+        <div class="scene" id="scene-3">
+            <div style="font-size: 0.85rem; font-weight: 800; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase;" id="sol-intro-1">O problema nunca foi ferramenta.</div>
+            <h1 style="font-size: 2.5rem; margin-top: 5px; line-height: 0.95;" id="sol-headline-1">ERA A<br><span class="highlight-green" style="font-size: 3.2rem;">ARQUITETURA!</span></h1>
+            
+            <p style="font-size: 0.9rem; opacity: 0.7; font-weight: 700; margin-top: 10px; line-height: 1.3;" id="sol-intro-2">
+                Conheça a nova <span class="highlight-green">Estrutura Privada</span>.<br>
+                Tudo rodando na sua própria conta.
+            </p>
+
+            <div class="solution-list">
+                <div class="solution-item" id="sol-1">
+                    <span>Checkout + Área de membros</span>
+                    <div class="check-icon"><i data-lucide="check"></i></div>
+                </div>
+                <div class="solution-item" id="sol-2">
+                    <span>Custo Inicial Praticamente ZERO</span>
+                    <div class="check-icon"><i data-lucide="check"></i></div>
+                </div>
+                <div class="solution-item" id="sol-3">
+                    <span>Recebimento Direto (Sem Retenções)</span>
+                    <div class="check-icon"><i data-lucide="check"></i></div>
+                </div>
+                <div class="solution-item" id="sol-4">
+                    <span>Sem Aluguel Eterno da Estrutura</span>
+                    <div class="check-icon"><i data-lucide="check"></i></div>
+                </div>
+                <div class="solution-item" id="sol-5" style="border-color: var(--primary); background: rgba(16, 185, 129, 0.08);">
+                    <span>Liberdade e Soberania Total</span>
+                    <div class="check-icon"><i data-lucide="zap"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENA 4 — A MÁQUINA DE CONVERSÃO -->
+        <div class="scene" id="scene-4">
+            <div class="counter-container">
+                <div class="counter-label">Seu Lucro Real</div>
+                <div class="counter-value" id="cash-counter">R$ 0,00</div>
+            </div>
+
+            <div class="phone-mockup-wrapper">
+                <div class="phone-mockup" id="phone-3d">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="checkout-box">
+                            <div style="font-size: 0.65rem; font-weight: 800; opacity: 0.7; margin-bottom: 5px;">SUPER SECURE CHECKOUT</div>
+                            <div class="checkout-input" id="input-name"></div>
+                            <div class="checkout-input" id="input-card"></div>
+                            <div class="checkout-btn">PAGAR AGORA</div>
+                        </div>
+
+                        <!-- Carimbo de Sucesso -->
+                        <div class="success-stamp" id="stamp-alert">
+                            <i data-lucide="check-circle"></i>
+                            <span style="font-size: 0.75rem;">IMPLANTAÇÃO COMPLETA</span>
+                            <span style="font-size: 0.6rem; opacity: 0.8; margin-top: 5px; color: var(--primary); font-weight: 800;">A PARTE TÉCNICA É COMIGO!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badges orbitando -->
+                <div class="metric-badge" id="badge-roi">
+                    <span class="badge-label">Sem travas</span>
+                    <span class="badge-val">Livre</span>
+                </div>
+
+                <div class="metric-badge" id="badge-sales">
+                    <span class="badge-label">Sem aluguel</span>
+                    <span class="badge-val">100% Seu</span>
+                </div>
+            </div>
+            
+            <div style="font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.4); margin-top: 15px; opacity: 0;" id="phone-bottom-text">
+                O custo cresce junto com a operação. <span style="color: #fff;">Não antes dela.</span>
+            </div>
+        </div>
+
+        <!-- CENA 5 — O CTA -->
+        <div class="scene" id="scene-5">
+            <h1 style="font-size: 2.8rem; margin-bottom: 5px; line-height: 0.95;">APENAS 3 VAGAS<br><span class="highlight-green" style="font-size: 3.2rem;">FOUNDERS</span></h1>
+            
+            <p style="font-size: 0.85rem; opacity: 0.7; font-weight: 700; margin-bottom: 20px;">QUERO ACOMPANHAR AS PRIMEIRAS OPERAÇÕES.</p>
+
+            <div class="cta-card">
+                <button class="btn-shimmer" id="cta-button">
+                    <span>REIVINDICAR VAGA FOUNDER</span>
+                    <i data-lucide="arrow-right"></i>
+                </button>
+                
+                <div class="cta-benefits-list">
+                    <div class="cta-benefit-row">
+                        <i data-lucide="check-circle-2"></i>
+                        <span>Produtos + Checkouts Ilimitados</span>
+                    </div>
+                    <div class="cta-benefit-row">
+                        <i data-lucide="check-circle-2"></i>
+                        <span>Domínios + Atualizações Ilimitadas</span>
+                    </div>
+                    <div class="cta-benefit-row" style="color: var(--primary);">
+                        <i data-lucide="zap"></i>
+                        <span>Implantação Completa inclusa</span>
+                    </div>
+                </div>
+
+                <div class="cta-urgency">Fase Inicial - Suporte Direto Comigo</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar ícones
+        lucide.createIcons();
+
+        // MOTOR DE ÁUDIO SINTETIZADO (Web Audio API)
+        const AudioEngine = {
+            ctx: null,
+            muted: false,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            },
+            playClick() {
+                if (this.muted) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(180 + Math.random() * 150, now);
+                
+                gain.gain.setValueAtTime(0.04, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(now + 0.04);
+            },
+            playLock() {
+                if (this.muted) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                
+                // Impacto de baixa frequência (Corpo do cadeado batendo)
+                const oscLow = this.ctx.createOscillator();
+                const gainLow = this.ctx.createGain();
+                oscLow.type = 'sawtooth';
+                oscLow.frequency.setValueAtTime(90, now);
+                oscLow.frequency.exponentialRampToValueAtTime(30, now + 0.6);
+                gainLow.gain.setValueAtTime(0.35, now);
+                gainLow.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+                
+                oscLow.connect(gainLow);
+                gainLow.connect(this.ctx.destination);
+                oscLow.start(now);
+                oscLow.stop(now + 0.6);
+
+                // Clique metálico de alta frequência (Alça travando)
+                const oscHigh = this.ctx.createOscillator();
+                const gainHigh = this.ctx.createGain();
+                oscHigh.type = 'sine';
+                oscHigh.frequency.setValueAtTime(1100, now);
+                gainHigh.gain.setValueAtTime(0.18, now);
+                gainHigh.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                
+                oscHigh.connect(gainHigh);
+                gainHigh.connect(this.ctx.destination);
+                oscHigh.start(now);
+                oscHigh.stop(now + 0.08);
+            },
+            playBite() {
+                if (this.muted) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(260, now);
+                osc.frequency.exponentialRampToValueAtTime(80, now + 0.18);
+                
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.18);
+            },
+            playTransition() {
+                if (this.muted) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(850, now + 0.4);
+                
+                gain.gain.setValueAtTime(0.01, now);
+                gain.gain.linearRampToValueAtTime(0.15, now + 0.2);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            },
+            playSuccess() {
+                if (this.muted) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                
+                // Arpejo Ka-ching
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i * 0.06);
+                    
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(0.08, now + i * 0.06 + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.35);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + i * 0.06);
+                    osc.stop(now + i * 0.06 + 0.35);
+                });
+            }
+        };
+
+        // TIMELINE GERAL COM GSAP
+        let masterTimeline;
+
+        function buildTimeline() {
+            if (masterTimeline) masterTimeline.kill();
+
+            masterTimeline = gsap.timeline({
+                onUpdate: () => {
+                    const prog = masterTimeline.progress() * 100;
+                    document.getElementById('progress-bar').style.width = `${prog}%`;
+                },
+                onComplete: () => {
+                    masterTimeline.restart();
+                }
+            });
+
+            // RESET DE ESTADOS
+            gsap.set(".scene", { className: "scene" });
+            gsap.set("#scene-1", { className: "scene active" });
+            gsap.set("#preso-headline", { opacity: 0, scale: 3, rotate: -10 });
+            gsap.set(".lock-container", { scale: 0 });
+            gsap.set("#lock-shackle", { strokeDashoffset: 40 });
+            gsap.set(".sub-hook-text", { opacity: 0, y: 20 });
+            gsap.set(".logo-item", { opacity: 0, scale: 0.6 });
+            gsap.set("#business-block", { className: "revenue-block" });
+            gsap.set(".pain-item", { x: -100, opacity: 0 });
+            gsap.set(".solution-item", { y: 40, opacity: 0 });
+            gsap.set("#stamp-alert", { opacity: 0, scale: 0.6 });
+            gsap.set(".metric-badge", { opacity: 0, scale: 0.5 });
+            gsap.set("#phone-3d", { rotateY: -15, rotateX: 10, scale: 1 });
+            gsap.set("#cash-counter", { textContent: "R$ 0,00" });
+            gsap.set("#phone-bottom-text", { opacity: 0, y: 15 });
+            gsap.set("#prob-sub-2", { opacity: 0, y: 15 });
+
+            // ----------------------------------------------------
+            // CENA 1: GANCHO (0s - 10s no roteiro)
+            // ----------------------------------------------------
+            masterTimeline.addLabel("scene1", 0);
+            
+            // Efeito de Digitação "Você cresce. Vende. Escala."
+            const textToType = "Você cresce. Vende. Escala.";
+            const textElement = document.getElementById("typing-text");
+            textElement.textContent = "";
+
+            for(let i = 0; i <= textToType.length; i++) {
+                masterTimeline.to({}, {
+                    duration: 0.07,
+                    onStart: () => {
+                        textElement.textContent = textToType.substring(0, i);
+                        if (i > 0 && i < textToType.length) {
+                            AudioEngine.playClick();
+                        }
+                    }
+                }, `scene1+=${i * 0.07}`);
+            }
+
+            const typingEnd = textToType.length * 0.07;
+
+            // Impacto do "E continua preso." e animação do cadeado
+            masterTimeline.to(".lock-container", {
+                duration: 0.35,
+                scale: 1,
+                ease: "back.out(1.5)"
+            }, `scene1+=${typingEnd + 0.8}`);
+
+            masterTimeline.to("#preso-headline", {
+                duration: 0.35,
+                opacity: 1,
+                scale: 1.1,
+                rotate: 0,
+                ease: "expo.out",
+                onStart: () => {
+                    AudioEngine.playLock();
+                    gsap.to("#reels-viewport", { x: "+=12", y: "+=12", duration: 0.05, repeat: 8, yoyo: true });
+                    gsap.to("#glow-red", { opacity: 0.8, duration: 0.1, yoyo: true, repeat: 3 });
+                }
+            }, `scene1+=${typingEnd + 1.0}`);
+
+            // Textos Sub-Hook cinéticos caindo
+            masterTimeline.to("#sub-hook-1", { duration: 0.35, opacity: 1, y: 0, ease: "back.out" }, `scene1+=${typingEnd + 1.8}`);
+            masterTimeline.to("#sub-hook-2", { duration: 0.35, opacity: 1, y: 0, ease: "back.out" }, `scene1+=${typingEnd + 2.5}`);
+            masterTimeline.to("#sub-hook-3", { 
+                duration: 0.45, 
+                opacity: 1, 
+                y: 0, 
+                scale: 1.1,
+                ease: "bounce.out",
+                onStart: () => {
+                    AudioEngine.playBite();
+                    gsap.to("#reels-viewport", { x: "+=6", y: "+=6", duration: 0.05, repeat: 4, yoyo: true });
+                }
+            }, `scene1+=${typingEnd + 3.2}`);
+
+            // ----------------------------------------------------
+            // TRANSIÇÃO 1 -> 2 (Frenético)
+            // ----------------------------------------------------
+            masterTimeline.to("#scene-1", {
+                duration: 0.35,
+                opacity: 0,
+                scale: 0.8,
+                filter: "blur(10px)",
+                ease: "power2.in",
+                onStart: () => {
+                    AudioEngine.playTransition();
+                }
+            }, `scene1+=${typingEnd + 5.2}`);
+
+            // ----------------------------------------------------
+            // CENA 2: O PROBLEMA (10s - 32s no roteiro)
+            // ----------------------------------------------------
+            masterTimeline.addLabel("scene2", `scene1+=${typingEnd + 5.6}`);
+            
+            masterTimeline.to("#scene-2", {
+                duration: 0.1,
+                onStart: () => {
+                    document.getElementById("scene-1").classList.remove("active");
+                    document.getElementById("scene-2").classList.add("active");
+                }
+            }, "scene2");
+
+            masterTimeline.to("#scene-2", { duration: 0.3, opacity: 1, scale: 1, ease: "power2.out" }, "scene2");
+
+            // Logos Piscando Rapidamente (Efeito Glitch de SVGs de Bichinhos/Ícones)
+            masterTimeline.to("#logo-hotmart", { duration: 0.12, opacity: 1, scale: 1.1, ease: "back.out" }, "scene2+=0.2");
+            masterTimeline.to("#logo-kiwify", { duration: 0.12, opacity: 1, scale: 1.1, ease: "back.out" }, "scene2+=0.35");
+            masterTimeline.to("#logo-eduzz", { duration: 0.12, opacity: 1, scale: 1.1, ease: "back.out" }, "scene2+=0.5");
+            
+            // Focar no Bloco do Negócio
+            masterTimeline.from(".revenue-block-wrapper", { duration: 0.5, scale: 0, ease: "back.out(1.2)" }, "scene2+=0.7");
+
+            // Dores caindo com impacto e mordendo o bloco
+            const painTimes = [1.1, 2.0, 2.9, 3.8, 4.7];
+            
+            painTimes.forEach((time, index) => {
+                const painId = `#pain-${index + 1}`;
+                masterTimeline.to(painId, {
+                    duration: 0.35,
+                    x: 0,
+                    opacity: 1,
+                    ease: "bounce.out",
+                    onStart: () => {
+                        AudioEngine.playBite();
+                        const block = document.getElementById("business-block");
+                        block.className = `revenue-block bite-${index + 1}`;
+                        gsap.to(".revenue-block-wrapper", { x: "+=6", y: "+=6", duration: 0.05, repeat: 4, yoyo: true });
+                        
+                        if (index === 4) {
+                            setTimeout(() => {
+                                block.className = "revenue-block shattered";
+                                AudioEngine.playLock();
+                            }, 350);
+                        }
+                    }
+                }, `scene2+=${time}`);
+            });
+
+            // Subtítulo final da Cena 2
+            masterTimeline.to("#prob-sub-2", { duration: 0.4, opacity: 1, y: 0, ease: "back.out" }, "scene2+=5.5");
+
+            // ----------------------------------------------------
+            // TRANSIÇÃO 2 -> 3 (Alívio / Solução)
+            // ----------------------------------------------------
+            masterTimeline.to("#scene-2", {
+                duration: 0.4,
+                opacity: 0,
+                scale: 1.3,
+                filter: "blur(15px)",
+                ease: "power2.in",
+                onStart: () => {
+                    AudioEngine.playTransition();
+                }
+            }, "scene2+=8.5");
+
+            // ----------------------------------------------------
+            // CENA 3: A SOLUÇÃO (32s - 58s no roteiro)
+            // ----------------------------------------------------
+            masterTimeline.addLabel("scene3", "scene2+=8.9");
+
+            masterTimeline.to("#scene-3", {
+                duration: 0.1,
+                onStart: () => {
+                    document.getElementById("scene-2").classList.remove("active");
+                    document.getElementById("scene-3").classList.add("active");
+                }
+            }, "scene3");
+
+            masterTimeline.to("#scene-3", { duration: 0.5, opacity: 1, scale: 1, ease: "expo.out" }, "scene3");
+
+            // Aparição gradual dos itens da solução
+            const solTimes = [0.6, 1.2, 1.8, 2.4, 3.0];
+            solTimes.forEach((time, index) => {
+                const solId = `#sol-${index + 1}`;
+                masterTimeline.to(solId, {
+                    duration: 0.4,
+                    y: 0,
+                    opacity: 1,
+                    ease: "back.out(1.1)",
+                    onStart: () => {
+                        AudioEngine.playClick();
+                    }
+                }, `scene3+=${time}`);
+            });
+
+            // ----------------------------------------------------
+            // TRANSIÇÃO 3 -> 4 (Impacto Tecnológico)
+            // ----------------------------------------------------
+            masterTimeline.to("#scene-3", {
+                duration: 0.4,
+                opacity: 0,
+                scale: 0.7,
+                filter: "blur(10px)",
+                ease: "power2.in",
+                onStart: () => {
+                    AudioEngine.playTransition();
+                }
+            }, "scene3+=6.0");
+
+            // ----------------------------------------------------
+            // CENA 4: A MÁQUINA DE CONVERSÃO (58s - 80s no roteiro)
+            // ----------------------------------------------------
+            masterTimeline.addLabel("scene4", "scene3+=6.4");
+
+            masterTimeline.to("#scene-4", {
+                duration: 0.1,
+                onStart: () => {
+                    document.getElementById("scene-3").classList.remove("active");
+                    document.getElementById("scene-4").classList.add("active");
+                }
+            }, "scene4");
+
+            masterTimeline.to("#scene-4", { duration: 0.4, opacity: 1, scale: 1, ease: "power2.out" }, "scene4");
+
+            // Mockup Celular subindo
+            masterTimeline.from(".phone-mockup-wrapper", {
+                duration: 0.8,
+                y: 200,
+                rotateZ: -20,
+                opacity: 0,
+                ease: "back.out(1.2)"
+            }, "scene4+=0.3");
+
+            // Animação de Inputs simulada
+            masterTimeline.to("#input-name", {
+                duration: 0.4,
+                onStart: () => { AudioEngine.playClick(); document.querySelector("#input-name").style.width = "100%"; }
+            }, "scene4+=1.1");
+
+            masterTimeline.to("#input-card", {
+                duration: 0.4,
+                onStart: () => { AudioEngine.playClick(); document.querySelector("#input-card").style.width = "100%"; }
+            }, "scene4+=1.5");
+
+            // Clique do Botão no Celular e Stamp de Sucesso
+            masterTimeline.to(".checkout-btn", {
+                duration: 0.1,
+                scale: 0.9,
+                yoyo: true,
+                repeat: 1,
+                onComplete: () => {
+                    AudioEngine.playSuccess();
+                    gsap.to("#stamp-alert", { duration: 0.35, opacity: 1, scale: 1, ease: "back.out(1.4)" });
+                }
+            }, "scene4+=2.0");
+
+            // Contador de Dinheiro Disparando
+            const targetCash = 12450.00;
+            const cashObj = { val: 0 };
+            const counterElement = document.getElementById("cash-counter");
+
+            masterTimeline.to(cashObj, {
+                val: targetCash,
+                duration: 1.8,
+                ease: "power3.out",
+                onUpdate: () => {
+                    const formatted = cashObj.val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    counterElement.textContent = formatted;
+                    if (Math.random() > 0.65) {
+                        AudioEngine.playClick();
+                    }
+                }
+            }, "scene4+=2.2");
+
+            // Badges orbitando surgindo com impacto
+            masterTimeline.to("#badge-roi", { duration: 0.4, opacity: 1, scale: 1, ease: "back.out" }, "scene4+=2.5");
+            masterTimeline.to("#badge-sales", { duration: 0.4, opacity: 1, scale: 1, ease: "back.out" }, "scene4+=2.8");
+
+            // Texto inferior
+            masterTimeline.to("#phone-bottom-text", { duration: 0.4, opacity: 1, y: 0, ease: "back.out" }, "scene4+=3.2");
+
+            // Giro 3D dinâmico do smartphone
+            masterTimeline.to("#phone-3d", {
+                duration: 3,
+                rotateY: 15,
+                rotateX: -5,
+                ease: "sine.inOut",
+                repeat: 1,
+                yoyo: true
+            }, "scene4+=1");
+
+            // ----------------------------------------------------
+            // TRANSIÇÃO 4 -> 5 (Aceleração CTA)
+            // ----------------------------------------------------
+            masterTimeline.to("#scene-4", {
+                duration: 0.4,
+                opacity: 0,
+                scale: 1.2,
+                filter: "blur(12px)",
+                ease: "power2.in",
+                onStart: () => {
+                    AudioEngine.playTransition();
+                }
+            }, "scene4+=6.5");
+
+            // ----------------------------------------------------
+            // CENA 5: O CTA DE ELITE (80s - 95s no roteiro)
+            // ----------------------------------------------------
+            masterTimeline.addLabel("scene5", "scene4+=6.9");
+
+            masterTimeline.to("#scene-5", {
+                duration: 0.1,
+                onStart: () => {
+                    document.getElementById("scene-4").classList.remove("active");
+                    document.getElementById("scene-5").classList.add("active");
+                }
+            }, "scene5");
+
+            masterTimeline.to("#scene-5", { duration: 0.5, opacity: 1, scale: 1, ease: "expo.out" }, "scene5");
+
+            // Impacto do Card do CTA
+            masterTimeline.from(".cta-card", {
+                duration: 0.7,
+                y: 80,
+                opacity: 0,
+                ease: "back.out(1.2)"
+            }, "scene5+=0.3");
+
+            // Brilho forte no Botão Shimmer
+            masterTimeline.to("#cta-button", {
+                duration: 0.5,
+                scale: 1.04,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            }, "scene5+=1.0");
+
+            // Fim da cena segura antes do reinício do loop
+            masterTimeline.to({}, { duration: 5.5 }, "scene5+=1.5");
+        }
+
+        // FUNÇÃO DE INICIALIZAÇÃO DE SEGURANÇA
+        function startReels() {
+            AudioEngine.init();
+            AudioEngine.playTransition();
+
+            const overlay = document.getElementById("tap-overlay");
+            overlay.classList.add("fade-out");
+
+            buildTimeline();
+        }
+
+        // INICIALIZAÇÃO CONTÍNUA DO AMBIENTE
+        
+        // Efeito pulsante suave nos glows de fundo
+        gsap.to(".neon-glow", {
+            duration: 6,
+            scale: 1.25,
+            opacity: 0.4,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            stagger: 1.5
+        });
+
+        // Efeito sutil de rotação 3D nos anéis de grade para dar profundidade
+        gsap.to(".glow-ring", {
+            rotation: 360,
+            duration: 40,
+            repeat: -1,
+            ease: "none"
+        });
+
+        // Criar partículas flutuantes dinâmicas
+        const reelsCanvas = document.getElementById('reels-viewport');
+        const numParticles = 25;
+        for(let i = 0; i < numParticles; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            
+            const size = Math.random() * 3 + 1;
+            p.style.width = `${size}px`;
+            p.style.height = `${size}px`;
+            p.style.left = `${Math.random() * 100}%`;
+            p.style.top = `${Math.random() * 80 + 20}%`;
+            p.style.opacity = Math.random() * 0.5 + 0.1;
+            
+            reelsCanvas.appendChild(p);
+            
+            gsap.to(p, {
+                y: -300 - Math.random() * 200,
+                opacity: 0,
+                duration: 3 + Math.random() * 5,
+                repeat: -1,
+                ease: "power1.in",
+                delay: Math.random() * 4
+            });
+        }
+    </script>
+</body>
+</html>

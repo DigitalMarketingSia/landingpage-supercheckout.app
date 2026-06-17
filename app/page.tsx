@@ -4,7 +4,10 @@ import React, { useRef, useState, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import BlurText from './components/BlurText';
 import GradientText from './components/GradientText';
-import HeroV2 from './components/HeroV2';
+import HeroMembers from './components/HeroMembers';
+import MembrosSection from './components/MembrosSection';
+import CheckoutDashboardSection from './components/CheckoutDashboardSection';
+import Aurora from './components/Aurora';
 
 // Ícones Minimalistas Premium (SVG Single-Tone)
 const Icons = {
@@ -162,22 +165,222 @@ const App: React.FC = () => {
       </div>
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 w-full z-50 py-6 backdrop-blur-2xl border-b border-white/5 bg-black/20">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center w-full">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Super Checkout Logo" fetchPriority="high" className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-xl md:rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)]" />
-            <span className="text-lg md:text-xl font-bold tracking-tighter uppercase italic">Super Checkout <span className="text-purple-500">.app</span></span>
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-3xl z-50 py-2.5 px-6 backdrop-blur-xl border border-white/10 bg-[#050508]/85 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.7)] transition-all">
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="Super Checkout Logo" fetchPriority="high" width={24} height={24} className="w-6 h-6 object-contain rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.3)]" />
+            <span className="text-xs font-bold tracking-tighter uppercase italic text-white">Super Checkout <span className="text-purple-500">.app</span></span>
           </div>
-          <div className="hidden md:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">
+          <div className="hidden sm:flex items-center gap-6 text-[8px] font-black uppercase tracking-[0.3em] text-gray-400">
             <a href="#features" className="hover:text-white transition-all">Tecnologia</a>
             <a href="#plans" className="hover:text-white transition-all">Planos</a>
-            <button className="px-8 py-2.5 bg-white text-black rounded-full text-[9px] font-black hover:bg-purple-600 hover:text-white transition-all shadow-xl">LOGAR</button>
+          </div>
+          <div className="flex items-center gap-4">
+            <button className="text-[8px] font-black uppercase tracking-widest text-gray-300 hover:text-white transition-all">LOGAR</button>
+            <button 
+              onClick={() => {
+                const plansSec = document.getElementById('plans');
+                if (plansSec) {
+                  plansSec.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="px-4 py-1.5 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-full text-[8px] font-black hover:scale-105 transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] uppercase tracking-wider"
+            >
+              Começar
+            </button>
           </div>
         </div>
       </nav>
 
       {/* New Hero Section */}
-      <HeroV2 />
+      <HeroMembers />
+
+      {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
+      <MembrosSection glowOpacity={glowOpacity} dashScale={dashScale} dashY={dashY} yParallax={yParallax} />
+
+      {/* GROUPED SECTION: FEATURES CAROUSEL & CHECKOUT DASHBOARD (UNIFIED VISUAL) */}
+      <div className="relative w-full bg-transparent overflow-hidden mt-12 md:mt-48">
+        {/* Shared WebGL Aurora Background with smooth fade at boundaries */}
+        <div 
+          className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-20"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)'
+          }}
+        >
+          <Aurora colorStops={['#a855f7', '#22c55e', '#a855f7']} amplitude={1.0} blend={0.5} speed={0.4} />
+        </div>
+
+        {/* Shared Ambient Background Gradient Glows */}
+        <div 
+          className="absolute inset-0 z-0 opacity-15 pointer-events-none bg-gradient-to-tr from-emerald-500/10 via-transparent to-purple-500/10"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 150px, black calc(100% - 150px), transparent 100%)'
+          }}
+        />
+
+        {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
+        <section id="features" className="relative z-10 mt-0">
+          <div className="pt-12 pb-0 lg:h-[65vh] lg:sticky lg:top-[18vh] flex items-center justify-center px-6">
+            <div className="max-w-7xl mx-auto w-full">
+              <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
+                <div>
+                  <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
+                    Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
+                  </h2>
+                  <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
+                </div>
+                <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
+                  Design minimalista. <br />Engenharia máxima.
+                </p>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
+
+                {/* MOBILE: Simple Stacked Cards */}
+                <div className="lg:hidden w-full space-y-4">
+                  {showcaseFeatures.map((f, i) => (
+                    <motion.div
+                      key={f.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.6 }}
+                      onClick={() => setActiveFeature(i)}
+                      className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
+                        ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
+                        : 'bg-[#0a0a0f]/50 border border-white/10'
+                        }`}
+                    >
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_15px_#a855f7]' : 'bg-white/5 text-gray-500'
+                          }`}>
+                          {f.icon}
+                        </div>
+                        <h3 className="text-base font-black italic uppercase tracking-wide">{f.title}</h3>
+                      </div>
+
+                      {/* Expandable Content */}
+                      <AnimatePresence>
+                        {activeFeature === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pt-4 border-t border-white/10">
+                              <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
+                              <div className="space-y-3">
+                                {f.highlights.map(h => (
+                                  <div key={h} className="flex items-center gap-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
+                                    <span className="text-xs font-bold uppercase tracking-wider text-white/70">{h}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* DESKTOP: Vertical Card Carousel */}
+                <div className="hidden lg:flex lg:w-[400px] relative h-full flex-col justify-center">
+                  <div className="relative h-[500px] flex flex-col items-center justify-center">
+                    {showcaseFeatures.map((f, i) => {
+                      const offset = i - activeFeature;
+                      const isActive = i === activeFeature;
+                      const isPrev = offset === -1;
+                      const isNext = offset === 1;
+                      const isVisible = Math.abs(offset) <= 1;
+
+                      return (
+                        <motion.div
+                          key={f.id}
+                          animate={{
+                            y: offset * 140,
+                            scale: isActive ? 1 : 0.85,
+                            opacity: isActive ? 1 : isPrev || isNext ? 0.3 : 0,
+                            filter: isActive ? 'blur(0px)' : 'blur(2px)'
+                          }}
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          className={`absolute w-full p-8 rounded-[48px] cursor-pointer flex items-center gap-6 ${isActive
+                            ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_30px_#a855f7] z-20'
+                            : 'bg-[#0a0a0f]/50 border border-white/5 z-10'
+                            }`}
+                          style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
+                          onClick={() => setActiveFeature(i)}
+                        >
+                          <div className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${isActive ? 'bg-purple-600 text-white shadow-[0_0_20px_#a855f7]' : 'bg-white/5 text-gray-500'
+                            }`}>
+                            {f.icon}
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-sm font-black italic uppercase tracking-[0.15em]">{f.title}</h3>
+                            {isActive && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-2" />}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Scroll Indicators */}
+                  <div className="flex justify-center gap-2 mt-8">
+                    {showcaseFeatures.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveFeature(i)}
+                        className={`w-2 h-2 rounded-full transition-all ${i === activeFeature ? 'bg-purple-500 w-8' : 'bg-white/20'
+                          }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* DESKTOP: Content Display */}
+                <div className="hidden lg:flex flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex-col lg:flex-row shadow-inner h-full">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
+
+                  <div className="flex-1 relative min-h-[400px]">
+                    <AnimatePresence mode="wait">
+                      <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
+                    <AnimatePresence mode="wait">
+                      <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
+                        <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
+                        <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
+                        <div className="space-y-5">
+                          {showcaseFeatures[activeFeature].highlights.map(h => (
+                            <div key={h} className="flex items-center gap-4 group">
+                              <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
+                              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
+          <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 25}vh` }} />
+        </section>
+
+        {/* SECTION: CHECKOUT DASHBOARD & INFRASTRUCTURE */}
+        <CheckoutDashboardSection showBackground={false} />
+      </div>
 
       {/* SECTION 2: CHECKOUT QUE VENDE */}
       < section className="py-0 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
@@ -893,361 +1096,9 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
-      <section className="py-32 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Área de Membros <br /> <span className="text-purple-500">Profissional.</span>
-              </h2>
-              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
-                Uma experiência digna de streaming para seus clientes
-              </p>
-            </motion.div>
-          </div>
 
-          {/* Grid Layout: Card + Text */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            {/* Premium Showcase Card with Auto-Scroll */}
-            <div className="relative group">
 
-              {/* Atmospheric Glow */}
-              <motion.div
-                style={{ opacity: glowOpacity }}
-                className="absolute -inset-10 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"
-              />
-
-              <motion.div
-                style={{
-                  scale: dashScale,
-                  opacity: dashOpacity,
-                  y: dashY
-                }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 100, damping: 30 }}
-                className="relative w-full aspect-[16/9] bg-[#050508] rounded-[24px] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.95)] overflow-hidden"
-              >
-                  {/* Custom Shifting Gradient Glow Background */}
-                  <div className="absolute inset-0 z-0 opacity-35 bg-gradient-to-br from-purple-600/25 via-transparent to-emerald-500/15 pointer-events-none" />
-
-                  {/* Glass Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-                  {/* Gradient Overlay for Depth */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-15 pointer-events-none" />
-
-                  {/* Auto-Scrolling Image Container */}
-                  <div className="w-full h-full flex items-start justify-center relative z-10 overflow-hidden">
-                    <motion.img
-                      src="/members-area-showcase.png"
-                      alt="Área de Membros - Vitrine de Produtos"
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-auto min-h-full object-cover object-top opacity-80"
-                      style={{
-                        filter: "grayscale(15%) brightness(0.85) contrast(0.95)"
-                      }}
-                      animate={{
-                        y: [0, -400, 0]
-                      }}
-                      transition={{
-                        duration: 20,
-                        repeat: Infinity,
-                        ease: "linear",
-                        repeatDelay: 2
-                      }}
-                      whileHover={{
-                        filter: "grayscale(0%) brightness(1) contrast(1)",
-                        transition: { duration: 0.6 }
-                      }}
-
-                    />
-                  </div>
-
-                  {/* Scan Line Effect */}
-                  <motion.div
-                    animate={{ y: ["-100%", "300%"] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-                    className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-transparent via-purple-500/15 to-transparent z-30 pointer-events-none blur-sm"
-                  />
-                </div>
-
-                {/* Neon Borders */}
-                <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/40 transition-colors duration-500" />
-                <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-              </motion.div>
-
-              {/* Floating Feature Badges */}
-              <motion.div
-                style={{ y: yParallax }}
-                className="absolute -right-4 md:-right-6 top-1/4 p-3 md:p-4 bg-[#0a0a0f]/80 backdrop-blur-3xl border border-purple-500/30 rounded-[20px] shadow-[0_20px_60px_rgba(168,85,247,0.15)] z-40"
-              >
-                <div className="flex items-center gap-2 md:gap-3">
-                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs md:text-sm font-bold shadow-[0_0_20px_rgba(34,197,94,0.2)]">✓</div>
-                  <div>
-                    <p className="text-[6px] md:text-[7px] font-black text-gray-500 uppercase tracking-widest">Layout Premium</p>
-                    <p className="text-xs md:text-sm font-bold text-white tracking-tight italic uppercase">Streaming</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -left-4 md:-left-6 bottom-[15%] p-3 md:p-4 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[20px] shadow-2xl z-40"
-              >
-                <p className="text-[6px] md:text-[7px] font-black text-purple-400 uppercase tracking-widest mb-1">Experiência</p>
-                <p className="text-base md:text-lg font-black text-white italic">Premium</p>
-              </motion.div>
-            </div>
-
-            {/* Text Content with Bullet Points */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h3 className="text-5xl md:text-6xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
-                Experiência <br /> <span className="text-purple-500">Premium.</span>
-              </h3>
-              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
-                Interface moderna tipo streaming para seus produtos digitais
-              </p>
-              <div className="space-y-6">
-                {[
-                  'Vitrine de Produtos',
-                  'Acesso Centralizado',
-                  'Branding Próprio',
-                  'Experiência Premium'
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                    className="flex items-center gap-4 group"
-                  >
-                    <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
-                    <span className="text-lg font-black uppercase tracking-wide">{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* NEW CARD: Member Area Dashboard Style */}
-              <motion.div
-                initial={{ opacity: 1, y: 0 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="mt-12 relative group"
-              >
-                {/* Ambient Glow */}
-                <div className="absolute -inset-10 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                <div className="relative w-full aspect-video bg-[#050508] rounded-[24px] border border-white/10 shadow-2xl overflow-hidden">
-                  {/* Custom Shifting Gradient Glow Background */}
-                  <div className="absolute inset-0 z-0 opacity-35 bg-gradient-to-br from-purple-600/25 via-transparent to-emerald-500/15 pointer-events-none" />
-
-                    {/* Glass Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-                    {/* Image */}
-                    <div className="w-full h-full flex items-center justify-center relative z-30">
-                      <img
-                        src="/assets/nova-aula.png"
-                        alt="Nova Aula Dashboard"
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover rounded-[20px]"
-                      />
-                    </div>
-
-                    {/* Scan Line Effect */}
-                    <motion.div
-                      animate={{ y: ["-100%", "300%"] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
-                      className="absolute top-0 left-0 w-full h-[20%] bg-gradient-to-b from-transparent via-purple-500/10 to-transparent z-30 pointer-events-none blur-sm"
-                    />
-                  </div>
-
-                  {/* Neon Borders */}
-                  <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/50 transition-colors duration-500" />
-                  <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-                </div>
-              </motion.div>
-            </motion.div>
-
-          </div>
-        </div>
-      </section >
-
-      {/* SECTION: EXPERIENCE SHOWCASE - VERTICAL SCROLL CAROUSEL */}
-
-      <section id="features" className="relative z-10 mt-12 md:mt-48">
-        <div className="py-32 lg:h-screen lg:sticky lg:top-0 flex items-center justify-center px-6">
-          <div className="max-w-7xl mx-auto w-full">
-            <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-10">
-              <div>
-                <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                  Experiência <br /> <span className="text-purple-500">Sem Atrito.</span>
-                </h2>
-                <div className="h-1.5 w-32 bg-purple-600 rounded-full" />
-              </div>
-              <p className="text-gray-500 text-[11px] font-black uppercase tracking-[0.6em] max-w-xs text-right leading-relaxed">
-                Design minimalista. <br />Engenharia máxima.
-              </p>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
-
-              {/* MOBILE: Simple Stacked Cards */}
-              <div className="lg:hidden w-full space-y-4">
-                {showcaseFeatures.map((f, i) => (
-                  <motion.div
-                    key={f.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.6 }}
-                    onClick={() => setActiveFeature(i)}
-                    className={`p-6 rounded-[32px] cursor-pointer transition-all duration-500 ${activeFeature === i
-                      ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_20px_#a855f7]'
-                      : 'bg-[#0a0a0f]/50 border border-white/10'
-                      }`}
-                  >
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeFeature === i ? 'bg-purple-600 text-white shadow-[0_0_15px_#a855f7]' : 'bg-white/5 text-gray-500'
-                        }`}>
-                        {f.icon}
-                      </div>
-                      <h3 className="text-base font-black italic uppercase tracking-wide">{f.title}</h3>
-                    </div>
-
-                    {/* Expandable Content */}
-                    <AnimatePresence>
-                      {activeFeature === i && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pt-4 border-t border-white/10">
-                            <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
-                            <div className="space-y-3">
-                              {f.highlights.map(h => (
-                                <div key={h} className="flex items-center gap-3">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
-                                  <span className="text-xs font-bold uppercase tracking-wider text-white/70">{h}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* DESKTOP: Vertical Card Carousel */}
-              <div className="hidden lg:flex lg:w-[400px] relative h-full flex-col justify-center">
-                <div className="relative h-[500px] flex flex-col items-center justify-center">
-                  {showcaseFeatures.map((f, i) => {
-                    const offset = i - activeFeature;
-                    const isActive = i === activeFeature;
-                    const isPrev = offset === -1;
-                    const isNext = offset === 1;
-                    const isVisible = Math.abs(offset) <= 1;
-
-                    return (
-                      <motion.div
-                        key={f.id}
-                        animate={{
-                          y: offset * 140,
-                          scale: isActive ? 1 : 0.85,
-                          opacity: isActive ? 1 : isPrev || isNext ? 0.3 : 0,
-                          filter: isActive ? 'blur(0px)' : 'blur(2px)'
-                        }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className={`absolute w-full p-8 rounded-[48px] cursor-pointer flex items-center gap-6 ${isActive
-                          ? 'bg-[#0a0a0f] border-2 border-purple-500/40 shadow-[0_0_30px_#a855f7] z-20'
-                          : 'bg-[#0a0a0f]/50 border border-white/5 z-10'
-                          }`}
-                        style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
-                        onClick={() => setActiveFeature(i)}
-                      >
-                        <div className={`w-14 h-14 rounded-3xl flex items-center justify-center transition-all ${isActive ? 'bg-purple-600 text-white shadow-[0_0_20px_#a855f7]' : 'bg-white/5 text-gray-500'
-                          }`}>
-                          {f.icon}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-sm font-black italic uppercase tracking-[0.15em]">{f.title}</h3>
-                          {isActive && <motion.div layoutId="bar" className="h-0.5 w-12 bg-purple-500 mt-2" />}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-
-                {/* Scroll Indicators */}
-                <div className="flex justify-center gap-2 mt-8">
-                  {showcaseFeatures.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveFeature(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${i === activeFeature ? 'bg-purple-500 w-8' : 'bg-white/20'
-                        }`}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* DESKTOP: Content Display */}
-              <div className="hidden lg:flex flex-1 bg-[#0a0a0f] border border-white/5 rounded-[70px] relative overflow-hidden flex-col lg:flex-row shadow-inner h-full">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.04)_0%,_transparent_50%)]" />
-
-                <div className="flex-1 relative min-h-[400px]">
-                  <AnimatePresence mode="wait">
-                    <FeatureVisual key={showcaseFeatures[activeFeature].id} type={showcaseFeatures[activeFeature].id} />
-                  </AnimatePresence>
-                </div>
-
-                <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
-                  <AnimatePresence mode="wait">
-                    <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
-                      <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
-                      <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
-                      <div className="space-y-5">
-                        {showcaseFeatures[activeFeature].highlights.map(h => (
-                          <div key={h} className="flex items-center gap-4 group">
-                            <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7]" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">{h}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        {/* Spacer for scroll-jacking - creates space for scrolling through all cards (desktop only) */}
-        <div className="hidden lg:block" style={{ height: `${showcaseFeatures.length * 25}vh` }} />
-      </section >
 
 
 

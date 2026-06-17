@@ -1,0 +1,94 @@
+/* [project]/app/globals.css [app-client] (css) */
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+:root {
+  --bg: #030303;
+  --accent: #a855f7;
+  --secondary: #22c55e;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: var(--bg);
+  color: #fff;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.glass-card {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background: #ffffff05;
+  border: 1px solid #ffffff14;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card:before {
+  content: "";
+  pointer-events: none;
+  background: radial-gradient(circle at 0 0, #a855f71a, #0000 40%);
+  position: absolute;
+  inset: 0;
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border:after {
+  content: "";
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  background: linear-gradient(45deg, #0000, #a855f74d, #0000);
+  transition: opacity .3s;
+  position: absolute;
+  inset: -1px;
+}
+
+.glow-border:hover:after {
+  opacity: 1;
+}
+
+.bg-gradient-noise {
+  opacity: .05;
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  position: fixed;
+  inset: 0;
+}
+
+.reveal-mask {
+  clip-path: inset(0 0 100%);
+  animation: 1.2s cubic-bezier(.77, 0, .175, 1) forwards reveal;
+}
+
+@keyframes reveal {
+  to {
+    clip-path: inset(0);
+  }
+}
+
+/*# sourceMappingURL=app_globals_css_bad6b30c._.single.css.map*/

@@ -14,7 +14,7 @@ const CTAComponent = () => (
     <div className="flex flex-col gap-4 w-full items-center lg:items-start">
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center lg:justify-start">
             <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(168,85,247,0.4)" }}
+                whileHover={{ scale: 1.04, boxShadow: "0 0 45px rgba(168,85,247,0.5)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
                     const plansSec = document.getElementById('plans');
@@ -22,24 +22,39 @@ const CTAComponent = () => (
                         plansSec.scrollIntoView({ behavior: 'smooth' });
                     }
                 }}
-                className="relative px-10 py-5 text-white rounded-2xl font-black text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 group overflow-hidden w-full sm:w-auto shadow-[0_10px_30px_rgba(168,85,247,0.2)]"
+                className="relative px-12 py-5 text-white rounded-2xl font-black text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-3 group overflow-hidden w-full sm:w-auto shadow-[0_10px_35px_rgba(168,85,247,0.3)] border border-white/10"
             >
-                {/* Animated Gradient Background */}
+                {/* Animated 3-Color Gradient Background (Deep Purple -> Lilac -> Violet) */}
                 <motion.div
                     animate={{
                         backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600 via-purple-400 to-purple-600 bg-[length:200%_100%] z-0"
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 bg-gradient-to-r from-[#3b0764] via-[#a855f7] via-[#6d28d9] to-[#3b0764] bg-[length:200%_100%] z-0"
                 />
-                <span className="relative z-10 flex items-center gap-2">
-                    CADASTRAR GRÁTIS
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+
+                {/* White Shimmer/Beam Sweep Effect */}
+                <motion.div
+                    initial={{ x: '-150%', skewX: -25 }}
+                    animate={{ x: '150%' }}
+                    transition={{ 
+                        repeat: Infinity, 
+                        repeatType: "loop", 
+                        duration: 2, 
+                        ease: "easeInOut",
+                        repeatDelay: 2.5
+                    }}
+                    className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/25 to-transparent z-10 pointer-events-none"
+                />
+
+                <span className="relative z-20 flex items-center gap-2">
+                    Experimente Agora!
+                    <span className="group-hover:translate-x-1.5 transition-transform duration-300">→</span>
                 </span>
             </motion.button>
         </div>
         <p className="text-gray-400 text-[10px] md:text-[11px] font-light tracking-wide leading-relaxed max-w-md text-center lg:text-left font-sans">
-            Sem cartão de crédito necessário. Comece em menos de 1 minuto.
+            Teste antes de Instalar. Comece em menos de 1 minuto.
         </p>
     </div>
 );
@@ -49,7 +64,7 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
     const [isPlayerLoaded, setIsPlayerLoaded] = useState(false);
 
     return (
-        <section className="relative w-full flex flex-col justify-start pt-28 pb-12 lg:pt-40 lg:pb-24 px-6 overflow-visible bg-transparent">
+        <section className="relative w-full flex flex-col justify-start pt-28 pb-12 lg:pt-20 lg:pb-24 px-6 overflow-visible bg-transparent">
             {/* Ambient Background Glows */}
             <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent" />
             <div className="absolute top-[-10%] left-[20%] w-[50vw] h-[50vw] bg-purple-600/5 rounded-full blur-[140px] pointer-events-none" />
@@ -101,10 +116,8 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
                     {/* Checkpoints centered row on mobile, left-aligned on desktop */}
                     <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-3 text-white text-[10px] md:text-xs font-light tracking-wide font-sans">
                         {[
-                            'Ativação Imediata',
-                            'Whitelabel Total',
-                            'Sem Cartão de Crédito',
-                            'Zero Taxas por Venda'
+                            'Zero taxa por vendas',
+                            'Personalize com sua Marca'
                         ].map((point, i) => (
                             <div key={i} className="flex items-center gap-2">
                                 <div className="w-4 h-4 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)] text-[10px]">
@@ -134,13 +147,12 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
                         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[16px] md:w-[36px] h-full bg-gradient-to-t from-purple-500/10 via-white/80 to-white/95 blur-[6px] md:blur-[12px] rounded-full" />
                     </div>
                     
+                    {/* Soft Lilac Glow behind the video card */}
+                    <div className="absolute inset-[-10%] bg-purple-600/20 blur-[60px] md:blur-[100px] rounded-full pointer-events-none z-0 mix-blend-screen animate-pulse" style={{ animationDuration: '4s' }} />
+
                     <motion.div
                         onClick={() => setIsVideoOpen(true)}
-                        style={{
-                            transform: 'perspective(1000px) rotateX(3deg) rotateY(-6deg)',
-                            transformStyle: 'preserve-3d'
-                        }}
-                        className="relative w-full max-w-xl aspect-video group rounded-[24px] md:rounded-[32px] bg-[#050508] border border-purple-500/20 shadow-[0_30px_80px_rgba(0,0,0,0.9),_0_0_40px_rgba(168,85,247,0.15)] overflow-hidden cursor-pointer z-10 transition-all duration-300 hover:border-purple-500/40 hover:shadow-[0_40px_100px_rgba(0,0,0,0.95),_0_0_60px_rgba(168,85,247,0.25)]"
+                        className="relative w-full max-w-xl aspect-video group rounded-[24px] md:rounded-[32px] bg-[#050508] border-[4px] border-purple-500/25 shadow-[0_30px_80px_rgba(0,0,0,0.9),_0_0_40px_rgba(168,85,247,0.15)] overflow-hidden cursor-pointer z-10 transition-all duration-300 hover:border-purple-500/45 hover:shadow-[0_40px_100px_rgba(0,0,0,0.95),_0_0_60px_rgba(168,85,247,0.25)]"
                     >
                         {/* Skeleton Shimmer Screen */}
                         {!isPlayerLoaded && (
@@ -150,7 +162,7 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
                         )}
 
                         {/* Large Video Vitrine Image */}
-                        <div className="w-full h-full flex items-center justify-center relative z-10 bg-[#020205] overflow-hidden">
+                        <div className="w-full h-full flex items-center justify-center relative bg-[#020205] overflow-hidden">
                             <img
                                 src="/members-area-showcase.png"
                                 alt="Netflix style Members Area Player"
@@ -191,8 +203,8 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
                                 2:15
                             </div>
 
-                            {/* Video Title Indicator (Top Left) */}
-                            <div className="absolute top-4 left-4 flex items-center gap-2 z-30 pointer-events-none font-sans">
+                            {/* Video Title Indicator (Top Right) */}
+                            <div className="absolute top-4 right-4 flex items-center gap-2 z-30 pointer-events-none font-sans">
                                 <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
                                 <span className="text-[10px] font-bold text-white/90 uppercase tracking-widest bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-sm border border-white/5">
                                     Apresentação da Plataforma

@@ -98,6 +98,17 @@ const FeatureVisual: React.FC<{ type: string }> = ({ type }) => {
 const App: React.FC = () => {
   const containerRef = useRef(null);
   const [activeFeature, setActiveFeature] = useState(0);
+  const [marqueeDuration, setMarqueeDuration] = useState(30);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setMarqueeDuration(window.innerWidth < 768 ? 5 : 30);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const featuresRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -390,7 +401,7 @@ const App: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Checkout que <br /> <span className="text-purple-500">Vende.</span>
+                Use nosso <br /> <span className="text-purple-500">Checkout.</span>
               </h2>
               <p className="text-gray-400 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto mt-6 font-sans">
                 Otimizado para conversão máxima em qualquer dispositivo.
@@ -527,6 +538,11 @@ const App: React.FC = () => {
             <div className="space-y-8 order-1 lg:order-2">
               {[
                 {
+                  title: 'Zero Taxa por Venda',
+                  desc: 'Fique com 100% do seu faturamento. Sem comissões ocultas ou taxas abusivas por transação.',
+                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                },
+                {
                   title: 'Alta Conversão',
                   desc: 'Design otimizado para maximizar vendas com UX testada',
                   icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
@@ -540,11 +556,6 @@ const App: React.FC = () => {
                   title: 'Order Bump & Upsell',
                   desc: 'Aumente o ticket médio automaticamente com ofertas inteligentes',
                   icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                },
-                {
-                  title: 'Recuperação de Carrinho',
-                  desc: 'Não perca nenhuma venda com automação inteligente',
-                  icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 },
                 {
                   title: 'Checkout Seguro',
@@ -679,27 +690,28 @@ const App: React.FC = () => {
           <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#030303] to-transparent z-10" />
 
           <motion.div
+            key={marqueeDuration}
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+            transition={{ repeat: Infinity, duration: marqueeDuration, ease: "linear" }}
             className="flex items-center gap-16 whitespace-nowrap"
           >
             {[
               { name: 'Mercado Pago', status: 'Ativado' },
-              { name: 'Stripe', status: 'em breve' },
-              { name: 'PagSeguro', status: 'em breve' },
+              { name: 'Stripe', status: 'Ativado' },
+              { name: 'Pagbank', status: 'em breve' },
               { name: 'Asaas', status: 'em breve' },
-              { name: 'Pagar.me', status: 'em breve' },
-              { name: 'PayPal', status: 'em breve' },
+              { name: 'Paypal', status: 'em breve' },
+              { name: 'Pagarme', status: 'em breve' },
               // Repeated for seamless cycle
               { name: 'Mercado Pago', status: 'Ativado' },
-              { name: 'Stripe', status: 'em breve' },
-              { name: 'PagSeguro', status: 'em breve' },
+              { name: 'Stripe', status: 'Ativado' },
+              { name: 'Pagbank', status: 'em breve' },
               { name: 'Asaas', status: 'em breve' },
-              { name: 'Pagar.me', status: 'em breve' },
-              { name: 'PayPal', status: 'em breve' }
+              { name: 'Paypal', status: 'em breve' },
+              { name: 'Pagarme', status: 'em breve' }
             ].map((gw, i) => (
               <div key={i} className="flex flex-col items-center group min-w-[200px]">
-                <span className={`text-4xl font-black italic uppercase tracking-tighter transition-colors ${gw.status === 'Ativado' ? 'text-white' : 'text-white/20'}`}>
+                <span className="text-4xl font-black italic uppercase tracking-tighter text-white transition-colors">
                   {gw.name}
                 </span>
                 <span className={`text-[7px] font-black uppercase tracking-[0.5em] mt-2 ${gw.status === 'Ativado' ? 'text-purple-500' : 'text-white/5'}`}>

@@ -52,10 +52,21 @@ const CTAComponent = () => (
                     <span className="group-hover:translate-x-1.5 transition-transform duration-300">→</span>
                 </span>
             </motion.button>
+            <div className="flex items-center justify-center bg-white/5 border border-white/10 rounded-full px-3 py-1.5 gap-1.5 mt-4 sm:mt-0">
+                <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <span className="text-[10px] font-bold text-gray-300 uppercase tracking-wider">Sem cartão de crédito</span>
+            </div>
         </div>
-        <p className="text-gray-400 text-[10px] md:text-[11px] font-light tracking-wide leading-relaxed max-w-md text-center lg:text-left font-sans">
-            Teste antes de Instalar. Comece em menos de 1 minuto.
-        </p>
+        <div className="flex flex-col items-center lg:items-start gap-1">
+            <p className="text-gray-400 text-[10px] md:text-[11px] font-light tracking-wide leading-relaxed max-w-md text-center lg:text-left font-sans">
+                Teste antes de Instalar. Comece em menos de 1 minuto.
+            </p>
+            <p className="text-yellow-500/90 text-[10px] md:text-[11px] font-bold tracking-wide mt-2 flex gap-1.5">
+                ⭐⭐⭐⭐⭐ <span className="text-gray-400 font-light">Usado por dezenas de criadores digitais no Brasil</span>
+            </p>
+        </div>
     </div>
 );
 
@@ -110,7 +121,7 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
                         </h1>
                     </div>
                     <p className="text-lg sm:text-xl font-light text-purple-200/80 leading-relaxed tracking-wide font-sans max-w-xl">
-                        Monte sua área de membros premium hoje. Whitelabel total, alta velocidade e zero taxas de transação.
+                        Sua loja, seu domínio, 100% do lucro. Monte sua área de membros premium em minutos, sem mensalidade e sem comissão por venda.
                     </p>
                     
                     {/* Checkpoints centered row on mobile, left-aligned on desktop */}
@@ -258,6 +269,48 @@ const HeroMembers: React.FC<HeroMembersProps> = ({ scrollYProgress, isDesktop })
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Testimonials Block */}
+            <div className="w-full max-w-7xl mx-auto px-6 mt-24 mb-8 relative z-20">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Testimonial 1 */}
+                    <div className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl flex flex-col gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-800 flex items-center justify-center text-white font-bold text-sm">MC</div>
+                            <div>
+                                <h4 className="text-sm font-bold text-white">Marcos Costa</h4>
+                                <p className="text-[10px] text-gray-400 uppercase tracking-wider">Produtor de Packs</p>
+                            </div>
+                        </div>
+                        <p className="text-sm text-gray-300 font-light italic">"A economia em taxas pagou a plataforma no primeiro mês. Instalação rápida e o suporte me ajudou em tudo."</p>
+                        <div className="text-yellow-500 text-xs">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    {/* Testimonial 2 */}
+                    <div className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl flex flex-col gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-800 flex items-center justify-center text-white font-bold text-sm">JS</div>
+                            <div>
+                                <h4 className="text-sm font-bold text-white">Juliana Silva</h4>
+                                <p className="text-[10px] text-gray-400 uppercase tracking-wider">Mentora Financeira</p>
+                            </div>
+                        </div>
+                        <p className="text-sm text-gray-300 font-light italic">"Ter o checkout no meu próprio domínio passou muito mais credibilidade. A conversão aumentou quase 20%."</p>
+                        <div className="text-yellow-500 text-xs">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    {/* Testimonial 3 */}
+                    <div className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl flex flex-col gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-800 flex items-center justify-center text-white font-bold text-sm">RA</div>
+                            <div>
+                                <h4 className="text-sm font-bold text-white">Rafael Alves</h4>
+                                <p className="text-[10px] text-gray-400 uppercase tracking-wider">Agência de Lançamentos</p>
+                            </div>
+                        </div>
+                        <p className="text-sm text-gray-300 font-light italic">"Não sou programador, mas consegui colocar no ar em minutos graças ao suporte. O carregamento é absurdo de rápido."</p>
+                        <div className="text-yellow-500 text-xs">⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 };

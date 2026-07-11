@@ -126,14 +126,14 @@ const MembrosSection: React.FC<MembrosSectionProps> = ({ glowOpacity, dashScale,
                             Experiência <br /> <span className="text-purple-500">Premium.</span>
                         </h3>
                         <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
-                            Interface moderna tipo streaming para seus produtos digitais
+                            Feito para quem vende cursos, mentorias e packs digitais, sem parecer um sistema genérico de arquivos.
                         </p>
                         <div className="space-y-6">
                             {[
-                                'Vitrine de Produtos',
-                                'Acesso Centralizado',
-                                'Branding Próprio',
-                                'Experiência Premium'
+                                { title: 'Vitrine de Produtos', desc: 'seus produtos aparecem organizados, como numa loja' },
+                                { title: 'Acesso Centralizado', desc: 'um login só, sem espalhar links soltos' },
+                                { title: 'Branding Próprio', desc: 'seu logo, suas cores, sem menção ao Super Checkout' },
+                                { title: 'Experiência Premium', desc: 'seu cliente sente que comprou algo de valor' }
                             ].map((item, i) => (
                                 <motion.div
                                     key={i}
@@ -141,53 +141,26 @@ const MembrosSection: React.FC<MembrosSectionProps> = ({ glowOpacity, dashScale,
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.05, duration: 0.4 }}
-                                    className="flex items-center gap-4 group"
+                                    className="flex items-start gap-4 group"
                                 >
-                                    <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
-                                    <span className="text-lg font-black uppercase tracking-wide">{item}</span>
+                                    <div className="w-2 h-2 rounded-full bg-purple-600 mt-2 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
+                                    <div>
+                                        <span className="text-lg font-black uppercase tracking-wide block">{item.title}</span>
+                                        <span className="text-sm text-gray-500 font-light">{item.desc}</span>
+                                    </div>
                                 </motion.div>
                             ))}
+                        </div>
+                        
+                        <div className="mt-12">
+                            <a href="#features" className="text-purple-400 hover:text-purple-300 font-bold uppercase tracking-widest text-xs transition-colors flex items-center gap-2 group w-max">
+                                Ver como fica na prática 
+                                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                            </a>
                         </div>
                     </motion.div>
                 </div>
 
-                {/* NEW CARD: Member Area Dashboard Style */}
-                <motion.div
-                    initial={{ opacity: 1, y: 0 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="mt-12 relative group md:max-w-lg mx-auto"
-                >
-                    <div className="absolute -inset-10 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                    <div className="relative w-full aspect-video bg-[#050508] rounded-[24px] border border-white/10 shadow-2xl overflow-hidden">
-                        <div className="w-full h-full relative">
-                            <div className="absolute inset-0 z-0 opacity-35 bg-gradient-to-br from-purple-600/25 via-transparent to-emerald-500/15 pointer-events-none" />
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 z-20 pointer-events-none" />
-
-                            <div className="w-full h-full flex items-center justify-center relative z-30 p-4 md:p-6">
-                                <img
-                                    src="/assets/nova-aula.png"
-                                    alt="Nova Aula Dashboard"
-                                    loading="lazy"
-                                    width={1920}
-                                    height={1080}
-                                    className="w-full h-full object-contain rounded-[12px]"
-                                />
-                            </div>
-
-                            <motion.div
-                                animate={{ y: ["-100%", "300%"] }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
-                                className="absolute top-0 left-0 w-full h-[20%] bg-gradient-to-b from-transparent via-purple-500/10 to-transparent z-30 pointer-events-none blur-sm"
-                            />
-                        </div>
-
-                        <div className="absolute inset-0 border-2 border-purple-500/20 rounded-[24px] pointer-events-none z-40 group-hover:border-purple-500/50 transition-colors duration-500" />
-                        <div className="absolute inset-0 border border-white/5 rounded-[24px] pointer-events-none z-40" />
-                    </div>
-                </motion.div>
             </div>
         </section>
     );

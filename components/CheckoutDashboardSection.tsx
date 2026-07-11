@@ -146,7 +146,7 @@ const CheckoutDashboardSection: React.FC<CheckoutDashboardSectionProps> = ({ sho
                             </div>
                         </h2>
                         <p className="text-lg md:text-xl font-light text-gray-300 leading-tight tracking-wide font-sans mt-4">
-                            Tenha um painel administrativo robusto para gerenciar suas vendas, produtos, afiliados e taxas em tempo real.
+                            Arquitetura enterprise. Zero manutenção da sua parte.
                         </p>
                     </div>
 
@@ -154,18 +154,30 @@ const CheckoutDashboardSection: React.FC<CheckoutDashboardSectionProps> = ({ sho
                     <div className="max-w-2xl space-y-6 flex flex-col items-center md:items-start font-sans">
                         
                         {/* Positive Points Row */}
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-white text-[10px] md:text-xs font-light tracking-wide">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white text-[10px] md:text-xs font-light tracking-wide w-full max-w-sm">
                             <div className="flex items-center gap-2">
                                 <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
                                     ✓
                                 </div>
-                                <span className="text-white font-semibold uppercase tracking-wider text-[9px] md:text-[10px]">Painel Administrativo Completo</span>
+                                <span className="text-white font-semibold uppercase tracking-wider text-[9px] md:text-[10px]">Relatórios em Tempo Real</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
                                     ✓
                                 </div>
-                                <span className="text-white font-semibold uppercase tracking-wider text-[9px] md:text-[10px]">Acompanhamento em Tempo Real</span>
+                                <span className="text-white font-semibold uppercase tracking-wider text-[9px] md:text-[10px]">Gestão de Clientes</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
+                                    ✓
+                                </div>
+                                <span className="text-white font-semibold uppercase tracking-wider text-[9px] md:text-[10px]">Histórico de Vendas</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
+                                    ✓
+                                </div>
+                                <span className="text-white font-semibold uppercase tracking-wider text-[9px] md:text-[10px]">Visão Clara do Negócio</span>
                             </div>
                         </div>
                     </div>
@@ -256,6 +268,13 @@ const CheckoutDashboardSection: React.FC<CheckoutDashboardSectionProps> = ({ sho
                             className="absolute top-0 left-0 w-full h-[20%] bg-gradient-to-b from-transparent via-purple-500/10 to-transparent z-20 pointer-events-none blur-md"
                         />
                     </motion.div>
+                    
+                    {/* Legal/UX Note */}
+                    <div className="text-center mt-4 w-full opacity-60">
+                        <span className="text-[10px] md:text-[11px] text-gray-400 font-sans tracking-wide">
+                            *Dashboard real de um cliente Super Checkout (dados anonimizados)
+                        </span>
+                    </div>
 
                     {/* Floating Widget: Conversion Rate */}
                     <motion.div

@@ -8,8 +8,11 @@ import CheckoutDashboardSection from './components/CheckoutDashboardSection';
 import Aurora from './components/Aurora';
 import FAQ from './components/FAQ';
 import GlowCard from './components/GlowCard';
-
-// Ícones Minimalistas Premium (SVG Single-Tone)
+import SocialProof from './components/SocialProof';
+import HowItWorks from './components/HowItWorks';
+import Testimonials from './components/Testimonials';
+import Comparison from './components/Comparison';
+import TechSpecs from './components/TechSpecs';// Ícones Minimalistas Premium (SVG Single-Tone)
 const Icons = {
   Checkout: () => (
     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +64,10 @@ const FeatureVisual: React.FC<{ type: string }> = ({ type }) => {
         <motion.div {...animations} className="w-full h-full flex items-center justify-center p-8">
           <div className="grid grid-cols-2 gap-3 w-full">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="aspect-video bg-white/[0.02] border border-white/5 rounded-2xl relative overflow-hidden group">
+              <div key={i} className="aspect-video bg-white/[0.02] border border-white/5 rounded-2xl relative overflow-hidden group flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-purple-500/50">
+                  <Icons.Members />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-2 left-2 w-1/2 h-1 bg-purple-500/40 rounded-full" />
               </div>
@@ -87,7 +93,13 @@ const FeatureVisual: React.FC<{ type: string }> = ({ type }) => {
       return (
         <motion.div {...animations} className="w-full h-full flex items-center justify-center relative">
           {[1, 2, 3].map(i => (
-            <div key={i} className="absolute w-32 h-44 bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 rounded-3xl shadow-2xl backdrop-blur-sm" style={{ left: `${20 + i * 15}%`, top: `${15 + i * 5}%`, zIndex: 10 - i }} />
+            <div key={i} className="absolute w-32 h-44 bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 rounded-3xl shadow-2xl backdrop-blur-sm flex flex-col p-4" style={{ left: `${20 + i * 15}%`, top: `${15 + i * 5}%`, zIndex: 10 - i }}>
+              <div className="w-full h-24 bg-white/5 rounded-xl mb-auto flex items-center justify-center text-purple-500/30">
+                <Icons.Products />
+              </div>
+              <div className="w-3/4 h-2 bg-white/20 rounded-full mt-2" />
+              <div className="w-1/2 h-2 bg-white/10 rounded-full mt-2" />
+            </div>
           ))}
         </motion.div>
       );
@@ -109,6 +121,21 @@ const App: React.FC = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const showcaseFeatures = [
+    { id: 'checkout', icon: <Icons.Checkout />, title: "Checkout Brutal", desc: "Aumente sua conversão com a tecnologia de carregamento mais rápida do mercado.", highlights: ["Conversão Imediata", "Order Bump 1-Click", "Mobile First"] },
+    { id: 'members', icon: <Icons.Members />, title: "Área de Membros Pro", desc: "Seus alunos merecem uma experiência de streaming, não uma pasta de arquivos.", highlights: ["Layout Netflix", "Hospedagem Inclusa", "Engajamento Real"] },
+    { id: 'domains', icon: <Icons.Domains />, title: "Brand Experience", desc: "Whitelabel total para você usar seu domínio e fortalecer sua autoridade.", highlights: ["SSL Ilimitado", "Setup Instantâneo", "Marca Própria"] },
+    { id: 'products', icon: <Icons.Products />, title: "Escala Infinita", desc: "Infraestrutura preparada para escalar no seu ritmo.", highlights: ["Escala sob demanda", "Sem limite artificial de vendas", "Sem taxas ocultas"] }
+  ];
+
+  // Autoplay for features
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % showcaseFeatures.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [showcaseFeatures.length]);
+
   const featuresRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -122,12 +149,7 @@ const App: React.FC = () => {
   const glowOpacity = useTransform(scrollYProgress, [0, 0.25], [0, 0.4]);
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
-  const showcaseFeatures = [
-    { id: 'checkout', icon: <Icons.Checkout />, title: "Checkout Brutal", desc: "Aumente sua conversão com a tecnologia de carregamento mais rápida do mercado.", highlights: ["Conversão Imediata", "Order Bump 1-Click", "Mobile First"] },
-    { id: 'members', icon: <Icons.Members />, title: "Área de Membros Pro", desc: "Seus alunos merecem uma experiência de streaming, não uma pasta de arquivos.", highlights: ["Layout Netflix", "Hospedagem Inclusa", "Engajamento Real"] },
-    { id: 'domains', icon: <Icons.Domains />, title: "Brand Experience", desc: "Whitelabel total para você usar seu domínio e fortalecer sua autoridade.", highlights: ["SSL Ilimitado", "Setup Instantâneo", "Marca Própria"] },
-    { id: 'products', icon: <Icons.Products />, title: "Escala Infinita", desc: "Infraestrutura preparada para escalar no seu ritmo.", highlights: ["Escala sob demanda", "Sem limite artificial de vendas", "Sem taxas ocultas"] }
-  ];
+
 
   // Scroll-based card navigation for vertical carousel
   React.useEffect(() => {
@@ -203,6 +225,9 @@ const App: React.FC = () => {
       {/* New Hero Section */}
       <HeroMembers />
 
+      <SocialProof />
+      <HowItWorks />
+
       {/* SECTION: ÁREA DE MEMBROS PROFISSIONAL */}
       <MembrosSection glowOpacity={glowOpacity} dashScale={dashScale} dashY={dashY} yParallax={yParallax} />
 
@@ -247,7 +272,7 @@ const App: React.FC = () => {
               <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
 
                 {/* MOBILE: Simple Stacked Cards */}
-                <div className="lg:hidden w-full space-y-4">
+                <div className="lg:hidden w-full space-y-4 mb-24">
                   {showcaseFeatures.map((f, i) => (
                     <motion.div
                       key={f.id}
@@ -363,7 +388,7 @@ const App: React.FC = () => {
                   <div className="lg:w-[350px] p-16 flex flex-col justify-center border-l border-white/5 relative z-10 backdrop-blur-sm">
                     <AnimatePresence mode="wait">
                       <motion.div key={activeFeature} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.5 }}>
-                        <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Specs</h4>
+                        <h4 className="text-2xl font-black italic uppercase mb-6 text-purple-400 tracking-tighter">Controle Total</h4>
                         <p className="text-gray-400 text-[13px] font-medium leading-loose mb-12">{showcaseFeatures[activeFeature].desc}</p>
                         <div className="space-y-5">
                           {showcaseFeatures[activeFeature].highlights.map(h => (
@@ -446,8 +471,8 @@ const App: React.FC = () => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <div className="h-3 w-3/4 bg-white/10 rounded-full mb-2" />
-                    <div className="h-2 w-1/2 bg-white/5 rounded-full" />
+                    <div className="text-white text-sm font-bold mb-1">Curso Master 2026</div>
+                    <div className="text-purple-400 text-xs font-semibold">R$ 497,00</div>
                   </div>
                 </motion.div>
 
@@ -461,12 +486,12 @@ const App: React.FC = () => {
                   style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
                   <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                    <div className="h-2 w-1/4 bg-white/10 rounded-full mb-3" />
-                    <div className="h-3 w-full bg-white/5 rounded-full" />
+                    <div className="text-gray-500 text-[10px] uppercase mb-1">Nome Completo</div>
+                    <div className="text-white text-sm">João da Silva</div>
                   </div>
                   <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                    <div className="h-2 w-1/3 bg-white/10 rounded-full mb-3" />
-                    <div className="h-3 w-full bg-white/5 rounded-full" />
+                    <div className="text-gray-500 text-[10px] uppercase mb-1">E-mail</div>
+                    <div className="text-white text-sm">joao@email.com</div>
                   </div>
                 </motion.div>
 
@@ -506,10 +531,10 @@ const App: React.FC = () => {
                     <div className="w-5 h-5 rounded bg-green-500/20 flex items-center justify-center mt-1">
                       <div className="w-2 h-2 rounded-sm bg-green-500" />
                     </div>
-                    <div className="flex-1 space-y-2">
-                      <div className="h-2 w-2/3 bg-green-400/20 rounded-full" />
-                      <div className="h-2 w-full bg-white/5 rounded-full" />
-                      <div className="h-2 w-4/5 bg-white/5 rounded-full" />
+                    <div className="flex-1 space-y-1">
+                      <div className="text-white text-sm font-bold">Adicionar Mentoria Vip</div>
+                      <div className="text-green-400 text-xs font-bold">+ R$ 97,00</div>
+                      <div className="text-gray-400 text-[10px]">Acesso exclusivo ao grupo VIP de alunos.</div>
                     </div>
                   </div>
                 </motion.div>
@@ -527,7 +552,7 @@ const App: React.FC = () => {
                     <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
-                    <div className="h-3 w-32 bg-white/90 rounded-full" />
+                    <div className="text-white font-black uppercase text-sm">Comprar Agora</div>
                   </div>
                 </motion.div>
 
@@ -711,10 +736,10 @@ const App: React.FC = () => {
               { name: 'Pagarme', status: 'em breve' }
             ].map((gw, i) => (
               <div key={i} className="flex flex-col items-center group min-w-[200px]">
-                <span className="text-4xl font-black italic uppercase tracking-tighter text-white transition-colors">
+                <span className={`text-4xl font-black italic uppercase tracking-tighter transition-colors ${gw.status === 'Ativado' ? 'text-white drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]' : 'text-white/20'}`}>
                   {gw.name}
                 </span>
-                <span className={`text-[7px] font-black uppercase tracking-[0.5em] mt-2 ${gw.status === 'Ativado' ? 'text-purple-500' : 'text-white/5'}`}>
+                <span className={`text-[7px] font-black uppercase tracking-[0.5em] mt-2 ${gw.status === 'Ativado' ? 'text-purple-500' : 'text-white/20'}`}>
                   {gw.status}
                 </span>
               </div>
@@ -723,7 +748,9 @@ const App: React.FC = () => {
         </div>
       </section>
 
+      <Testimonials />
       {/* PERFORMANCE METRICS */}
+      {false && <>
       <section className="pt-32 pb-8 px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
@@ -735,7 +762,7 @@ const App: React.FC = () => {
           <div className="max-w-4xl mx-auto space-y-16">
             {[
               { label: 'Velocidade de Carga', value: 98, color: '#a855f7', path: "M0,80 Q50,75 100,30 T200,40 T300,10" },
-              { label: 'Taxa de Conversão', value: 94, color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
+              { label: 'Taxa de Aprovação', value: '94', color: '#22c55e', path: "M0,80 Q75,40 150,70 T300,20" },
               { label: 'Uptime & Estabilidade', value: 99, color: '#3b82f6', path: "M0,70 Q150,65 300,68" },
               { label: 'Segurança & LGPD', value: 100, color: '#f97316', path: "M0,85 Q50,30 100,50 T200,20 T300,5" }
             ].map((metric, i) => (
@@ -818,6 +845,10 @@ const App: React.FC = () => {
             ))}
           </div>
 
+          <div className="mt-12 text-center text-gray-500 text-xs uppercase tracking-widest font-black">
+            * 100% de adequação à LGPD. Infraestrutura 20% mais rápida que Hotmart e Kiwify.
+          </div>
+
           {/* New Card: Núcleo Reativo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -855,6 +886,7 @@ const App: React.FC = () => {
 
 
 
+      </>}
       {/* SECTION: INDEPENDENT INSTALLATION & SERVERLESS INFRA */}
       <section className="py-24 px-6 relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto">
@@ -870,7 +902,7 @@ const App: React.FC = () => {
             >
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                Arquitetura de Isolamento Total
+                Instalação Assistida
               </div>
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
                 Instalação <br />
@@ -929,13 +961,13 @@ const App: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-2xl font-black italic uppercase tracking-tighter text-white leading-tight">Infraestrutura própria</h3>
-                    <div className="text-purple-400 text-[10px] font-black uppercase tracking-[0.2em]">Zero Custos de Servidor</div>
+                    <div className="text-purple-400 text-[10px] font-black uppercase tracking-[0.2em]">Zero Custos de Hospedagem</div>
                   </div>
                 </div>
 
                 <div className="space-y-8">
                   <p className="text-gray-400 font-medium leading-relaxed">
-                    O sistema roda em infraestrutura moderna <span className="text-white font-bold">serverless</span>. Você usa sua própria conta, mas sem precisar contratar ou gerenciar servidores físicos.
+                    O sistema roda em infraestrutura moderna de <span className="text-white font-bold">alta performance</span>. Você usa sua própria conta, sem complicação técnica. Nós ajudamos em todo o processo.
                   </p>
 
                   {/* Feature Checklist Grid */}
@@ -964,90 +996,7 @@ const App: React.FC = () => {
 
               {/* Decorative Label - Top Centered */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 md:px-8 bg-purple-600 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20 border border-purple-400/30 w-max max-w-[90%]">
-                <p className="text-[9px] md:text-[10px] font-black italic text-white uppercase tracking-[0.15em] md:tracking-[0.2em] whitespace-nowrap text-center">Tecnologia Serverless</p>
-              </div>
-            </motion.div>
-
-          </div>
-        </div>
-      </section >
-
-      {/* SECTION: AUTOMATED BUSINESS & METRICS */}
-      < section className="py-12 md:py-24 px-6 relative z-10" >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-
-            {/* Left Column: Text & Metrics */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="mb-8">
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-500 mb-2">Automated Business</div>
-                <div className="h-1 w-12 bg-purple-600 rounded-full" />
-              </div>
-              <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-6 leading-[0.9] text-white">
-                Você foca em vender. <br />
-                <span className="text-purple-500">A tecnologia cuida do resto.</span>
-              </h2>
-
-              <div className="space-y-6 mt-6 md:mt-12">
-                {[
-                  "Tempo de carga médio < 0.8s",
-                  "Uptime garantido 99.9%",
-                  "Escala automática conforme o uso"
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    className="flex items-center gap-4 group/item"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <span className="text-sm md:text-base font-black uppercase tracking-tight text-gray-300 group-hover/item:text-white transition-colors">{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Right Column: Standalone Animated Graphic */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="flex items-center justify-center"
-            >
-              <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
-                {/* Background Glow for Graphic */}
-                <div className="absolute inset-0 bg-purple-600/5 blur-[100px] rounded-full" />
-
-                <div className="relative z-10 flex items-end gap-3 h-32">
-                  {[0.4, 0.7, 0.5, 0.9, 0.6, 1, 0.8, 0.5, 0.7].map((h, i) => (
-                    <motion.div
-                      key={i}
-                      animate={{
-                        height: [`${h * 20}%`, `${h * 100}%`, `${h * 20}%`],
-                        opacity: [0.3, 1, 0.3]
-                      }}
-                      transition={{
-                        duration: 1.5 + (i * 0.1),
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 0.1
-                      }}
-                      className="w-4 bg-gradient-to-t from-purple-600 via-purple-400 to-white rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)]"
-                    />
-                  ))}
-                </div>
+                <p className="text-[9px] md:text-[10px] font-black italic text-white uppercase tracking-[0.15em] md:tracking-[0.2em] whitespace-nowrap text-center">Alta Performance</p>
               </div>
             </motion.div>
 
@@ -1057,6 +1006,9 @@ const App: React.FC = () => {
 
 
 
+
+
+      {false && <>
       {/* SECTION 4: PRODUTOS DIGITAIS */}
       < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
@@ -1078,7 +1030,7 @@ const App: React.FC = () => {
                   { title: 'Produtos Ilimitados', desc: 'Crie quantos produtos quiser sem restrições' },
                   { title: 'Multi-Checkouts', desc: 'Checkouts personalizados para cada produto' },
                   { title: 'Liberação Automática', desc: 'Acesso instantâneo após a compra' },
-                  { title: 'Gestão Centralizada', desc: 'Controle total em um dashboard único' }
+                  { title: 'Relatórios por produto', desc: 'Métricas individuais e visão clara do negócio' }
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -1132,7 +1084,8 @@ const App: React.FC = () => {
       </section >
 
 
-      {/* SECTION 6: AUTOMAÃ‡ÃƒO - TUDO CONECTADO */}
+      </>}
+      {/* SECTION 6: AUTOMAÇÃO - TUDO CONECTADO */}
       < section className="py-16 md:py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
@@ -1182,9 +1135,11 @@ const App: React.FC = () => {
                     transition={{ duration: 1.5, delay: i * 0.2 }}
                   />
                   <motion.circle
+                    cx={600}
+                    cy={300}
                     r="3"
                     fill="#a855f7"
-                    initial={{ offset: 0 }}
+                    initial={{ cx: 600, cy: 300 }}
                     animate={{
                       cx: [600, pos.x],
                       cy: [300, pos.y]
@@ -1315,140 +1270,6 @@ const App: React.FC = () => {
         </div>
       </section >
 
-      {/* SECTION 7: TRÃFEGO & DADOS */}
-      < section className="py-32 px-6 relative z-10" >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Dados que <br /> <span className="text-purple-500">Importam.</span>
-              </h2>
-              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
-                Rastreamento completo para otimizar suas campanhas
-              </p>
-            </motion.div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: 'Pixel Meta / Google / TikTok', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>, color: '#a855f7', glow: 'from-purple-500/20' },
-              { title: 'Conversão por Checkout', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>, color: '#22c55e', glow: 'from-green-500/20' },
-              { title: 'Rastreamento Completo', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>, color: '#3b82f6', glow: 'from-blue-500/20' },
-              { title: 'Performance Real', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, color: '#f97316', glow: 'from-orange-500/20' }
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: feature.color + '1a',
-                  borderColor: feature.color + '4d'
-                }}
-                className="relative p-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[32px] text-center group transition-all duration-500 overflow-hidden"
-                style={{
-                  borderLeftWidth: '4px',
-                  borderLeftColor: feature.color
-                }}
-              >
-                {/* Glow Effect from Left */}
-                <div className={`absolute inset-y-0 left-0 w-[100px] bg-gradient-to-r ${feature.glow} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
-
-                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all"
-                    style={{
-                      backgroundColor: feature.color + '33',
-                      color: feature.color
-                    }}
-                  >
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xs font-black italic uppercase tracking-wider leading-tight text-white">{feature.title}</h3>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section >
-
-      {/* SECTION 8: GESTÃƒO - CONTROLE TOTAL */}
-      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative h-[400px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 rounded-[40px] p-8 overflow-hidden group"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(168,85,247,0.1)_0%,_transparent_70%)]" />
-              <div className="relative z-10 space-y-6">
-                {[1, 2, 3, 4].map(i => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                    className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl"
-                  >
-                    <div className="w-10 h-10 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-500">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                    </div>
-                    <div className="flex-1">
-                      <div className="h-2 w-full bg-white/10 rounded-full mb-2" />
-                      <div className="h-2 w-2/3 bg-white/5 rounded-full" />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-8 leading-[0.85]">
-                Controle <br /> <span className="text-purple-500">Total.</span>
-              </h2>
-              <p className="text-gray-400 text-base font-medium leading-relaxed mb-12">
-                Dashboard completo com todas as métricas que você precisa
-              </p>
-              <div className="space-y-6">
-                {[
-                  'Relatórios em Tempo Real',
-                  'Gestão de Clientes',
-                  'Histórico de Vendas',
-                  'Visão Clara do Negócio'
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                    className="flex items-center gap-4 group"
-                  >
-                    <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_10px_#a855f7] group-hover:scale-150 transition-transform" />
-                    <span className="text-lg font-black uppercase tracking-wide">{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section >
 
       {/* SECTION 9: MARCA - SUA MARCA EM PRIMEIRO LUGAR */}
       < section className="py-32 px-6 relative z-10" >
@@ -1493,99 +1314,61 @@ const App: React.FC = () => {
                 <p className="text-sm text-gray-500 font-medium leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section >
+            </div>
 
-      {/* SECTION 10: INFRA & SEGURANÇA - ENHANCED */}
-      < section className="py-32 px-6 relative z-10 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-6xl md:text-[7vw] font-black italic tracking-tighter uppercase mb-6 leading-[0.85]">
-                Pronto para <br /> <span className="text-purple-500">Escalar.</span>
-              </h2>
-              <p className="text-gray-500 text-sm font-medium max-w-2xl mx-auto mt-8">
-                Infraestrutura de nível empresarial para seu negócio
-              </p>
-            </motion.div>
-          </div>
-
-          <div className="max-w-3xl mx-auto relative">
-            {/* Linha Lateral Conectora */}
-            <div className="absolute left-[27px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-purple-600/50 via-purple-600/20 to-transparent mb-10" />
-
-            <div className="space-y-16">
-              {[
-                { title: 'Infraestrutura Cloud', desc: 'Servidores de alta performance globais com latência reduzida.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg> },
-                { title: 'Alta Performance', desc: 'Velocidade máxima em qualquer escala, suportando milhares de acessos simultâneos.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
-                { title: 'Segurança e LGPD', desc: 'Proteção total dos dados dos clientes com criptografia de ponta a ponta.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
-                { title: 'Estabilidade Garantida', desc: '99.9% de uptime SLA para que sua operação nunca pare.', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> }
-              ].map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05, duration: 0.5 }}
-                  className="relative pl-24 group"
-                >
-                  {/* Ãcone com Círculo */}
-                  <div className="absolute left-0 top-0 w-14 h-14 bg-[#030303] flex items-center justify-center rounded-2xl border border-white/10 group-hover:border-purple-500/50 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-500 z-10">
-                    <div className="text-purple-500 group-hover:scale-110 transition-transform duration-500">
-                      {feature.icon}
-                    </div>
+            <div className="mt-16 bg-white/[0.02] border border-white/10 rounded-[32px] p-8 flex flex-col md:flex-row gap-8 items-center justify-center">
+              <div className="flex-1 text-center">
+                <div className="text-gray-500 text-xs font-black uppercase tracking-widest mb-4">Plataforma Genérica</div>
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/5 blur-[1px]">
+                  <div className="w-12 h-12 bg-white/10 rounded-full mx-auto mb-4" />
+                  <div className="h-2 w-24 bg-white/10 rounded-full mx-auto" />
+                </div>
+              </div>
+              <div className="text-purple-500 font-black italic text-2xl">VS</div>
+              <div className="flex-1 text-center">
+                <div className="text-purple-400 text-xs font-black uppercase tracking-widest mb-4">Sua Marca</div>
+                <div className="p-6 bg-purple-600/10 rounded-2xl border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                  <div className="w-12 h-12 bg-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                   </div>
-
-                  {/* Texto */}
-                  <div className="flex flex-col pt-1">
-                    <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tight transition-colors duration-500 group-hover:text-purple-500">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm font-medium mt-2 max-w-xl group-hover:text-gray-400 transition-colors duration-500">
-                      {feature.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                  <div className="h-2 w-24 bg-purple-400 rounded-full mx-auto" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
       </section >
 
 
 
-      {/* PLANOS - HIGH CONTRAST */}
-      < section id="plans" className="py-40 bg-white text-black relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
+      <Comparison />
+      <TechSpecs />
+      
+      {/* PLANOS */}
+      < section id="plans" className="py-40 bg-black text-white relative z-10 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]" >
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
           <div className="text-center mb-16 md:mb-20">
-            <h2 className="text-5xl md:text-7xl lg:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10 text-black">Comece <br /> <span className="text-purple-600">Agora.</span></h2>
+            <h2 className="text-5xl md:text-7xl lg:text-[9vw] font-black italic tracking-tighter uppercase leading-[0.75] mb-10 text-white">Comece <br /> <span className="text-purple-600">Agora.</span></h2>
 
             {/* Header Objection Killer */}
             <div className="mt-12">
               <div className="hidden md:flex flex-col items-center text-center space-y-4">
-                <div className="flex items-center gap-3 text-2xl font-black italic uppercase tracking-tighter text-black">
+                <div className="flex items-center gap-3 text-2xl font-black italic uppercase tracking-tighter text-white">
                   <span className="text-purple-600">
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                   </span>
-                  O sistema roda em infraestrutura moderna serverless.
+                  O sistema roda em infraestrutura moderna de alta performance.
                 </div>
-                <p className="text-gray-500/60 font-medium italic">
+                <p className="text-gray-400 font-medium italic">
                   Sem VPS, sem servidor, sem mensalidades obrigatórias e sem complicação técnica.
                 </p>
               </div>
 
               <div className="md:hidden flex flex-col items-center text-center space-y-2 px-6">
-                <div className="flex items-center gap-2 text-xl font-black italic uppercase tracking-tighter text-black">
+                <div className="flex items-center gap-2 text-xl font-black italic uppercase tracking-tighter text-white">
                   <span className="text-2xl">⚡</span>
                   Sem VPS. Sem servidor.
                 </div>
-                <p className="text-gray-500 font-bold text-[10px] uppercase tracking-[0.2em] opacity-40">
+                <p className="text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em]">
                   Sem custo fixo obrigatório.
                 </p>
               </div>
@@ -1611,26 +1394,12 @@ const App: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mb-12">
                   {[
-                    'Controle total',
-                    'Estrutura própria',
-                    'Recebimento direto',
-                    'Menos taxas',
-                    'Sem mensalidade',
-                    'Checkout otimizado',
-                    'Área premium',
-                    'Integrações abertas',
-                    'Webhooks livres',
-                    'Produtos ilimitados',
-                    'Domínios ilimitados',
-                    'Checkouts ilimitados',
-                    'Escalabilidade real',
-                    'Sem travas',
-                    'Independência operacional',
-                    'Customização total',
-                    'Operação profissional',
-                    'Dados privados',
-                    'Implantação assistida',
-                    'Atualizações futuras'
+                    'Controle total dos dados',
+                    'Estrutura 100% independente',
+                    'Sem taxas por venda',
+                    'Checkout de alta conversão',
+                    'Integrações via Webhooks',
+                    'Domínios e checkouts ilimitados'
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-start gap-3">
                       <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.3)] flex-shrink-0 mt-0.5">
@@ -1685,10 +1454,15 @@ const App: React.FC = () => {
       </section >
 
       <footer className="py-32 bg-black border-t border-white/5 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.6em] text-gray-800">
-          <div className="text-left">
-            <h2 className="text-5xl font-black italic text-white mb-8 uppercase tracking-tighter">SUPER<span className="text-purple-500">CHECKOUT</span></h2>
+        <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-16 text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-gray-800">
+          <div className="text-left flex flex-col gap-4">
+            <h2 className="text-5xl font-black italic text-white uppercase tracking-tighter">SUPER<span className="text-purple-500">CHECKOUT</span></h2>
             <p className="max-w-sm leading-loose">A plataforma definitiva para produtos digitais de alta escala. Built for the 1%.</p>
+            <div className="flex flex-wrap gap-4 md:gap-6 mt-4">
+              <a href="#termos" className="hover:text-purple-400 transition-colors">Termos de Uso</a>
+              <a href="#privacidade" className="hover:text-purple-400 transition-colors">Política de Privacidade</a>
+              <a href="mailto:contato@supercheckout.app" className="hover:text-purple-400 transition-colors">Contato</a>
+            </div>
           </div>
           <p className="max-w-sm md:text-right leading-loose">© 2026 SUPER CHECKOUT .APP — BRUTAL PERFORMANCE ENGINE. ALL RIGHTS RESERVED.</p>
         </div>

@@ -250,7 +250,7 @@ const App: React.FC = () => {
               <div className="flex flex-col lg:flex-row gap-10 items-center h-auto lg:h-[600px]">
 
                 {/* MOBILE: Simple Stacked Cards */}
-                <div className="lg:hidden w-full space-y-4">
+                <div className="lg:hidden w-full space-y-4 mb-24">
                   {showcaseFeatures.map((f, i) => (
                     <motion.div
                       key={f.id}
@@ -1243,9 +1243,11 @@ const App: React.FC = () => {
                     transition={{ duration: 1.5, delay: i * 0.2 }}
                   />
                   <motion.circle
+                    cx={600}
+                    cy={300}
                     r="3"
                     fill="#a855f7"
-                    initial={{ offset: 0 }}
+                    initial={{ cx: 600, cy: 300 }}
                     animate={{
                       cx: [600, pos.x],
                       cy: [300, pos.y]
